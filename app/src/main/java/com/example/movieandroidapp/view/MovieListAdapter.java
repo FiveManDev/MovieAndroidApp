@@ -20,11 +20,9 @@ import java.util.List;
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MyViewHolder> {
 
     private List<Movie> movieList;
-    private Context context;
 
-    public MovieListAdapter(List<Movie> movieList, Context context) {
+    public MovieListAdapter(List<Movie> movieList) {
         this.movieList = movieList;
-        this.context = context;
     }
 
     @NonNull
@@ -40,7 +38,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MyVi
         holder.tvReleaseDate.setText(movieList.get(position).getReleaseDate());
         holder.tvOverview.setText(movieList.get(position).getOverview());
         if(movieList.get(position).getPosterPath()!=null){
-            Picasso.get().load(ApiClient.IMAGE_BASE_URL+movieList.get(position).getPosterPath()).into(holder.ivMovie);
+            Picasso.get().load(movieList.get(position).getPosterPath()).into(holder.ivMovie);
         }
     }
 

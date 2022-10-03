@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">MovieAndroidApp</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <!--    nav list-->
+    <string name="nav_home_user">HOME</string>
+    <string name="nav_category_user">CATEGORY</string>
+
+    <string name="navigation_drawer_opend">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
 </resources>

@@ -18,7 +18,7 @@ public class MovieListModel implements MovieListContract.Model {
     public void getMovieList(OnFinishedListener onFinishedListener, int pageNo) {
         IMovieApi apiService = ApiClient.getClient().create(IMovieApi.class);
 
-        Call<MovieListResponse> call = apiService.getPopularMovies(ApiClient.API_KEY, pageNo);
+        Call<MovieListResponse> call = apiService.getPopularMovies( pageNo);
 
         call.enqueue(new Callback<MovieListResponse>() {
             @Override
@@ -26,7 +26,6 @@ public class MovieListModel implements MovieListContract.Model {
                 List<Movie> movies = response.body().getResults();
                 onFinishedListener.onFinished(movies);
             }
-
             @Override
             public void onFailure(Call<MovieListResponse> call, Throwable t) {
                 onFinishedListener.onFailure(t);

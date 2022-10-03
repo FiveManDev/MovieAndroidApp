@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="160dp"
+    android:layout_marginRight="15dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="4dp"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardElevation="0dp"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/img_movie"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:src="@drawable/not_available"
+            android:scaleType="centerCrop"/>
+        <TextView
+            android:id="@+id/title_movie"
+            android:layout_marginTop="4dp"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="Benched"
+            android:textColor="@color/white"
+            />
+        <TextView
+            android:id="@+id/genre_movie"
+            android:layout_marginTop="4dp"
+            android:textSize="14sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primary_color"
+            android:text="Comedy"/>
+        <LinearLayout
+            android:layout_marginTop="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_star"
+                app:tint="@color/primary_color"
+                android:layout_gravity="center"
+                />
+            <TextView
+                android:id="@+id/rating_movie"
+                android:layout_marginLeft="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7.1"
+                android:textColor="@color/white"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

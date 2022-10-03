@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class MovieListResponse {
+
     @SerializedName("page")
     @Expose
     private Integer page;
