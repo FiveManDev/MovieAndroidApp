@@ -58,6 +58,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="bottom"
                 android:text="John Doe"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 

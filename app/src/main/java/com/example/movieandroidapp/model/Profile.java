@@ -16,12 +16,12 @@ public class Profile {
     @SerializedName("avatar")
     @Expose
     private String avatar;
-    @SerializedName("eMail")
+    @SerializedName("email")
     @Expose
-    private String eMail;
-    @SerializedName("userID")
+    private String email;
+    @SerializedName("genre")
     @Expose
-    private String userID;
+    private String genre;
     @SerializedName("classID")
     @Expose
     private String classID;
@@ -58,20 +58,20 @@ public class Profile {
         this.avatar = avatar;
     }
 
-    public String geteMail() {
-        return eMail;
+    public String getEmail() {
+        return email;
     }
 
-    public void seteMail(String eMail) {
-        this.eMail = eMail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getUserID() {
-        return userID;
+    public String getGenre() {
+        return genre;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public String getClassID() {

@@ -1,10 +1,8 @@
 package com.example.movieandroidapp.network.User;
 
 import com.example.movieandroidapp.model.ApiResponse;
-import com.example.movieandroidapp.model.MovieListResponse;
 import com.example.movieandroidapp.model.TokenModel;
 import com.example.movieandroidapp.model.User;
-import com.example.movieandroidapp.network.Movie.MovieApiUrl;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -20,6 +18,6 @@ public interface IUserApi {
     @POST(UserApiUrl.CreateUser)
     Call<ApiResponse<String[]>> createUser(@Body CreateUserBody createUserBody);
 
-    @POST(UserApiUrl.GetUserInformation)
-    Call<ApiResponse<User>> getUserInformation();
+    @GET(UserApiUrl.GetUserInformation)
+    Call<ApiResponse<User>> getUserInformation(@Query("id") String id);
 }

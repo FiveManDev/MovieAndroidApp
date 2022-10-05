@@ -1,6 +1,7 @@
 package com.example.movieandroidapp.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -11,15 +12,20 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.movieandroidapp.R;
+import com.example.movieandroidapp.Utility.DataLocalManager;
 import com.example.movieandroidapp.contract.user.GetUserInformationContract;
 import com.example.movieandroidapp.fragment.CategoryFragment;
 import com.example.movieandroidapp.fragment.HomeFragment;
+import com.example.movieandroidapp.fragment.SearchHomeFragment;
+import com.example.movieandroidapp.model.PayLoadToken;
 import com.example.movieandroidapp.model.User;
 import com.example.movieandroidapp.presenter.user.GetUserInformationPresenter;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,17 +33,18 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GetUserInformationContract.View {
     private static final int FRAGMENT_HOME = 0;
     private static final int FRAGMENT_CATEGORY = 1;
+    private static final int FRAGMENT_SEARCH_HOME = 2;
 
     private int mCurrentFragment = FRAGMENT_HOME;
 
     private DrawerLayout mDrawerLayout;
     private ImageView avatar;
     private TextView role,name;
-
+    private SearchView search_toolbar;
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,13 +71,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         replaceFragment(new HomeFragment());
         navigationView.getMenu().findItem(R.id.nav_home_user).setChecked(true);
 
-        avatar = findViewById(R.id.header_navigation_avatar);
-        role = findViewById(R.id.header_navigation_role);
-        name = findViewById(R.id.header_navigation_name);
+
 
         GetUserInformationPresenter presenter = new GetUserInformationPresenter(this);
-        presenter.requestGetUserToServer();
+        String ACCESS_TOKEN = DataLocalManager.getAccessToken();
 
+        java.util.Base64.Decoder decoder = java.util.Base64.getUrlDecoder();
+        String[] parts = ACCESS_TOKEN.split("\\."); // split out the "parts" (header, payload and signature)
+        String payloadJson = new String(decoder.decode(parts[1]));
+
+        Gson gson = new Gson();
+        PayLoadToken payload = gson.fromJson(payloadJson, PayLoadToken.class);
+
+        presenter.requestGetUserToServer(payload.getUserID());
     }
 
 
@@ -96,13 +109,35 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(HomeActivity.this, query, Toast.LENGTH_SHORT).show();
+                //bundle data to another fragment
+                Bundle bundle = new Bundle();
+                bundle.putString("search_query",query);
+                SearchHomeFragment searchHomeFragment = new SearchHomeFragment();
+                searchHomeFragment.setArguments(bundle);
+                replaceFragment(searchHomeFragment);
+                mCurrentFragment = FRAGMENT_SEARCH_HOME;
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
+            }
+        });
+
+        //handle event when click close search in toolbar
+        MenuItem searchMenuItem = menu.findItem(R.id.search_toolbar);
+        searchMenuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                replaceFragment(new HomeFragment());
+                mCurrentFragment=FRAGMENT_HOME;
+                return true;
             }
         });
 
@@ -148,8 +183,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @SuppressLint("SetTextI18n")
     @Override
     public void onResponseSuccess(User user) {
+        avatar = findViewById(R.id.header_navigation_avatar);
+        role = findViewById(R.id.header_navigation_role);
+        name = findViewById(R.id.header_navigation_name);
+
         if(user != null){
-            Picasso.get().load(user.getProfile().getAvatar()).into(avatar);
+            if(user.getProfile().getAvatar()!= null){
+                Picasso.get().load(user.getProfile().getAvatar()).into(avatar);
+            }
             name.setText(user.getProfile().getFirstName() + " " + user.getProfile().getLastName());
             role.setText(user.getAuthorization().getAuthorizationName());
         }

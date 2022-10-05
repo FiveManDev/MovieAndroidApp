@@ -48,4 +48,5 @@ public class User {
     public void setAuthorization(Authorization authorization) {
         this.authorization = authorization;
     }
+
 }

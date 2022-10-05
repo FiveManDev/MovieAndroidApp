@@ -1,16 +1,14 @@
 package com.example.movieandroidapp.Utility;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.Patterns;
 
-import androidx.appcompat.app.AppCompatActivity;
+
 
 public class Extension {
 
     public static String addBearToToken(String token) {
-        return "Bear " + token;
+        return "Bearer " + token;
     }
 
     public static boolean isEmail(String email) {

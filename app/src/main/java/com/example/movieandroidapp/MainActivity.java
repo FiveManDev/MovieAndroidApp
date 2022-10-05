@@ -40,42 +40,6 @@ public class MainActivity extends AppCompatActivity  {
             startActivity(new Intent(this, HomeActivity.class));
         });
 
-//        //get recyle view
-//        rvMovieList = findViewById(R.id.rvMovieList);
-//        pbLoading = findViewById(R.id.pbLoading);
-//
-//        movieList = new ArrayList<>();
-//
-//        layoutManager = new LinearLayoutManager(this);
-//
-//        rvMovieList.setLayoutManager(layoutManager);
-//        rvMovieList.setHasFixedSize(true);
-//
-//        moviePresenter = new MoviePresenter(this);
-//        moviePresenter.requestDataFromServer();
-
     }
 
-//    @Override
-//    public void showProgress() {
-//        pbLoading.setVisibility(View.VISIBLE);
-//    }
-//
-//    @Override
-//    public void hideProgress() {
-//        pbLoading.setVisibility(View.GONE);
-//    }
-//
-//    @Override
-//    public void setDataToRecyclerview(List<Movie> movieListArray) {
-//        movieList.addAll(movieListArray);
-//        movieListAdapter = new MovieListAdapter(movieList);
-//        rvMovieList.setAdapter(movieListAdapter);
-//    }
-//
-//    @Override
-//    public void onResponseFailure(Throwable throwable) {
-//        Log.e("ERROR:", throwable.getMessage());
-//        Toast.makeText(MainActivity.this, "Error in getting data", Toast.LENGTH_LONG).show();
-//    }
 }

@@ -9,13 +9,13 @@ public interface GetUserInformationContract {
             void onFailure(String message);
         }
 
-        void getUserInformation(GetUserInformationContract.Model.OnFinishedListener onFinishedListener);
+        void getUserInformation(GetUserInformationContract.Model.OnFinishedListener onFinishedListener, String id);
     }
     interface View{
         void onResponseSuccess(User user);
         void onResponseFailure(String message);
     }
     interface Presenter {
-        void requestGetUserToServer();
+        void requestGetUserToServer(String id);
     }
 }

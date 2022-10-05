@@ -17,15 +17,14 @@ public class ApiClient {
 
     public static Retrofit getClient() {
          String ACCESS_TOKEN = DataLocalManager.getAccessToken();
-
+         String BearToken = Extension.addBearToToken(ACCESS_TOKEN);
          OkHttpClient defaultHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(
                         chain -> {
                             Request request = chain.request().newBuilder()
                                     .addHeader("Accept", "Application/JSON")
                                     .addHeader("Content-Type","application/json;charset=UTF-8")
-                                    .addHeader("Authentication", Extension.addBearToToken(ACCESS_TOKEN))
-                                    .addHeader("Connection","close").build();
+                                    .addHeader("Authorization", BearToken).build();
                             return chain.proceed(request);
                         }).retryOnConnectionFailure(true).build();
 

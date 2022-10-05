@@ -16,10 +16,10 @@ import retrofit2.Response;
 public class GetUserInformationRequest implements GetUserInformationContract.Model {
 
     @Override
-    public void getUserInformation(OnFinishedListener onFinishedListener) {
+    public void getUserInformation(OnFinishedListener onFinishedListener,String id) {
 
         IUserApi apiService = ApiClient.getClient().create(IUserApi.class);
-        Call<ApiResponse<User>> call = apiService.getUserInformation();
+        Call<ApiResponse<User>> call = apiService.getUserInformation(id);
 
         call.enqueue(new Callback<ApiResponse<User>>() {
             @Override

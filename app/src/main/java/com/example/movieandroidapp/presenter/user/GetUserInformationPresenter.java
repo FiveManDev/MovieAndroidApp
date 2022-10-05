@@ -14,12 +14,13 @@ public class GetUserInformationPresenter implements GetUserInformationContract.P
     }
 
     @Override
-    public void requestGetUserToServer() {
-        getUserInformationPresenterModel.getUserInformation(this);
+    public void requestGetUserToServer(String id) {
+        getUserInformationPresenterModel.getUserInformation(this,id);
     }
 
     @Override
     public void onFinished(User user) {
+
         viewModel.onResponseSuccess(user);
     }
 

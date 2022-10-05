@@ -15,18 +15,18 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class GetTopLastestReleaseMoviesAdapter extends RecyclerView.Adapter<GetTopLastestReleaseMoviesAdapter.MyViewHolder> {
+public class GetTopLastestPublicationMoviesAdapter extends RecyclerView.Adapter<GetTopLastestPublicationMoviesAdapter.MyViewHolder> {
 
     private List<Movie> movieList;
 
-    public GetTopLastestReleaseMoviesAdapter(List<Movie> list){
+    public GetTopLastestPublicationMoviesAdapter(List<Movie> list){
         this.movieList = list;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new GetTopLastestReleaseMoviesAdapter.MyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie, parent, false));
+        return new GetTopLastestPublicationMoviesAdapter.MyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie, parent, false));
     }
 
     @Override
