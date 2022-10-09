@@ -11,4 +11,7 @@
     <string name="navigation_drawer_opend">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <string name="track_selection_title">Video Quality</string>
+
+
 </resources>

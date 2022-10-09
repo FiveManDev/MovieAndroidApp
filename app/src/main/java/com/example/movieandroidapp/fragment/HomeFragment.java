@@ -13,15 +13,16 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.movieandroidapp.Activity.HomeActivity;
 import com.example.movieandroidapp.R;
 import com.example.movieandroidapp.Utility.Style.SpacingItemDecorator;
 import com.example.movieandroidapp.contract.movie.GetTopLastestPublicationMoviesContract;
 import com.example.movieandroidapp.contract.movie.GetTopLastestReleaseMoviesContract;
+import com.example.movieandroidapp.contract.movie.ListenerMovie;
 import com.example.movieandroidapp.model.movie.Movie;
 import com.example.movieandroidapp.presenter.movie.GetTopLastestPublicationMoviesPresenter;
 import com.example.movieandroidapp.presenter.movie.GetTopLastestReleaseMoviesPresenter;
-import com.example.movieandroidapp.view.movie.GetTopLastestPublicationMoviesAdapter;
-import com.example.movieandroidapp.view.movie.GetTopLastestReleaseMoviesAdapter;
+import com.example.movieandroidapp.view.movie.MovieListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,14 +75,22 @@ public class HomeFragment extends Fragment implements GetTopLastestReleaseMovies
 
     @Override
     public void setDataToRecyclerview(List<Movie> movieListArray) {
+        ListenerMovie listenerMovie = movie -> {
+            MovieDetailFragment movieDetailFragment = ((HomeActivity) getActivity()).bundleMovieToDetailFragment(movie);
+            ((HomeActivity) getActivity()).replaceFragment(movieDetailFragment);
+        };
         movieList.addAll(movieListArray);
-        GetTopLastestReleaseMoviesAdapter adapter = new GetTopLastestReleaseMoviesAdapter(movieList);
+        MovieListAdapter adapter = new MovieListAdapter(movieList,listenerMovie);
         rcv_movie_home.setAdapter(adapter);
     }
 
     @Override
     public void setDataToRecyclerviewNew(List<Movie> movieListArray) {
-        GetTopLastestPublicationMoviesAdapter adapter = new GetTopLastestPublicationMoviesAdapter(movieListArray);
+        ListenerMovie listenerMovie = movie -> {
+            MovieDetailFragment movieDetailFragment = ((HomeActivity) getActivity()).bundleMovieToDetailFragment(movie);
+            ((HomeActivity) getActivity()).replaceFragment(movieDetailFragment);
+        };
+        MovieListAdapter adapter = new MovieListAdapter(movieListArray,listenerMovie);
         rcv_movie_new_home.setAdapter(adapter);
     }
 
@@ -94,4 +103,5 @@ public class HomeFragment extends Fragment implements GetTopLastestReleaseMovies
     public void onResponseFailure(String message) {
         Toast.makeText(mView.getContext(), message, Toast.LENGTH_SHORT).show();
     }
+
 }

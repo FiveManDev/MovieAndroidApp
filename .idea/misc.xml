@@ -6,6 +6,7 @@
         <entry key="../../../../layout/custom_preview.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-v24/rounded_btn.xml" value="0.1955" />
         <entry key="app/src/main/res/drawable/avatar_background.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_baseline_fullscreen_24.xml" value="0.1195" />
         <entry key="app/src/main/res/drawable/ic_category.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_home.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_logo.xml" value="0.17" />
@@ -13,17 +14,22 @@
         <entry key="app/src/main/res/drawable/ic_search.xml" value="0.1865" />
         <entry key="app/src/main/res/drawable/logo.xml" value="0.17" />
         <entry key="app/src/main/res/drawable/nav_view_item_background.xml" value="0.138" />
+        <entry key="app/src/main/res/drawable/settings.xml" value="0.1195" />
         <entry key="app/src/main/res/drawable/textview_border.xml" value="0.17" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.24583333333333332" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.23177083333333334" />
+        <entry key="app/src/main/res/layout/custom_player_control.xml" value="0.1890625" />
         <entry key="app/src/main/res/layout/fragment_category.xml" value="0.30277777777777776" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2675971137152777" />
+        <entry key="app/src/main/res/layout/fragment_movie_detail.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_search_home.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_watch_movie.xml" value="0.175" />
         <entry key="app/src/main/res/layout/item_movie.xml" value="0.3072289156626506" />
         <entry key="app/src/main/res/layout/layout_header_navigation.xml" value="0.335" />
         <entry key="app/src/main/res/layout/row_item_movie_list.xml" value="0.24583333333333332" />
+        <entry key="app/src/main/res/layout/track_selection_dialog.xml" value="0.1890625" />
         <entry key="app/src/main/res/menu/menu_nav_user.xml" value="0.29074074074074074" />
         <entry key="app/src/main/res/menu/menu_toolbar.xml" value="0.4203125" />
         <entry key="app/src/main/res/xml/network_security_config.xml" value="0.2734375" />

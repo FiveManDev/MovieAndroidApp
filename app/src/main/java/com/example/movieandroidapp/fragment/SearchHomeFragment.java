@@ -10,16 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.movieandroidapp.Activity.HomeActivity;
 import com.example.movieandroidapp.R;
 import com.example.movieandroidapp.Utility.Style.SpacingItemDecorator;
+import com.example.movieandroidapp.contract.movie.ListenerMovie;
 import com.example.movieandroidapp.contract.movie.SearchMovieHome;
 import com.example.movieandroidapp.model.movie.Movie;
 import com.example.movieandroidapp.presenter.movie.SearchHomePresenter;
-import com.example.movieandroidapp.view.movie.GetTopLastestReleaseMoviesAdapter;
-import com.example.movieandroidapp.view.movie.SearchHomeAdapter;
+import com.example.movieandroidapp.view.movie.MovieListAdapter;
 
 import java.util.List;
 
@@ -56,7 +56,11 @@ public class SearchHomeFragment extends Fragment implements SearchMovieHome.View
 
     @Override
     public void setDataToRecyclerview(List<Movie> movieListArray) {
-        SearchHomeAdapter adapter = new SearchHomeAdapter(movieListArray);
+        ListenerMovie listenerMovie = movie -> {
+            MovieDetailFragment movieDetailFragment = ((HomeActivity) getActivity()).bundleMovieToDetailFragment(movie);
+            ((HomeActivity) getActivity()).replaceFragment(movieDetailFragment);
+        };
+        MovieListAdapter adapter = new MovieListAdapter(movieListArray,listenerMovie);
         rcv_movie_search_home.setAdapter(adapter);
     }
 

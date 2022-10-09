@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#2A2A30"
+        android:orientation="vertical"
+        android:layout_marginBottom="20dp"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp">
+
+        <TextView
+            android:id="@+id/movie_title_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:maxWidth="200dp"
+            android:text="I Dream in Another Language"
+            android:textColor="@color/white"
+            android:textSize="24dp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="5dp">
+
+            <ImageView
+                android:id="@+id/movie_image_detail"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/not_available" />
+        </androidx.cardview.widget.CardView>
+        <Button
+            android:id="@+id/btn_watch_movie"
+            android:layout_marginTop="10dp"
+            android:layout_width="170dp"
+            android:layout_height="match_parent"
+            android:text="Watch now"
+            android:backgroundTint="@color/primary_color"
+        />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_star"
+                app:tint="@color/primary_color" />
+
+            <TextView
+                android:id="@+id/movie_rating_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:text="7.1"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/movie_quality_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="HD"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/movie_age_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="16+"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/groupField"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Genre:" />
+
+            <TextView
+                android:id="@+id/movie_genre_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Triler, Action"
+                android:textColor="@color/primary_color" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/groupField"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Running time:" />
+
+            <TextView
+                android:id="@+id/movie_time_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="120 min"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/groupField"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Release year:" />
+
+            <TextView
+                android:id="@+id/movie_release_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2017"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/groupField"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Country:" />
+
+            <TextView
+                android:id="@+id/movie_country_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="US"
+                android:textColor="@color/primary_color" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/movie_desc_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:lineHeight="20dp"
+            android:maxLines="5"
+            android:text="Phim là câu chuyện xoay quanh hành trình sống còn chống lại xác sống của một nhóm học sinh bị mắc kẹt trong trường học khi xuất hiện một loại virus lây nhiễm có khả năng biến con người thành xác sống đang lây lan khắp thành phố. Đây không chỉ đơn thuần là cuộc đấu tranh với những thứ nguy hiểm và đáng sợ mà còn là thử thách khi đối diện với sự đố kỵ và lòng tham vô đáy của con người."
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

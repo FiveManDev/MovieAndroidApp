@@ -13,12 +13,15 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.movieandroidapp.R;
 import com.example.movieandroidapp.Utility.DataLocalManager;
+import com.example.movieandroidapp.contract.movie.ListenerMovie;
 import com.example.movieandroidapp.contract.user.GetUserInformationContract;
 import com.example.movieandroidapp.fragment.CategoryFragment;
 import com.example.movieandroidapp.fragment.HomeFragment;
+import com.example.movieandroidapp.fragment.MovieDetailFragment;
 import com.example.movieandroidapp.fragment.SearchHomeFragment;
 import com.example.movieandroidapp.model.PayLoadToken;
 import com.example.movieandroidapp.model.User;
+import com.example.movieandroidapp.model.movie.Movie;
 import com.example.movieandroidapp.presenter.user.GetUserInformationPresenter;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
@@ -27,6 +30,7 @@ import com.squareup.picasso.Picasso;
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -84,6 +88,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         PayLoadToken payload = gson.fromJson(payloadJson, PayLoadToken.class);
 
         presenter.requestGetUserToServer(payload.getUserID());
+
+
     }
 
 
@@ -174,7 +180,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    private void replaceFragment(Fragment fragment){
+    public void replaceFragment(Fragment fragment){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content_frame_user,fragment);
         transaction.commit();
@@ -199,5 +205,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onResponseFailure(String message) {
         Toast.makeText(this, "Something wrong with your internet", Toast.LENGTH_SHORT).show();
+    }
+
+    public MovieDetailFragment bundleMovieToDetailFragment(Movie movie){
+        Gson gson = new Gson();
+        Bundle bundle = new Bundle();
+        bundle.putString("movie",gson.toJson(movie));
+        MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
+        movieDetailFragment.setArguments(bundle);
+        return movieDetailFragment;
     }
 }
