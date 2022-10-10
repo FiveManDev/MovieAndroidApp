@@ -69,15 +69,22 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:padding="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxWidth="250dp"
-                        android:text="NEW MOVIES"
+                        android:text="New Movies"
                         android:textColor="@color/white"
                         android:textSize="26sp" />
+                    <Spinner
+                        android:id="@+id/home_filter_genre"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@android:color/transparent"
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

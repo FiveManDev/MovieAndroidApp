@@ -13,5 +13,10 @@
 
     <string name="track_selection_title">Video Quality</string>
 
+    <string-array name="list_genre">
+        <item>Action</item>
+        <item>Comedy</item>
+        <item>Honor</item>
+    </string-array>
 
 </resources>

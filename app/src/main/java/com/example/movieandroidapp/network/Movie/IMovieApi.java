@@ -1,6 +1,7 @@
 package com.example.movieandroidapp.network.Movie;
 
 import com.example.movieandroidapp.model.ApiResponse;
+import com.example.movieandroidapp.model.Genre;
 import com.example.movieandroidapp.model.movie.Movie;
 
 import java.util.List;
@@ -20,4 +21,7 @@ public interface IMovieApi {
 
     @GET(MovieApiUrl.GetMoviesBasedOnSearchText)
     Call<ApiResponse<List<Movie>>> GetMoviesBasedOnSearchText(@Query("searchText") String query);
+
+    @GET(MovieApiUrl.GetGenres)
+    Call<ApiResponse<List<String>>> GetAllGenreOfMovie();
 }
