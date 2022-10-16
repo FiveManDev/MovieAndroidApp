@@ -19,18 +19,13 @@ public class GetAllGenreOfMovieRequest implements GetGenre.Model {
     @Override
     public void getGenre(OnFinishedListener onFinishedListener) {
         IMovieApi apiService = ApiClient.getClient().create(IMovieApi.class);
-        Call<ApiResponse<List<String>>> call = apiService.GetAllGenreOfMovie();
+        Call<ApiResponse<List<Genre>>> call = apiService.GetAllGenreOfMovie();
 
-        call.enqueue(new Callback<ApiResponse<List<String>>>() {
+        call.enqueue(new Callback<ApiResponse<List<Genre>>>() {
             @Override
-            public void onResponse(Call<ApiResponse<List<String>>> call, Response<ApiResponse<List<String>>> response) {
+            public void onResponse(Call<ApiResponse<List<Genre>>> call, Response<ApiResponse<List<Genre>>> response) {
                 if(response.isSuccessful()){
-                    List<String> stringList =response.body().getData();
-                    List<Genre> genreList= new ArrayList<>();
-                    for (String item:
-                         stringList) {
-                        genreList.add(new Genre(item));
-                    }
+                    List<Genre> genreList= response.body().getData();
                     onFinishedListener.onFinished(genreList);
                 }
                 else{
@@ -38,7 +33,7 @@ public class GetAllGenreOfMovieRequest implements GetGenre.Model {
                 }
             }
             @Override
-            public void onFailure(Call<ApiResponse<List<String>>> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<List<Genre>>> call, Throwable t) {
                 onFinishedListener.onFailure("Can not fetch genre");
             }
         });

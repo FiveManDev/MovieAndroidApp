@@ -95,7 +95,7 @@ public class HomeFragment extends Fragment
         spnGenre.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                filterMovieByGenre((genreAdapter.getItem(position).getGener()));
+                filterMovieByGenre((genreAdapter.getItem(position).getGenreName()));
 
             }
             @Override

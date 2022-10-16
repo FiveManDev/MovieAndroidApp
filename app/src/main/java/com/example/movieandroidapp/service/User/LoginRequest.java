@@ -1,6 +1,8 @@
 package com.example.movieandroidapp.service.User;
 
 
+import android.util.Log;
+
 import com.example.movieandroidapp.contract.user.LoginContract;
 import com.example.movieandroidapp.model.ApiResponse;
 import com.example.movieandroidapp.model.TokenModel;
@@ -26,7 +28,8 @@ public class LoginRequest implements LoginContract.Model {
             public void onResponse(Call<ApiResponse<TokenModel>> call, Response<ApiResponse<TokenModel>> response) {
                 try {
                     if (response.isSuccessful()) {
-                        onFinishedListener.onFinished(response.body().getData());
+                        TokenModel tokenModel = response.body().getData();
+                        onFinishedListener.onFinished(tokenModel);
                     } else {
                         onFinishedListener.onFailure(response.body().getMessage());
                     }

@@ -11,11 +11,14 @@ import androidx.fragment.app.Fragment;
 
 import com.example.movieandroidapp.R;
 
-public class CategoryFragment extends Fragment {
+public class CatalogFragment extends Fragment {
+
+    View mView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_category,container,false);
+        mView = inflater.inflate(R.layout.fragment_catalog,container,false);
+        return mView;
     }
 }

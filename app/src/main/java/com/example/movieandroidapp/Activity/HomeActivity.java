@@ -1,6 +1,7 @@
 package com.example.movieandroidapp.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,11 +14,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.movieandroidapp.R;
 import com.example.movieandroidapp.Utility.DataLocalManager;
-import com.example.movieandroidapp.contract.movie.ListenerMovie;
+import com.example.movieandroidapp.Utility.Extension;
 import com.example.movieandroidapp.contract.user.GetUserInformationContract;
-import com.example.movieandroidapp.fragment.CategoryFragment;
+import com.example.movieandroidapp.fragment.CatalogFragment;
 import com.example.movieandroidapp.fragment.HomeFragment;
 import com.example.movieandroidapp.fragment.MovieDetailFragment;
+import com.example.movieandroidapp.fragment.ProfileFragment;
 import com.example.movieandroidapp.fragment.SearchHomeFragment;
 import com.example.movieandroidapp.model.PayLoadToken;
 import com.example.movieandroidapp.model.User;
@@ -28,19 +30,23 @@ import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GetUserInformationContract.View {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private static final int FRAGMENT_HOME = 0;
     private static final int FRAGMENT_CATEGORY = 1;
     private static final int FRAGMENT_SEARCH_HOME = 2;
+    private static final int FRAGMENT_PROFILE_HOME = 3;
 
     private int mCurrentFragment = FRAGMENT_HOME;
 
@@ -48,6 +54,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private ImageView avatar;
     private TextView role,name;
     private SearchView search_toolbar;
+    View header_nav;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,28 +78,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = findViewById(R.id.navigation_view_user);
         navigationView.setNavigationItemSelectedListener(this);
-
+        //create context to find id of list item in header navigation
+        header_nav = navigationView.getHeaderView(0);
 
         replaceFragment(new HomeFragment());
+
         navigationView.getMenu().findItem(R.id.nav_home_user).setChecked(true);
 
-
-
-        GetUserInformationPresenter presenter = new GetUserInformationPresenter(this);
-        String ACCESS_TOKEN = DataLocalManager.getAccessToken();
-
-        java.util.Base64.Decoder decoder = java.util.Base64.getUrlDecoder();
-        String[] parts = ACCESS_TOKEN.split("\\."); // split out the "parts" (header, payload and signature)
-        String payloadJson = new String(decoder.decode(parts[1]));
-
-        Gson gson = new Gson();
-        PayLoadToken payload = gson.fromJson(payloadJson, PayLoadToken.class);
-
-        presenter.requestGetUserToServer(payload.getUserID());
-
-
+        getUser(DataLocalManager.getUserId());
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -161,8 +156,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         else if(id == R.id.nav_category_user){
             if(mCurrentFragment != FRAGMENT_CATEGORY){
-                replaceFragment(new CategoryFragment());
+                replaceFragment(new CatalogFragment());
                 mCurrentFragment=FRAGMENT_CATEGORY;
+            }
+        }
+        else if(id == R.id.nav_profile_user){
+            if(mCurrentFragment != FRAGMENT_PROFILE_HOME){
+                replaceFragment(new ProfileFragment());
+                mCurrentFragment=FRAGMENT_PROFILE_HOME;
             }
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
@@ -183,15 +184,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public void replaceFragment(Fragment fragment){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content_frame_user,fragment);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 
-    @SuppressLint("SetTextI18n")
-    @Override
-    public void onResponseSuccess(User user) {
-        avatar = findViewById(R.id.header_navigation_avatar);
-        role = findViewById(R.id.header_navigation_role);
-        name = findViewById(R.id.header_navigation_name);
+    public void renderUser(User user){
+        avatar =header_nav.findViewById(R.id.header_navigation_avatar);
+        role = header_nav.findViewById(R.id.header_navigation_role);
+        name = header_nav.findViewById(R.id.header_navigation_name);
 
         if(user != null){
             if(user.getProfile().getAvatar()!= null){
@@ -202,11 +202,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    @Override
-    public void onResponseFailure(String message) {
-        Toast.makeText(this, "Something wrong with your internet", Toast.LENGTH_SHORT).show();
-    }
-
     public MovieDetailFragment bundleMovieToDetailFragment(Movie movie){
         Gson gson = new Gson();
         Bundle bundle = new Bundle();
@@ -214,5 +209,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
         movieDetailFragment.setArguments(bundle);
         return movieDetailFragment;
+    }
+
+    public void getUser(String userId) {
+        GetUserInformationContract.View userInformationContract = new GetUserInformationContract.View() {
+            @Override
+            public void onResponseSuccess(User user) {
+                renderUser(user);
+            }
+
+            @Override
+            public void onResponseFailure(String message) {
+            }
+        };
+        GetUserInformationPresenter presenter = new GetUserInformationPresenter(userInformationContract);
+        presenter.requestGetUserToServer(userId);
     }
 }

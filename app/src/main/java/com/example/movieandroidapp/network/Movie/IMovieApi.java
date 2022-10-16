@@ -23,5 +23,5 @@ public interface IMovieApi {
     Call<ApiResponse<List<Movie>>> GetMoviesBasedOnSearchText(@Query("searchText") String query);
 
     @GET(MovieApiUrl.GetGenres)
-    Call<ApiResponse<List<String>>> GetAllGenreOfMovie();
+    Call<ApiResponse<List<Genre>>> GetAllGenreOfMovie();
 }

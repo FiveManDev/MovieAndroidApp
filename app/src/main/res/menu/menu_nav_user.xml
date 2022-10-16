@@ -10,6 +10,10 @@
             android:title="@string/nav_category_user"
             android:icon="@drawable/ic_category"
             />
+        <item android:id="@+id/nav_profile_user"
+            android:title="@string/nav_profile_user"
+            android:icon="@drawable/ic_person"
+            />
     </group>
 
 </menu>

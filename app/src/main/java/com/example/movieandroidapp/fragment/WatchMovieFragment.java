@@ -36,7 +36,7 @@ public class WatchMovieFragment extends Fragment {
     private DefaultTrackSelector trackSelector;
 
     String[] speed = {"0.25x","0.5x","Normal","1.5x","2x"};
-    String live_url = "https://media.geeksforgeeks.org/wp-content/uploads/20201217163353/Screenrecorder-2020-12-17-16-32-03-350.mp4";
+    String live_url = "https://moviewebapi.s3.ap-southeast-1.amazonaws.com/Video/1.mp4?AWSAccessKeyId=AKIAUBYK6ZN225WS3AEB&Expires=1696951404&Signature=owI%2BOJUvTlkSH%2FsUROJCqsqLSi4%3D";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

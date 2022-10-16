@@ -1,20 +1,37 @@
 package com.example.movieandroidapp.model;
 
-public class Genre {
-    private String genre;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-    public Genre(String genre) {
-        this.genre = genre;
-    }
+public class Genre {
+    @SerializedName("genreID")
+    @Expose
+    private String genreID;
+    @SerializedName("genreName")
+    @Expose
+    private String genreName;
 
     public Genre() {
     }
 
-    public String getGener() {
-        return genre;
+    public Genre(String genreID, String genreName) {
+        this.genreID = genreID;
+        this.genreName = genreName;
     }
 
-    public void setGener(String genre) {
-        this.genre = genre;
+    public String getGenreID() {
+        return genreID;
+    }
+
+    public void setGenreID(String genreID) {
+        this.genreID = genreID;
+    }
+
+    public String getGenreName() {
+        return genreName;
+    }
+
+    public void setGenreName(String genreName) {
+        this.genreName = genreName;
     }
 }

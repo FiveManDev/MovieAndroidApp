@@ -13,7 +13,6 @@ import com.example.movieandroidapp.Activity.RegisterActivity;
 public class MainActivity extends AppCompatActivity  {
 
     private Button btnLogin,btnRegister,btnHomeView;
-    String urlmovie = "https://www.youtube.com/watch?v=5TKX8yBTUeY&ab_channel=CodeEngineer";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +20,6 @@ public class MainActivity extends AppCompatActivity  {
         btnLogin = findViewById(R.id.btnLoginView);
         btnRegister = findViewById(R.id.btnRegisterView);
         btnHomeView = findViewById(R.id.btnHomeView);
-        playVideo();
         btnLogin.setOnClickListener(v -> {
             startActivity(new Intent(this, LoginActivity.class));
         });
@@ -33,13 +31,4 @@ public class MainActivity extends AppCompatActivity  {
         });
 
     }
-    private void playVideo(){
-        try {
-
-
-        }catch (Exception e){
-
-        }
-    }
-
 }
