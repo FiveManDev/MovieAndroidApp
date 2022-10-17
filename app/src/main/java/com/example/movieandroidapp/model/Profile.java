@@ -19,12 +19,12 @@ public class Profile {
     @SerializedName("email")
     @Expose
     private String email;
-    @SerializedName("genre")
+    @SerializedName("userID")
     @Expose
-    private String genre;
-    @SerializedName("classID")
+    private String userID;
+    @SerializedName("classification")
     @Expose
-    private String classID;
+    private Classification classification;
 
     public String getProfileID() {
         return profileID;
@@ -66,20 +66,20 @@ public class Profile {
         this.email = email;
     }
 
-    public String getGenre() {
-        return genre;
+    public String getUserID() {
+        return userID;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
-    public String getClassID() {
-        return classID;
+    public Classification getClassification() {
+        return classification;
     }
 
-    public void setClassID(String classID) {
-        this.classID = classID;
+    public void setClassification(Classification classification) {
+        this.classification = classification;
     }
 
 }

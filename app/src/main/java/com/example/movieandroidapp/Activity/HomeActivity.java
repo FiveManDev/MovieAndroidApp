@@ -1,7 +1,6 @@
 package com.example.movieandroidapp.Activity;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,14 +13,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.movieandroidapp.R;
 import com.example.movieandroidapp.Utility.DataLocalManager;
-import com.example.movieandroidapp.Utility.Extension;
 import com.example.movieandroidapp.contract.user.GetUserInformationContract;
 import com.example.movieandroidapp.fragment.CatalogFragment;
 import com.example.movieandroidapp.fragment.HomeFragment;
 import com.example.movieandroidapp.fragment.MovieDetailFragment;
 import com.example.movieandroidapp.fragment.ProfileFragment;
 import com.example.movieandroidapp.fragment.SearchHomeFragment;
-import com.example.movieandroidapp.model.PayLoadToken;
 import com.example.movieandroidapp.model.User;
 import com.example.movieandroidapp.model.movie.Movie;
 import com.example.movieandroidapp.presenter.user.GetUserInformationPresenter;
@@ -29,19 +26,17 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private static final int FRAGMENT_HOME = 0;
     private static final int FRAGMENT_CATEGORY = 1;
@@ -53,7 +48,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout mDrawerLayout;
     private ImageView avatar;
     private TextView role,name;
-    private SearchView search_toolbar;
+    private RelativeLayout btn_logout_home;
     View header_nav;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -62,6 +57,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        //tool bar top
         Toolbar toolbar = findViewById(R.id.toolbar_user);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -85,7 +81,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.getMenu().findItem(R.id.nav_home_user).setChecked(true);
 
+        //get information of a user
         getUser(DataLocalManager.getUserId());
+
     }
 
     @Override
@@ -141,7 +139,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             }
         });
-
         return true;
     }
 
@@ -193,8 +190,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         role = header_nav.findViewById(R.id.header_navigation_role);
         name = header_nav.findViewById(R.id.header_navigation_name);
 
+        //set onclick for icon logout to logout
+        btn_logout_home =(header_nav).findViewById(R.id.btn_logout_home);
+        btn_logout_home.setOnClickListener(t ->{
+            logout();
+        });
         if(user != null){
-            if(user.getProfile().getAvatar()!= null){
+            if(user.getProfile().getAvatar() == null){
+                Picasso.get().load("@drawable/not_available").into(avatar);
+            }else {
                 Picasso.get().load(user.getProfile().getAvatar()).into(avatar);
             }
             name.setText(user.getProfile().getFirstName() + " " + user.getProfile().getLastName());
@@ -224,5 +228,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         };
         GetUserInformationPresenter presenter = new GetUserInformationPresenter(userInformationContract);
         presenter.requestGetUserToServer(userId);
+    }
+
+    public void logout(){
+        DataLocalManager.setAccessToken("");
+        DataLocalManager.setUserId("");
+        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
     }
 }

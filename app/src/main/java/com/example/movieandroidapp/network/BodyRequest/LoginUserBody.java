@@ -1,4 +1,4 @@
-package com.example.movieandroidapp.network.User;
+package com.example.movieandroidapp.network.BodyRequest;
 
 public class LoginUserBody {
     private String userName;

@@ -35,14 +35,16 @@
                     <Spinner
                         android:id="@+id/catalog_filter_genre"
                         android:layout_width="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:background="@android:color/transparent"
                         android:layout_height="wrap_content"/>
 
-                </LinearLayout>  <LinearLayout
+                </LinearLayout>
+                <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    >
                     <TextView
                         android:text="QUALITY"
                         android:textColor="#949496"
@@ -57,7 +59,9 @@
                         android:background="@android:color/transparent"
                         android:layout_height="wrap_content"/>
 
-                </LinearLayout>  <LinearLayout
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="10dp"
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -77,6 +81,7 @@
 
                 </LinearLayout>
                 <LinearLayout
+                    android:layout_marginTop="10dp"
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -97,7 +102,7 @@
                 </LinearLayout>
 
                 <Button
-                    android:layout_width="150dp"
+                    android:layout_width="140dp"
                     android:layout_height="wrap_content"
                     android:text="APPLY FILTER"
                     android:backgroundTint="@color/primary_color"

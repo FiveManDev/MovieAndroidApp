@@ -1,4 +1,4 @@
-package com.example.movieandroidapp.network.User;
+package com.example.movieandroidapp.network.BodyRequest;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

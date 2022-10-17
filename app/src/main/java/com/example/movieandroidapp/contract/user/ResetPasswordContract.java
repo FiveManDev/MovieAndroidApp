@@ -1,20 +1,19 @@
 package com.example.movieandroidapp.contract.user;
 
-public interface CreateAccountContract {
-
+public interface ResetPasswordContract {
     interface Model{
         interface OnFinishedListener {
             void onFinished();
             void onFailure(String message);
         }
-
-        void register(CreateAccountContract.Model.OnFinishedListener onFinishedListener,String userName,String email, String password);
+        void resetPassword(ResetPasswordContract.Model.OnFinishedListener onFinishedListener
+                ,String newPassword, String confirmPassword, String email);
     }
     interface View{
         void onResponseSuccess();
         void onResponseFailure(String message);
     }
     interface Presenter {
-        void requestCreateUserToServer(String userName,String email, String password, String code_input,String code);
+        void confirmEmailToServer(String newPassword, String confirmPassword, String email);
     }
 }

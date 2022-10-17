@@ -13,19 +13,13 @@ import android.widget.TextView;
 import com.example.movieandroidapp.R;
 import com.example.movieandroidapp.Utility.DataLocalManager;
 import com.example.movieandroidapp.Utility.Extension;
-import com.example.movieandroidapp.contract.user.GetUserInformationContract;
 import com.example.movieandroidapp.contract.user.LoginContract;
 import com.example.movieandroidapp.model.PayLoadToken;
 import com.example.movieandroidapp.model.TokenModel;
-import com.example.movieandroidapp.model.User;
-import com.example.movieandroidapp.presenter.user.GetUserInformationPresenter;
 import com.example.movieandroidapp.presenter.user.LoginPresenter;
-import com.google.gson.Gson;
-
-import java.lang.reflect.Type;
 
 public class LoginActivity extends AppCompatActivity implements LoginContract.View {
-    private TextView signup_link, userName, password, error_message;
+    private TextView btn_forgot,signup_link, userName, password, error_message;
     private Button btnLogin;
 
     @Override
@@ -33,12 +27,17 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         btnLogin = findViewById(R.id.btnLogin);
+        btn_forgot = findViewById(R.id.btn_forgot_password);
 
         userName = findViewById(R.id.userName);
         password = findViewById(R.id.password);
 
         LoginPresenter loginPresenter = new LoginPresenter(this);
         signup_link = findViewById(R.id.signup_link);
+
+        btn_forgot.setOnClickListener(t->{
+            startActivity(new Intent(LoginActivity.this, ForgotPassword.class));
+        });
         signup_link.setOnClickListener(t -> {
             startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
         });

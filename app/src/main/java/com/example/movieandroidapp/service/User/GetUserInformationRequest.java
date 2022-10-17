@@ -1,13 +1,10 @@
 package com.example.movieandroidapp.service.User;
 
-import android.util.Log;
-
 import com.example.movieandroidapp.contract.user.GetUserInformationContract;
 import com.example.movieandroidapp.model.ApiResponse;
 import com.example.movieandroidapp.model.User;
 import com.example.movieandroidapp.network.ApiClient;
-import com.example.movieandroidapp.network.User.CreateUserBody;
-import com.example.movieandroidapp.network.User.IUserApi;
+import com.example.movieandroidapp.network.Profile.IProfileApi;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,7 +15,7 @@ public class GetUserInformationRequest implements GetUserInformationContract.Mod
     @Override
     public void getUserInformation(OnFinishedListener onFinishedListener,String id) {
 
-        IUserApi apiService = ApiClient.getClient().create(IUserApi.class);
+        IProfileApi apiService = ApiClient.getClient().create(IProfileApi.class);
         Call<ApiResponse<User>> call = apiService.getUserInformation(id);
 
         call.enqueue(new Callback<ApiResponse<User>>() {

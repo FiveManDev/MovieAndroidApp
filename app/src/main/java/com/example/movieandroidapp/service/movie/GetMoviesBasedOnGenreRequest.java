@@ -1,7 +1,6 @@
 package com.example.movieandroidapp.service.movie;
 
-import com.example.movieandroidapp.contract.movie.GetTopLastestPublicationMoviesContract;
-import com.example.movieandroidapp.contract.movie.GetTopLastestReleaseMoviesContract;
+import com.example.movieandroidapp.contract.movie.GetMoviesBasedOnGenreContract;
 import com.example.movieandroidapp.model.ApiResponse;
 import com.example.movieandroidapp.model.movie.Movie;
 import com.example.movieandroidapp.network.ApiClient;
@@ -13,12 +12,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GetTopLastestPublicationMoviesRequest implements GetTopLastestPublicationMoviesContract.Model {
+public class GetMoviesBasedOnGenreRequest implements GetMoviesBasedOnGenreContract.Model {
 
     @Override
-    public void getTopLastestPublicationMovies(OnFinishedListener onFinishedListener, int top) {
+    public void getMoviesBasedOnGenre(OnFinishedListener onFinishedListener,String genre, int top) {
         IMovieApi apiService = ApiClient.getClient().create(IMovieApi.class);
-        Call<ApiResponse<List<Movie>>> call = apiService.GetTopLastestPublicationMovies(top);
+        Call<ApiResponse<List<Movie>>> call = apiService.GetMoviesBasedOnGenre(genre,top);
 
         call.enqueue(new Callback<ApiResponse<List<Movie>>>() {
             @Override

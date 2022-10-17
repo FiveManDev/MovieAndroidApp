@@ -1,6 +1,5 @@
 package com.example.movieandroidapp.service.movie;
 
-import com.example.movieandroidapp.contract.movie.GetTopLastestPublicationMoviesContract;
 import com.example.movieandroidapp.contract.movie.SearchMovieHome;
 import com.example.movieandroidapp.model.ApiResponse;
 import com.example.movieandroidapp.model.movie.Movie;

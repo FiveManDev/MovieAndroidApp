@@ -27,7 +27,7 @@ public class GetTopLastestReleaseMoviesRequest implements GetTopLastestReleaseMo
                     onFinishedListener.onFinished(response.body().getData());
                 }
                 else{
-                    onFinishedListener.onFailure("Dont have any movie");
+                    onFinishedListener.onFailure("Don't have any movie");
                 }
             }
             @Override
@@ -36,5 +36,4 @@ public class GetTopLastestReleaseMoviesRequest implements GetTopLastestReleaseMo
             }
         });
     }
-
 }

@@ -36,12 +36,11 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MyVi
     @Override
     public void onBindViewHolder(@NonNull MovieListAdapter.MyViewHolder holder, int position) {
         holder.title_movie.setText(movieList.get(position).getMovieName());
-        holder.genre_movie.setText("Action");
+        holder.genre_movie.setText(String.join(", ",movieList.get(position).getGenres()));
         holder.rating_movie.setText(movieList.get(position).getRating().toString());
         Picasso.get().load(movieList.get(position).getCoverImage()).into(holder.img_movie);
         holder.movie_item_container.setOnClickListener(t->{
             listenerMovie.ClickedMovie(movieList.get(position));
-
         });
     }
 

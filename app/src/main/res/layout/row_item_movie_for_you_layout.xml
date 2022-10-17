@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scrollbars="vertical">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/gray_darker">
+
+                <TableRow android:background="@drawable/borderbottom_row">
+
+                    <TextView
+                        android:id="@+id/item_id_movie"
+                        android:layout_gravity="start"
+                        android:maxLines="1"
+                        android:layout_width="50dp"
+                        android:padding="10dp"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/item_title_movie"
+                        android:layout_gravity="start"
+                        android:layout_width="250dp"
+                        android:maxLines="1"
+                        android:padding="10dp"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/item_other_movie"
+                        android:layout_gravity="start"
+                        android:maxLines="1"
+                        android:padding="10dp"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/item_rating_movie"
+                        android:layout_gravity="start"
+                        android:maxLines="1"
+                        android:padding="10dp"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+                </TableRow>
+            </TableLayout>
+        </HorizontalScrollView>
+
+    </ScrollView>

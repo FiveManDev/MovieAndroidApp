@@ -10,12 +10,21 @@ public class User {
     @SerializedName("userName")
     @Expose
     private String userName;
+    @SerializedName("createAt")
+    @Expose
+    private String createAt;
+    @SerializedName("status")
+    @Expose
+    private Boolean status;
     @SerializedName("profile")
     @Expose
     private Profile profile;
     @SerializedName("authorization")
     @Expose
     private Authorization authorization;
+    @SerializedName("numberOfReviews")
+    @Expose
+    private Integer numberOfReviews;
 
     public String getUserID() {
         return userID;
@@ -31,6 +40,22 @@ public class User {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(String createAt) {
+        this.createAt = createAt;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     public Profile getProfile() {
@@ -49,4 +74,11 @@ public class User {
         this.authorization = authorization;
     }
 
+    public Integer getNumberOfReviews() {
+        return numberOfReviews;
+    }
+
+    public void setNumberOfReviews(Integer numberOfReviews) {
+        this.numberOfReviews = numberOfReviews;
+    }
 }

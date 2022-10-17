@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -20,7 +19,7 @@ import com.example.movieandroidapp.Activity.HomeActivity;
 import com.example.movieandroidapp.R;
 import com.example.movieandroidapp.Utility.Style.SpacingItemDecorator;
 import com.example.movieandroidapp.contract.movie.GetGenre;
-import com.example.movieandroidapp.contract.movie.GetTopLastestPublicationMoviesContract;
+import com.example.movieandroidapp.contract.movie.GetMoviesBasedOnGenreContract;
 import com.example.movieandroidapp.contract.movie.GetTopLastestReleaseMoviesContract;
 import com.example.movieandroidapp.contract.movie.ListenerMovie;
 import com.example.movieandroidapp.model.Genre;
@@ -36,7 +35,7 @@ import java.util.List;
 
 public class HomeFragment extends Fragment
         implements GetTopLastestReleaseMoviesContract.View,
-        GetTopLastestPublicationMoviesContract.View {
+        GetMoviesBasedOnGenreContract.View {
 
     private RecyclerView rcv_movie_home, rcv_movie_new_home;
     View mView;
@@ -58,11 +57,11 @@ public class HomeFragment extends Fragment
 
     private void initUI() {
         setUpMoviesRelease();
-        setUpMoviesNew();
+        setUpMoviesNew("Drama Films",6);
         getListGenre();
     }
 
-    private void setUpMoviesNew() {
+    private void setUpMoviesNew(String genre,int top) {
         rcv_movie_new_home = mView.findViewById(R.id.rcv_movie_new_home);
         GetTopLastestPublicationMoviesPresenter presenter = new GetTopLastestPublicationMoviesPresenter(this);
         gridLayoutManager = new GridLayoutManager(mView.getContext(), 2);
@@ -70,7 +69,7 @@ public class HomeFragment extends Fragment
         rcv_movie_new_home.addItemDecoration(itemDecorator);
         rcv_movie_new_home.setLayoutManager(gridLayoutManager);
         rcv_movie_new_home.setHasFixedSize(true);
-        presenter.requestDataFromServerNew(6);
+        presenter.requestDataFromServerNew(genre, top);
     }
 
     private void setUpMoviesRelease() {
@@ -123,8 +122,7 @@ public class HomeFragment extends Fragment
     }
 
     private void filterMovieByGenre(String genre){
-        Toast.makeText(mView.getContext(), genre, Toast.LENGTH_SHORT).show();
-
+        setUpMoviesNew(genre,10);
     }
     @Override
     public void setDataToRecyclerview(List<Movie> movieListArray) {

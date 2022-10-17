@@ -4,7 +4,7 @@ import com.example.movieandroidapp.model.movie.Movie;
 
 import java.util.List;
 
-public interface GetTopLastestPublicationMoviesContract {
+public interface GetMoviesBasedOnGenreContract {
 
     interface Model{
         interface OnFinishedListener {
@@ -12,7 +12,7 @@ public interface GetTopLastestPublicationMoviesContract {
             void onFailure(String message);
         }
 
-        void getTopLastestPublicationMovies(GetTopLastestPublicationMoviesContract.Model.OnFinishedListener onFinishedListener, int top);
+        void getMoviesBasedOnGenre(GetMoviesBasedOnGenreContract.Model.OnFinishedListener onFinishedListener, String genreName, int top);
     }
 
     interface View{
@@ -21,7 +21,7 @@ public interface GetTopLastestPublicationMoviesContract {
     }
 
     interface Presenter {
-        void requestDataFromServerNew(int top);
+        void requestDataFromServerNew(String genre, int top);
     }
 
 }

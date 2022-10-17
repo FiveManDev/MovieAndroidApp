@@ -66,7 +66,7 @@ public class MovieDetailFragment extends Fragment {
         movie_rating_detail.setText(movie.getRating().toString());
         movie_quality_detail.setText(movie.getQuality());
         movie_age_detail.setText(movie.getAge());
-        movie_genre_detail.setText("Action");
+        movie_genre_detail.setText(String.join(", ",movie.getGenres()));
         movie_time_detail.setText(movie.getRunningTime().toString());
         movie_release_detail.setText(Extension.formatDate(movie.getReleaseTime()));
         movie_country_detail.setText(movie.getCountry());

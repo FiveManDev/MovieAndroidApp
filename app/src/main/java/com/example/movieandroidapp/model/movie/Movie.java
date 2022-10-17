@@ -3,6 +3,8 @@ package com.example.movieandroidapp.model.movie;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Movie {
     @SerializedName("movieID")
     @Expose
@@ -67,6 +69,9 @@ public class Movie {
     @SerializedName("movieTypeName")
     @Expose
     private String movieTypeName;
+    @SerializedName("genres")
+    @Expose
+    private List<String> genres = null;
 
     public String getMovieID() {
         return movieID;
@@ -188,14 +193,6 @@ public class Movie {
         this.runningTime = runningTime;
     }
 
-    public Float getRating() {
-        return rating;
-    }
-
-    public void setRating(Float rating) {
-        this.rating = rating;
-    }
-
     public String getQuality() {
         return quality;
     }
@@ -204,8 +201,13 @@ public class Movie {
         this.quality = quality;
     }
 
+    public Float getRating() {
+        return rating;
+    }
 
-
+    public void setRating(Float rating) {
+        this.rating = rating;
+    }
 
     public String getFirstNameAuthor() {
         return firstNameAuthor;
@@ -237,5 +239,13 @@ public class Movie {
 
     public void setMovieTypeName(String movieTypeName) {
         this.movieTypeName = movieTypeName;
+    }
+
+    public List<String> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<String> genres) {
+        this.genres = genres;
     }
 }

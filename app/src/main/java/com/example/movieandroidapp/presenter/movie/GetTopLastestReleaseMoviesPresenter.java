@@ -1,8 +1,6 @@
 package com.example.movieandroidapp.presenter.movie;
 
 import com.example.movieandroidapp.contract.movie.GetTopLastestReleaseMoviesContract;
-import com.example.movieandroidapp.contract.user.GetUserInformationContract;
-import com.example.movieandroidapp.model.User;
 import com.example.movieandroidapp.model.movie.Movie;
 import com.example.movieandroidapp.service.movie.GetTopLastestReleaseMoviesRequest;
 
