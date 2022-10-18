@@ -50,6 +50,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private TextView role,name;
     private RelativeLayout btn_logout_home;
     View header_nav;
+    User mUser;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -159,7 +160,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         else if(id == R.id.nav_profile_user){
             if(mCurrentFragment != FRAGMENT_PROFILE_HOME){
-                replaceFragment(new ProfileFragment());
+                replaceFragment(ProfileFragment.newInstance(mUser));
                 mCurrentFragment=FRAGMENT_PROFILE_HOME;
             }
         }
@@ -196,10 +197,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             logout();
         });
         if(user != null){
-            if(user.getProfile().getAvatar() == null){
-                Picasso.get().load("@drawable/not_available").into(avatar);
-            }else {
+            if(!user.getProfile().getAvatar().isEmpty()){
                 Picasso.get().load(user.getProfile().getAvatar()).into(avatar);
+            }else {
+                Picasso.get().load("@drawable/not_available").into(avatar);
             }
             name.setText(user.getProfile().getFirstName() + " " + user.getProfile().getLastName());
             role.setText(user.getAuthorization().getAuthorizationName());
@@ -219,6 +220,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         GetUserInformationContract.View userInformationContract = new GetUserInformationContract.View() {
             @Override
             public void onResponseSuccess(User user) {
+                mUser = user;
                 renderUser(user);
             }
 

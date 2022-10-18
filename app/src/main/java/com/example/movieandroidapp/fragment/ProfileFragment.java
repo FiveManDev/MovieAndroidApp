@@ -9,12 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.movieandroidapp.Activity.HomeActivity;
 import com.example.movieandroidapp.R;
+import com.example.movieandroidapp.Utility.Extension;
+import com.example.movieandroidapp.model.User;
 import com.example.movieandroidapp.view.movie.GenreAdapter;
 import com.example.movieandroidapp.view.user.ProfileNavigationAdapter;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +34,12 @@ public class ProfileFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private User mUser;
 
+    TextView profile_role_user,profile_name_user;
+    ImageView profile_image_user;
 
     View mView;
     Spinner profile_navigation;
@@ -48,16 +53,14 @@ public class ProfileFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param user Parameter 1.
      * @return A new instance of fragment ProfileFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProfileFragment newInstance(String param1, String param2) {
+    public static ProfileFragment newInstance(User user) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_PARAM1, Extension.GsonUtil().toJson(user));
         fragment.setArguments(args);
         return fragment;
     }
@@ -66,8 +69,7 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mUser = Extension.GsonUtil().fromJson(getArguments().getString(ARG_PARAM1),User.class);
         }
     }
 
@@ -85,6 +87,18 @@ public class ProfileFragment extends Fragment {
 
     private void init(){
         renderListItemNavigation();
+        renderUser();
+    }
+    private void renderUser(){
+        profile_image_user = mView.findViewById(R.id.profile_image_user);
+        profile_role_user = mView.findViewById(R.id.profile_role_user);
+        profile_name_user = mView.findViewById(R.id.profile_name_user);
+
+        if(!(mUser.getProfile().getAvatar().isEmpty())){
+            Picasso.get().load(mUser.getProfile().getAvatar()).into(profile_image_user);
+        }
+        profile_role_user.setText(mUser.getAuthorization().getAuthorizationName());
+        profile_name_user.setText(mUser.getProfile().getFirstName()+" "+mUser.getProfile().getLastName());
     }
     private void renderListItemNavigation(){
         profile_navigation = mView.findViewById(R.id.profile_navigation);
@@ -103,9 +117,9 @@ public class ProfileFragment extends Fragment {
     }
     private List<String> listNavigation(){
         List<String> list = new ArrayList<>();
-        list.add(new String("PROFILE"));
-        list.add(new String("SUBSCRIPTION"));
-        list.add(new String("SETTINGS"));
+        list.add("PROFILE");
+        list.add("SUBSCRIPTION");
+        list.add("SETTINGS");
         return list;
     }
     private void checkNavigation(String item){
@@ -118,7 +132,7 @@ public class ProfileFragment extends Fragment {
             replaceFragment(fragment);
         }
         else{
-            Profile_setting_fragment fragment = new Profile_setting_fragment();
+            Profile_setting_fragment fragment = Profile_setting_fragment.newInstance(mUser);
             replaceFragment(fragment);
         }
     }

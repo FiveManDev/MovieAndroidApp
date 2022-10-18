@@ -2,6 +2,7 @@ package com.example.movieandroidapp.network.User;
 
 import com.example.movieandroidapp.model.ApiResponse;
 import com.example.movieandroidapp.model.TokenModel;
+import com.example.movieandroidapp.network.BodyRequest.ChangePasswordBody;
 import com.example.movieandroidapp.network.BodyRequest.CreateUserBody;
 import com.example.movieandroidapp.network.BodyRequest.LoginUserBody;
 import com.example.movieandroidapp.network.BodyRequest.ResetPassword;
@@ -9,6 +10,7 @@ import com.example.movieandroidapp.network.BodyRequest.ResetPassword;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 
 public interface IUserApi {
 
@@ -26,4 +28,7 @@ public interface IUserApi {
 
     @POST(UserApiUrl.ResetPassword)
     Call<ApiResponse<String[]>> resetPassword(@Body ResetPassword resetPassword);
+
+    @POST(UserApiUrl.ChangePassword)
+    Call<ApiResponse<String[]>> changePassword(@Body ChangePasswordBody passwordBody);
 }

@@ -45,10 +45,10 @@
                             android:layout_height="match_parent">
 
                             <ImageView
-                                android:id="@+id/header_navigation_avatar"
+                                android:id="@+id/profile_image_user"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                android:scaleType="fitXY"
+                                android:scaleType="centerInside"
                                 android:src="@drawable/not_available" />
 
                         </LinearLayout>
@@ -62,7 +62,7 @@
                         android:paddingStart="12dp">
 
                         <TextView
-                            android:id="@+id/profile_role"
+                            android:id="@+id/profile_role_user"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="User"
@@ -70,7 +70,7 @@
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/profile_name"
+                            android:id="@+id/profile_name_user"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
