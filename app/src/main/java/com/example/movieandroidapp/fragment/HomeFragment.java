@@ -57,11 +57,11 @@ public class HomeFragment extends Fragment
 
     private void initUI() {
         setUpMoviesRelease();
-        setUpMoviesNew("Drama Films",6);
+        setUpMoviesNew("8782bbd0-2f56-4fd4-89d6-081396549bfb",6);
         getListGenre();
     }
 
-    private void setUpMoviesNew(String genre,int top) {
+    private void setUpMoviesNew(String genreID,int top) {
         rcv_movie_new_home = mView.findViewById(R.id.rcv_movie_new_home);
         GetTopLastestPublicationMoviesPresenter presenter = new GetTopLastestPublicationMoviesPresenter(this);
         gridLayoutManager = new GridLayoutManager(mView.getContext(), 2);
@@ -69,7 +69,7 @@ public class HomeFragment extends Fragment
         rcv_movie_new_home.addItemDecoration(itemDecorator);
         rcv_movie_new_home.setLayoutManager(gridLayoutManager);
         rcv_movie_new_home.setHasFixedSize(true);
-        presenter.requestDataFromServerNew(genre, top);
+        presenter.requestDataFromServerNew(genreID, top);
     }
 
     private void setUpMoviesRelease() {
@@ -94,7 +94,7 @@ public class HomeFragment extends Fragment
         spnGenre.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                filterMovieByGenre((genreAdapter.getItem(position).getGenreName()));
+                filterMovieByGenre((genreAdapter.getItem(position).getGenreID()));
 
             }
             @Override
@@ -121,8 +121,8 @@ public class HomeFragment extends Fragment
         getGenrePresenter.requestGetGenres();
     }
 
-    private void filterMovieByGenre(String genre){
-        setUpMoviesNew(genre,10);
+    private void filterMovieByGenre(String genreID){
+        setUpMoviesNew(genreID,10);
     }
     @Override
     public void setDataToRecyclerview(List<Movie> movieListArray) {

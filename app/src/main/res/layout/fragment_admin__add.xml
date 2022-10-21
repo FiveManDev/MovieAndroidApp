@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.admin.Admin_AddFragment">
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray_darker"
+            android:orientation="vertical"
+            android:padding="14dp">
+              <LinearLayout
+                  android:paddingStart="5dp"
+                  android:paddingEnd="5dp"
+                  android:paddingTop="10dp"
+                  android:paddingBottom="15dp"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+                  <TextView
+                      android:text="Add new movie"
+                      android:textSize="24sp"
+                      android:textColor="@color/white"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"/>
+              </LinearLayout>
+
+              <ImageView
+                  android:layout_marginBottom="15dp"
+                android:src="@drawable/not_available"
+                android:scaleType="center"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"/>
+            
+            <EditText
+                android:id="@+id/admin_movie_add__title"
+                style="@style/inputText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:ems="10"
+                android:hint="Title"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/admin_movie_add_content"
+                style="@style/inputText"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="Description"
+                android:inputType="textMultiLine"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp" />
+            <EditText
+
+                android:id="@+id/admin_movie_add_releaseTime"
+                style="@style/inputText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Release year"
+                android:inputType="textPersonName" />
+            <EditText
+
+                android:id="@+id/admin_movie_add_running_time"
+                style="@style/inputText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Running timed in minutes"
+                android:inputType="textPersonName" />
+            <EditText
+
+                android:id="@+id/admin_movie_add_quality"
+                style="@style/inputText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Choose quality"
+                android:inputType="textPersonName" />
+            <EditText
+                android:id="@+id/admin_movie_add_age"
+                style="@style/inputText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Age"
+                android:inputType="textPersonName" />
+            <EditText
+                android:id="@+id/admin_movie_add_country"
+                style="@style/inputText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Choose country"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/admin_movie_add_genre"
+                style="@style/inputText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Choose genre"
+                android:inputType="textPersonName" />
+            <EditText
+                android:id="@+id/admin_movie_upload_photos"
+                style="@style/inputText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Upload photo"
+                android:inputType="textPersonName" />
+            <EditText
+                android:id="@+id/admin_movie_upload_video"
+                style="@style/inputText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Upload video"
+                android:inputType="textPersonName" />
+            <Button
+                android:id="@+id/btn_send_review"
+                android:layout_width="170dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/primary_color"
+                android:text="Send" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+
+</FrameLayout>

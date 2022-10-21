@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.admin.Admin_ReviewsFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <FrameLayout
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/gray_light"
+            android:paddingTop="10dp"
+            android:paddingBottom="20dp"
+            tools:context=".fragment.Profile_information_fragment">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp">
+
+                <LinearLayout
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="15dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="Reviews"
+                        android:textSize="24sp"
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:layout_marginLeft="15dp"
+                        android:textColor="@color/text_gray"
+                        android:text="14,452 Total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="Sort by"
+                        android:textColor="#949496"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        />
+                    <Spinner
+                        android:id="@+id/catalog_filter_genre"
+                        android:layout_width="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+                <EditText
+                    android:id="@+id/search_movie_admin"
+                    android:layout_width="240dp"
+                    android:layout_height="50dp"
+                    android:backgroundTint="@color/gray_darker"
+                    android:inputType="textPersonName"
+                    style="@style/inputText"
+                    android:textSize="14sp"
+                    android:hint="Key word.."
+                    />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/gray_darker"
+                    android:elevation="8dp"
+                    card_view:cardCornerRadius="5dp"
+                    card_view:cardElevation="4dp"
+                    card_view:cardUseCompatPadding="true">
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <ScrollView
+                            xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:scrollbars="vertical">
+
+                            <HorizontalScrollView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TableLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:backgroundTint="@color/gray_darker">
+
+                                    <TableRow android:background="@drawable/borderbottom_row">
+
+                                        <TextView
+                                            android:layout_width="50dp"
+                                            android:layout_gravity="start"
+                                            android:maxLines="1"
+                                            android:padding="10dp"
+                                            android:text="ID"
+
+                                            android:textColor="@color/gray_primary"
+                                            android:textSize="12sp" />
+
+                                        <TextView
+                                            android:layout_gravity="start"
+                                            android:layout_width="200dp"
+                                            android:maxLines="1"
+                                            android:padding="10dp"
+                                            android:text="ITEM"
+
+                                            android:textColor="@color/gray_primary"
+                                            android:textSize="12sp" />
+
+                                        <TextView
+                                            android:layout_gravity="start"
+                                            android:maxLines="1"
+                                            android:padding="10dp"
+                                            android:text="AUTHOR"
+
+                                            android:textColor="@color/gray_primary"
+                                            android:textSize="12sp" />
+
+                                        <TextView
+                                            android:layout_gravity="start"
+                                            android:maxLines="1"
+                                            android:padding="10dp"
+                                            android:text="TEXT"
+                                            android:layout_width="200dp"
+                                            android:textColor="@color/gray_primary"
+                                            android:textSize="12sp" />
+                                        <TextView
+                                            android:layout_gravity="start"
+                                            android:maxLines="1"
+                                            android:layout_width="90dp"
+                                            android:padding="10dp"
+                                            android:text="REVIEWS"
+
+                                            android:textColor="@color/gray_primary"
+                                            android:textSize="12sp" />
+                                        <TextView
+                                            android:layout_gravity="start"
+                                            android:maxLines="1"
+                                            android:layout_width="90dp"
+                                            android:padding="10dp"
+                                            android:text="RATING"
+
+                                            android:textColor="@color/gray_primary"
+                                            android:textSize="12sp" />
+                                        <TextView
+                                            android:layout_width="120dp"
+                                            android:layout_gravity="start"
+                                            android:maxLines="1"
+                                            android:padding="10dp"
+                                            android:text="CREATED DATE"
+
+                                            android:textColor="@color/gray_primary"
+                                            android:textSize="12sp" />
+                                        <TextView
+                                            android:layout_width="160dp"
+                                            android:layout_gravity="start"
+                                            android:maxLines="1"
+                                            android:padding="10dp"
+                                            android:text="ACTIONS"
+
+                                            android:textColor="@color/gray_primary"
+                                            android:textSize="12sp" />
+                                    </TableRow>
+                                    <androidx.recyclerview.widget.RecyclerView
+                                        android:id="@+id/rcv_top_movies"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        />
+                                </TableLayout>
+                            </HorizontalScrollView>
+
+                        </ScrollView>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+        </FrameLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</FrameLayout>

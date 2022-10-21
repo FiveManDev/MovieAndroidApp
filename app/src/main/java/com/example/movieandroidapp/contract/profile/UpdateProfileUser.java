@@ -5,13 +5,16 @@ import com.example.movieandroidapp.contract.user.ConfirmEmailContract;
 public interface UpdateProfileUser {
     interface Model{
         interface OnFinishedListener {
-            void onFinished(String code);
+            void onFinished();
             void onFailure(String message);
         }
-        void updateProfile(UpdateProfileUser.Model.OnFinishedListener onFinishedListener, String email_address);
+        void updateProfile(UpdateProfileUser.Model.OnFinishedListener onFinishedListener, String userId,
+                           String firstName,
+                           String lastName
+                           );
     }
     interface View{
-        void onResponseSuccess(String code);
+        void onResponseSuccess();
         void onResponseFailure(String message);
     }
     interface Presenter {

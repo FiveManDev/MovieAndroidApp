@@ -6,13 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.example.movieandroidapp.Activity.AdminActivity;
 import com.example.movieandroidapp.Activity.HomeActivity;
 import com.example.movieandroidapp.Activity.LoginActivity;
 import com.example.movieandroidapp.Activity.RegisterActivity;
 
 public class MainActivity extends AppCompatActivity  {
 
-    private Button btnLogin,btnRegister,btnHomeView;
+    private Button btnLogin,btnRegister,btnHomeView,btnHomeAdmin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +21,9 @@ public class MainActivity extends AppCompatActivity  {
         btnLogin = findViewById(R.id.btnLoginView);
         btnRegister = findViewById(R.id.btnRegisterView);
         btnHomeView = findViewById(R.id.btnHomeView);
+        btnHomeAdmin = findViewById(R.id.btnHomeAdmin);
+
+
         btnLogin.setOnClickListener(v -> {
             startActivity(new Intent(this, LoginActivity.class));
         });
@@ -28,6 +32,9 @@ public class MainActivity extends AppCompatActivity  {
         });
         btnHomeView.setOnClickListener(v -> {
             startActivity(new Intent(this, HomeActivity.class));
+        });
+        btnHomeAdmin.setOnClickListener(v -> {
+            startActivity(new Intent(this, AdminActivity.class));
         });
 
     }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,11 +17,12 @@ import com.example.movieandroidapp.Activity.HomeActivity;
 import com.example.movieandroidapp.R;
 import com.example.movieandroidapp.Utility.Extension;
 import com.example.movieandroidapp.model.movie.Movie;
+import com.google.android.material.slider.Slider;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 public class MovieDetailFragment extends Fragment {
-    Button watchBtn;
+    Button watchBtn,btn_send_review;
     TextView movie_title_detail,
             movie_rating_detail,
             movie_quality_detail,
@@ -34,18 +36,21 @@ public class MovieDetailFragment extends Fragment {
     ImageView movie_image_detail;
     Movie movie;
     View mView;
+    EditText movie_detail_title,movie_detail_content;
+    Slider movie_review_slider;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_movie_detail,container,false);
         Gson gson = new Gson();
-        movie =gson.fromJson(this.getArguments().getString("movie"),Movie.class) ;
+        movie = gson.fromJson(this.getArguments().getString("movie"),Movie.class) ;
         init();
         return mView;
     }
     private void init(){
         render();
         clickButtonWatch();
+        formReview();
     }
     private void render(){
         movie_image_detail = mView.findViewById(R.id.movie_image_detail);
@@ -79,5 +84,17 @@ public class MovieDetailFragment extends Fragment {
             WatchMovieFragment movieDetailFragment = new WatchMovieFragment();
             ((HomeActivity) getActivity()).replaceFragment(movieDetailFragment);
         });
+    }
+
+    private void formReview(){
+        movie_detail_title = mView.findViewById(R.id.movie_detail_title);
+        movie_detail_content = mView.findViewById(R.id.movie_detail_content);
+        movie_review_slider = mView.findViewById(R.id.movie_review_slider);
+        btn_send_review = mView.findViewById(R.id.btn_send_review);
+
+        btn_send_review.setOnClickListener(t->{
+
+        });
+
     }
 }

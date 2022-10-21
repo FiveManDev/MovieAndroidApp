@@ -17,8 +17,8 @@ public class GetTopLastestPublicationMoviesPresenter implements GetMoviesBasedOn
     }
 
     @Override
-    public void requestDataFromServerNew(String genre, int top) {
-        getTopLastestPublicationMoviesPresenter.getMoviesBasedOnGenre(this ,genre, top);
+    public void requestDataFromServerNew(String genreID, int top) {
+        getTopLastestPublicationMoviesPresenter.getMoviesBasedOnGenre(this ,genreID, top);
     }
 
     @Override

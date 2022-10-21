@@ -15,9 +15,9 @@ import retrofit2.Response;
 public class GetMoviesBasedOnGenreRequest implements GetMoviesBasedOnGenreContract.Model {
 
     @Override
-    public void getMoviesBasedOnGenre(OnFinishedListener onFinishedListener,String genre, int top) {
+    public void getMoviesBasedOnGenre(OnFinishedListener onFinishedListener,String genreID, int top) {
         IMovieApi apiService = ApiClient.getClient().create(IMovieApi.class);
-        Call<ApiResponse<List<Movie>>> call = apiService.GetMoviesBasedOnGenre(genre,top);
+        Call<ApiResponse<List<Movie>>> call = apiService.GetMoviesBasedOnGenre(genreID,top);
 
         call.enqueue(new Callback<ApiResponse<List<Movie>>>() {
             @Override

@@ -23,5 +23,8 @@
     <string name="USER">user</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dashboard">DASHBOARD</string>
+    <string name="users">USERS</string>
+    <string name="reviews">REVIEWS</string>
 
 </resources>

@@ -17,7 +17,7 @@ public interface IMovieApi {
     Call<ApiResponse<List<Movie>>> getTopLastestReleaseMovies(@Query("top") int top);
 
     @GET(MovieApiUrl.GetMoviesBasedOnGenre)
-    Call<ApiResponse<List<Movie>>> GetMoviesBasedOnGenre(@Query("genreName") String genreName, @Query("top") int top);
+    Call<ApiResponse<List<Movie>>> GetMoviesBasedOnGenre(@Query("genreID") String genreID, @Query("top") int top);
 
     @GET(MovieApiUrl.GetMoviesBasedOnSearchText)
     Call<ApiResponse<List<Movie>>> GetMoviesBasedOnSearchText(@Query("searchText") String query);

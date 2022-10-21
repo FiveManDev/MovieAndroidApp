@@ -3,6 +3,7 @@ package com.example.movieandroidapp.Activity;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,7 +22,7 @@ import com.example.movieandroidapp.presenter.user.LoginPresenter;
 public class LoginActivity extends AppCompatActivity implements LoginContract.View {
     private TextView btn_forgot,signup_link, userName, password, error_message;
     private Button btnLogin;
-
+    ProgressDialog progress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +32,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
         userName = findViewById(R.id.userName);
         password = findViewById(R.id.password);
-
+        progress = new ProgressDialog(this);
         LoginPresenter loginPresenter = new LoginPresenter(this);
         signup_link = findViewById(R.id.signup_link);
 
@@ -42,6 +43,10 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
             startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
         });
         btnLogin.setOnClickListener(t -> {
+            progress.setTitle("Loading");
+            progress.setMessage("Wait while loading...");
+            progress.setCancelable(false);
+            progress.show();
             loginPresenter.requestLoginToServer(userName.getText().toString(), password.getText().toString());
         });
     }
@@ -50,6 +55,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onResponseSuccess(TokenModel tokenModel) {
+        progress.dismiss();
         DataLocalManager.setAccessToken(tokenModel.getAccessToken());
         String[] decoded = Extension.decodeAccessToken(tokenModel.getAccessToken());
         PayLoadToken payload = Extension.GsonUtil().fromJson(decoded[1], PayLoadToken.class);
@@ -66,6 +72,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     @Override
     public void onResponseFailure(String message) {
+        progress.dismiss();
         error_message = findViewById(R.id.error_message);
         error_message.setText(message);
         error_message.setVisibility(View.VISIBLE);

@@ -12,7 +12,7 @@ public interface GetMoviesBasedOnGenreContract {
             void onFailure(String message);
         }
 
-        void getMoviesBasedOnGenre(GetMoviesBasedOnGenreContract.Model.OnFinishedListener onFinishedListener, String genreName, int top);
+        void getMoviesBasedOnGenre(GetMoviesBasedOnGenreContract.Model.OnFinishedListener onFinishedListener, String genreID, int top);
     }
 
     interface View{
@@ -21,7 +21,7 @@ public interface GetMoviesBasedOnGenreContract {
     }
 
     interface Presenter {
-        void requestDataFromServerNew(String genre, int top);
+        void requestDataFromServerNew(String genreID, int top);
     }
 
 }

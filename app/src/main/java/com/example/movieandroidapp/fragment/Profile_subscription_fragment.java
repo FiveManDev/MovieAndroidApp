@@ -2,6 +2,7 @@ package com.example.movieandroidapp.fragment;
 
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.movieandroidapp.R;
+import com.example.movieandroidapp.Utility.Extension;
+import com.example.movieandroidapp.model.Classification;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,13 +22,11 @@ public class Profile_subscription_fragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_Classificaiton = "param1";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    View mView;
+    CardView profile_basic_plan,profile_pre_plan;
+    Classification classification;
     public Profile_subscription_fragment() {
         // Required empty public constructor
     }
@@ -34,16 +35,14 @@ public class Profile_subscription_fragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param classification Parameter 1.
      * @return A new instance of fragment Profile_subscription_fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static Profile_subscription_fragment newInstance(String param1, String param2) {
+    public static Profile_subscription_fragment newInstance(Classification classification) {
         Profile_subscription_fragment fragment = new Profile_subscription_fragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_Classificaiton, Extension.GsonUtil().toJson(classification));
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,8 +51,7 @@ public class Profile_subscription_fragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            classification = Extension.GsonUtil().fromJson(getArguments().getString(ARG_Classificaiton),Classification.class);
         }
     }
 
@@ -61,6 +59,22 @@ public class Profile_subscription_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile_subscription_fragment, container, false);
+        mView = inflater.inflate(R.layout.fragment_profile_subscription_fragment, container, false);
+        init();
+        return mView;
+    }
+    private void init(){
+        profile_basic_plan = mView.findViewById(R.id.profile_basic_plan);
+        profile_pre_plan = mView.findViewById(R.id.profile_pre_plan);
+
+        if(classification.getClassLevel() == 1){
+            profile_basic_plan.setVisibility(View.VISIBLE);
+            profile_pre_plan.setVisibility(View.GONE);
+        }
+        else{
+            profile_basic_plan.setVisibility(View.GONE);
+            profile_pre_plan.setVisibility(View.VISIBLE);
+
+        }
     }
 }

@@ -19,6 +19,7 @@ import com.example.movieandroidapp.fragment.HomeFragment;
 import com.example.movieandroidapp.fragment.MovieDetailFragment;
 import com.example.movieandroidapp.fragment.ProfileFragment;
 import com.example.movieandroidapp.fragment.SearchHomeFragment;
+import com.example.movieandroidapp.model.MessageEvent;
 import com.example.movieandroidapp.model.User;
 import com.example.movieandroidapp.model.movie.Movie;
 import com.example.movieandroidapp.presenter.user.GetUserInformationPresenter;
@@ -29,6 +30,7 @@ import com.squareup.picasso.Picasso;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -36,6 +38,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private static final int FRAGMENT_HOME = 0;
@@ -84,7 +90,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         //get information of a user
         getUser(DataLocalManager.getUserId());
-
+        EventBus.getDefault().register(this);
+    }
+    @Subscribe
+    public void refresh(MessageEvent<User> user) {
+        mUser = user.getMessage();
+        final Handler handler = new Handler();
+        final Runnable runnable = () -> renderUser(mUser);
+        handler.postDelayed(runnable,1000);
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override

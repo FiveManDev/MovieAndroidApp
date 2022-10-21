@@ -31,7 +31,6 @@ public class LoginRequest implements LoginContract.Model {
                     onFinishedListener.onFailure("Incorrect username or password!");
                 }
             }
-
             @Override
             public void onFailure(Call<ApiResponse<TokenModel>> call, Throwable t) {
                 onFinishedListener.onFailure("Incorrect username or password!");

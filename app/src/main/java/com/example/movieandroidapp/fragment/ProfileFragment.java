@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,14 @@ import android.widget.TextView;
 import com.example.movieandroidapp.Activity.HomeActivity;
 import com.example.movieandroidapp.R;
 import com.example.movieandroidapp.Utility.Extension;
+import com.example.movieandroidapp.model.MessageEvent;
 import com.example.movieandroidapp.model.User;
 import com.example.movieandroidapp.view.movie.GenreAdapter;
 import com.example.movieandroidapp.view.user.ProfileNavigationAdapter;
 import com.squareup.picasso.Picasso;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +76,13 @@ public class ProfileFragment extends Fragment {
         if (getArguments() != null) {
             mUser = Extension.GsonUtil().fromJson(getArguments().getString(ARG_PARAM1),User.class);
         }
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -87,9 +99,9 @@ public class ProfileFragment extends Fragment {
 
     private void init(){
         renderListItemNavigation();
-        renderUser();
+        renderUser(mUser);
     }
-    private void renderUser(){
+    private void renderUser(User user){
         profile_image_user = mView.findViewById(R.id.profile_image_user);
         profile_role_user = mView.findViewById(R.id.profile_role_user);
         profile_name_user = mView.findViewById(R.id.profile_name_user);
@@ -128,7 +140,7 @@ public class ProfileFragment extends Fragment {
             replaceFragment(movieDetailFragment);
         }
         else if(item.equals("SUBSCRIPTION")){
-            Profile_subscription_fragment fragment = new Profile_subscription_fragment();
+            Profile_subscription_fragment fragment = Profile_subscription_fragment.newInstance(mUser.getProfile().getClassification());
             replaceFragment(fragment);
         }
         else{
@@ -141,5 +153,13 @@ public class ProfileFragment extends Fragment {
         transaction.replace(R.id.profile_frame_layout,fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    @Subscribe
+    public void refresh(MessageEvent<User> user) {
+        mUser = user.getMessage();
+        final Handler handler = new Handler();
+        final Runnable runnable = () -> renderUser(mUser);
+        handler.postDelayed(runnable,1000);
     }
 }
