@@ -1,6 +1,7 @@
 package com.example.movieandroidapp.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import com.example.movieandroidapp.contract.user.GetUserInformationContract;
 import com.example.movieandroidapp.fragment.CatalogFragment;
 import com.example.movieandroidapp.fragment.HomeFragment;
 import com.example.movieandroidapp.fragment.MovieDetailFragment;
+import com.example.movieandroidapp.fragment.PricingFragment;
 import com.example.movieandroidapp.fragment.ProfileFragment;
 import com.example.movieandroidapp.fragment.SearchHomeFragment;
 import com.example.movieandroidapp.model.MessageEvent;
@@ -27,10 +29,12 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -44,12 +48,13 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-    private static final int FRAGMENT_HOME = 0;
-    private static final int FRAGMENT_CATEGORY = 1;
-    private static final int FRAGMENT_SEARCH_HOME = 2;
-    private static final int FRAGMENT_PROFILE_HOME = 3;
+    public static final int FRAGMENT_HOME = 0;
+    public static final int FRAGMENT_CATEGORY = 1;
+    public static final int FRAGMENT_SEARCH_HOME = 2;
+    public static final int FRAGMENT_PROFILE_HOME = 3;
+    public static final int FRAGMENT_PRICING_HOME = 4;
 
-    private int mCurrentFragment = FRAGMENT_HOME;
+    public static int mCurrentFragment = FRAGMENT_HOME;
 
     private DrawerLayout mDrawerLayout;
     private ImageView avatar;
@@ -64,6 +69,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        //get information of a user
+        getUser(DataLocalManager.getUserId());
+
+
+    }
+    private void init(){
         //tool bar top
         Toolbar toolbar = findViewById(R.id.toolbar_user);
         setSupportActionBar(toolbar);
@@ -84,14 +95,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         //create context to find id of list item in header navigation
         header_nav = navigationView.getHeaderView(0);
 
-        replaceFragment(new HomeFragment());
 
         navigationView.getMenu().findItem(R.id.nav_home_user).setChecked(true);
 
-        //get information of a user
-        getUser(DataLocalManager.getUserId());
+        replaceFragment(HomeFragment.newInstance(mUser));
+        renderUser(mUser);
         EventBus.getDefault().register(this);
     }
+
     @Subscribe
     public void refresh(MessageEvent<User> user) {
         mUser = user.getMessage();
@@ -166,7 +177,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         if(id == R.id.nav_home_user){
             if(mCurrentFragment != FRAGMENT_HOME){
-                replaceFragment(new HomeFragment());
+                replaceFragment(HomeFragment.newInstance(mUser));
                 mCurrentFragment=FRAGMENT_HOME;
             }
         }
@@ -180,6 +191,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             if(mCurrentFragment != FRAGMENT_PROFILE_HOME){
                 replaceFragment(ProfileFragment.newInstance(mUser));
                 mCurrentFragment=FRAGMENT_PROFILE_HOME;
+            }
+        }
+        else if(id == R.id.nav_pricing_user){
+            if(mCurrentFragment != FRAGMENT_PRICING_HOME){
+                replaceFragment(new PricingFragment());
+                mCurrentFragment=FRAGMENT_PRICING_HOME;
             }
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
@@ -239,7 +256,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onResponseSuccess(User user) {
                 mUser = user;
-                renderUser(user);
+                init();
             }
 
             @Override

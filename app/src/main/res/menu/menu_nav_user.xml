@@ -14,6 +14,10 @@
             android:title="@string/nav_profile_user"
             android:icon="@drawable/ic_person"
             />
+        <item android:id="@+id/nav_pricing_user"
+            android:title="@string/pricing"
+            android:icon="@drawable/ic_registration"
+            />
     </group>
 
 </menu>

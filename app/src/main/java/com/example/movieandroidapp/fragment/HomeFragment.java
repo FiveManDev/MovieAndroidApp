@@ -17,12 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.movieandroidapp.Activity.HomeActivity;
 import com.example.movieandroidapp.R;
+import com.example.movieandroidapp.Utility.Extension;
 import com.example.movieandroidapp.Utility.Style.SpacingItemDecorator;
 import com.example.movieandroidapp.contract.movie.GetGenre;
 import com.example.movieandroidapp.contract.movie.GetMoviesBasedOnGenreContract;
 import com.example.movieandroidapp.contract.movie.GetTopLastestReleaseMoviesContract;
 import com.example.movieandroidapp.contract.movie.ListenerMovie;
 import com.example.movieandroidapp.model.Genre;
+import com.example.movieandroidapp.model.User;
 import com.example.movieandroidapp.model.movie.Movie;
 import com.example.movieandroidapp.presenter.movie.GetGenrePresenter;
 import com.example.movieandroidapp.presenter.movie.GetTopLastestPublicationMoviesPresenter;
@@ -30,12 +32,17 @@ import com.example.movieandroidapp.presenter.movie.GetTopLastestReleaseMoviesPre
 import com.example.movieandroidapp.view.movie.GenreAdapter;
 import com.example.movieandroidapp.view.movie.MovieListAdapter;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment
         implements GetTopLastestReleaseMoviesContract.View,
         GetMoviesBasedOnGenreContract.View {
+
+    private static final String ARG_PARAM1 = "param1";
+
 
     private RecyclerView rcv_movie_home, rcv_movie_new_home;
     View mView;
@@ -47,6 +54,24 @@ public class HomeFragment extends Fragment
     private GenreAdapter genreAdapter;
 
     List<Genre> genreList;
+
+    private User mUser;
+    public static HomeFragment newInstance(User user) {
+        HomeFragment fragment = new HomeFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, Extension.GsonUtil().toJson(user));
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mUser = Extension.GsonUtil().fromJson(getArguments().getString(ARG_PARAM1),User.class);
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -126,9 +151,8 @@ public class HomeFragment extends Fragment
     }
     @Override
     public void setDataToRecyclerview(List<Movie> movieListArray) {
-        ListenerMovie listenerMovie = movie -> {
-            MovieDetailFragment movieDetailFragment = ((HomeActivity) getActivity()).bundleMovieToDetailFragment(movie);
-            ((HomeActivity) getActivity()).replaceFragment(movieDetailFragment);
+        ListenerMovie listenerMovie = (movie,type) -> {
+            checkUserIsBasic(mUser,movie);
         };
         movieList.addAll(movieListArray);
         MovieListAdapter adapter = new MovieListAdapter(movieList, listenerMovie);
@@ -137,9 +161,8 @@ public class HomeFragment extends Fragment
 
     @Override
     public void setDataToRecyclerviewNew(List<Movie> movieListArray) {
-        ListenerMovie listenerMovie = movie -> {
-            MovieDetailFragment movieDetailFragment = ((HomeActivity) getActivity()).bundleMovieToDetailFragment(movie);
-            ((HomeActivity) getActivity()).replaceFragment(movieDetailFragment);
+        ListenerMovie listenerMovie = (movie,type) -> {
+            checkUserIsBasic(mUser,movie);
         };
         MovieListAdapter adapter = new MovieListAdapter(movieListArray, listenerMovie);
         rcv_movie_new_home.setAdapter(adapter);
@@ -154,4 +177,24 @@ public class HomeFragment extends Fragment
     public void onResponseFailure(String message) {
         Toast.makeText(mView.getContext(), message, Toast.LENGTH_SHORT).show();
     }
+    public void checkUserIsBasic(User user,Movie movie) {
+        String classNameUser = user.getProfile().getClassification().getClassName().toLowerCase();
+        String classNameMovie = movie.getClassName().toLowerCase();
+
+        if(user.getProfile().getClassification().getClassLevel() == 2){
+            MovieDetailFragment movieDetailFragment = ((HomeActivity) getActivity()).bundleMovieToDetailFragment(movie);
+            ((HomeActivity) getActivity()).replaceFragment(movieDetailFragment);
+        }
+        else if(classNameUser.equals("basic")){
+            if(classNameMovie.equals("basic")){
+                MovieDetailFragment movieDetailFragment = ((HomeActivity) getActivity()).bundleMovieToDetailFragment(movie);
+                ((HomeActivity) getActivity()).replaceFragment(movieDetailFragment);
+            }
+            else{
+                ((HomeActivity) getActivity()).replaceFragment(new PricingFragment());
+                HomeActivity.mCurrentFragment = HomeActivity.FRAGMENT_PRICING_HOME;
+            }
+        }
+    }
+    
 }

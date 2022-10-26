@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.PricingFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/profile_basic_plan"
+                card_view:cardElevation="4dp"
+                card_view:cardUseCompatPadding="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:background="@color/gray_darker"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Basic"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            />
+                        <TextView
+                            android:text="Free"
+                            android:textSize="18sp"
+                            android:textColor="@color/primary_color"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:text="7 days"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="@color/text_gray"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <View style="@style/Divider.Horizontal" />
+                        <TextView
+                            android:text="720p Resolution"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="@color/text_gray"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <View style="@style/Divider.Horizontal"/><TextView
+                        android:text="Limited Availability
+"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:textColor="@color/text_gray"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                        <View style="@style/Divider.Horizontal"/>
+                        <TextView
+                            android:text="Desktop Only"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="@color/text_gray"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <View style="@style/Divider.Horizontal"/>
+                        <TextView
+                            android:text="Limited Support"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="@color/text_gray"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <Button
+                        android:layout_marginTop="15dp"
+                        android:text="Choose Plan"
+                        android:backgroundTint="@color/primary_color"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/profile_pre_plan"
+                card_view:cardElevation="4dp"
+                card_view:cardUseCompatPadding="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:background="@color/gray_darker"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Premium"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            />
+                        <TextView
+                            android:text="$19.99"                            android:textSize="18sp"
+                            android:textColor="@color/primary_color"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:text="1 Month"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="@color/text_gray"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <View style="@style/Divider.Horizontal" />
+                        <TextView
+                            android:text="Full HD"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="@color/text_gray"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <View style="@style/Divider.Horizontal"/>
+                        <TextView
+                            android:text="Lifetime Availability"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="@color/text_gray"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <View style="@style/Divider.Horizontal"/>
+                        <TextView
+                            android:text="TV &amp; Desktop"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="@color/text_gray"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <View style="@style/Divider.Horizontal"/>
+                        <TextView
+                            android:text="24/7 Support"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="@color/text_gray"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <Button
+                        android:layout_marginTop="15dp"
+                        android:text="Choose Plan"
+                        android:backgroundTint="@color/primary_color"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</FrameLayout>

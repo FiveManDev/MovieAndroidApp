@@ -17,6 +17,7 @@ import com.example.movieandroidapp.contract.movie.GetGenre;
 import com.example.movieandroidapp.model.Genre;
 import com.example.movieandroidapp.presenter.movie.GetGenrePresenter;
 import com.example.movieandroidapp.view.movie.GenreAdapter;
+import com.example.movieandroidapp.view.movie.QualityAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.List;
 public class CatalogFragment extends Fragment {
 
     View mView;
-    Spinner spnGenre;
+    Spinner spnGenre,catalog_filter_quality;
 
     List<Genre> genreList;
 
@@ -37,7 +38,26 @@ public class CatalogFragment extends Fragment {
     }
     private void init(){
         getListGenre();
+        renderListQuality();
     }
+
+    private void renderListQuality() {
+        catalog_filter_quality = mView.findViewById(R.id.catalog_filter_quality);
+        QualityAdapter qualityAdapter = new QualityAdapter(mView.getContext(),R.layout.dropdown_selected,getListQuality());
+        catalog_filter_quality.setAdapter(qualityAdapter);
+        catalog_filter_quality.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
     private void renderListGenre(){
         spnGenre = mView.findViewById(R.id.catalog_filter_genre);
         GenreAdapter genreAdapter = new GenreAdapter(mView.getContext(), R.layout.dropdown_selected,genreList);
@@ -69,5 +89,11 @@ public class CatalogFragment extends Fragment {
         };
         GetGenrePresenter getGenrePresenter = new GetGenrePresenter(view);
         getGenrePresenter.requestGetGenres();
+    }
+    private List<String> getListQuality(){
+        List<String> qualityList = new ArrayList<>();
+        qualityList.add("HD 1080");
+        qualityList.add("HD 720");
+        return qualityList;
     }
 }

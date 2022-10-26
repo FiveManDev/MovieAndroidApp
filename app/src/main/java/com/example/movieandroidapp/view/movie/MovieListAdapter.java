@@ -40,7 +40,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MyVi
         holder.rating_movie.setText(movieList.get(position).getRating().toString());
         Picasso.get().load(movieList.get(position).getCoverImage()).into(holder.img_movie);
         holder.movie_item_container.setOnClickListener(t->{
-            listenerMovie.ClickedMovie(movieList.get(position));
+            listenerMovie.ClickedMovie(movieList.get(position),"detail");
         });
     }
 

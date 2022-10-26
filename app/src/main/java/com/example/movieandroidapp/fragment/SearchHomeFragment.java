@@ -56,7 +56,7 @@ public class SearchHomeFragment extends Fragment implements SearchMovieHome.View
 
     @Override
     public void setDataToRecyclerview(List<Movie> movieListArray) {
-        ListenerMovie listenerMovie = movie -> {
+        ListenerMovie listenerMovie = (movie,type) -> {
             MovieDetailFragment movieDetailFragment = ((HomeActivity) getActivity()).bundleMovieToDetailFragment(movie);
             ((HomeActivity) getActivity()).replaceFragment(movieDetailFragment);
         };

@@ -7,8 +7,18 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Toast;
 
 import com.example.movieandroidapp.R;
+import com.example.movieandroidapp.contract.movie.GetGenre;
+import com.example.movieandroidapp.model.Genre;
+import com.example.movieandroidapp.presenter.movie.GetGenrePresenter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,30 +30,35 @@ public class Admin_AddFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
-    private String mParam2;
+
+    private View mView;
+
+    //value of dropdown quality
+    String[] itemsDropdownQuality = {"HD","FullHD"};
+    AutoCompleteTextView autoCompleteTxt_quality;
+    ArrayAdapter<String> adapterItemQuality;
+
+    //value of dropdown genre
+    List<String> genres;
+    ArrayAdapter<String> adapterItemGenre;
+    AutoCompleteTextView autoCompleteTxt_genre;
+
+
+    //value of dropdown country
+    String[] itemsDropdownCountry = {"US","UK","Viet Nam","Singapore"};
+    AutoCompleteTextView autoCompleteTxt_country;
+    ArrayAdapter<String> adapterItemCountry;
 
     public Admin_AddFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Admin_AddFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Admin_AddFragment newInstance(String param1, String param2) {
         Admin_AddFragment fragment = new Admin_AddFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,7 +68,6 @@ public class Admin_AddFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -61,6 +75,72 @@ public class Admin_AddFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin__add, container, false);
+        mView = inflater.inflate(R.layout.fragment_admin__add, container, false);
+        init();
+        return mView;
     }
+
+    private void init(){
+        getGenre();
+        renderDropdownQuality();
+        renderDropdownGenre();
+        renderDropdownCountry();
+    }
+
+    private void renderDropdownQuality(){
+        autoCompleteTxt_quality = mView.findViewById(R.id.auto_complete_quality);
+
+        adapterItemQuality = new ArrayAdapter<>(mView.getContext(), R.layout.dropdown_normal_item, itemsDropdownQuality);
+
+        autoCompleteTxt_quality.setAdapter(adapterItemQuality);
+
+        autoCompleteTxt_quality.setOnItemClickListener((parent, view, position, id) -> {
+            String item = parent.getItemAtPosition(position).toString();
+            Toast.makeText(getActivity().getApplicationContext(), item, Toast.LENGTH_SHORT).show();
+        });
+    }
+    private void getGenre(){
+        genres = new ArrayList<>();
+        GetGenre.View view = new GetGenre.View() {
+            @Override
+            public void onResponseSuccess(List<Genre> genreList) {
+                for (Genre genre : genreList) {
+                    genres.add(genre.getGenreName());
+                }
+            }
+
+            @Override
+            public void onResponseFailure(String message) {
+
+            }
+        };
+        GetGenrePresenter getGenrePresenter = new GetGenrePresenter(view);
+        getGenrePresenter.requestGetGenres();
+    }
+    private void renderDropdownGenre(){
+        autoCompleteTxt_genre = mView.findViewById(R.id.auto_complete_genre);
+
+        adapterItemGenre = new ArrayAdapter<>(mView.getContext(), R.layout.dropdown_normal_item, genres);
+
+        autoCompleteTxt_genre.setAdapter(adapterItemGenre);
+
+        autoCompleteTxt_genre.setOnItemClickListener((parent, view, position, id) -> {
+            String item = parent.getItemAtPosition(position).toString();
+            Toast.makeText(getActivity().getApplicationContext(), item, Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void renderDropdownCountry(){
+        autoCompleteTxt_country = mView.findViewById(R.id.auto_complete_country);
+
+        adapterItemCountry = new ArrayAdapter<>(mView.getContext(), R.layout.dropdown_normal_item, itemsDropdownCountry);
+
+        autoCompleteTxt_country.setAdapter(adapterItemCountry);
+
+        autoCompleteTxt_country.setOnItemClickListener((parent, view, position, id) -> {
+            String item = parent.getItemAtPosition(position).toString();
+            Toast.makeText(getActivity().getApplicationContext(), item, Toast.LENGTH_SHORT).show();
+        });
+    }
+
 }

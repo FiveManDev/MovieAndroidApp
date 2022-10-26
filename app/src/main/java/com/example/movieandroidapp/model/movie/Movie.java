@@ -57,6 +57,9 @@ public class Movie {
     @SerializedName("rating")
     @Expose
     private Float rating;
+    @SerializedName("isVisible")
+    @Expose
+    private Boolean isVisible;
     @SerializedName("firstNameAuthor")
     @Expose
     private String firstNameAuthor;
@@ -207,6 +210,14 @@ public class Movie {
 
     public void setRating(Float rating) {
         this.rating = rating;
+    }
+
+    public Boolean getIsVisible() {
+        return isVisible;
+    }
+
+    public void setIsVisible(Boolean isVisible) {
+        this.isVisible = isVisible;
     }
 
     public String getFirstNameAuthor() {
