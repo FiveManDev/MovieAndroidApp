@@ -1,4 +1,4 @@
-package com.example.movieandroidapp.view.movie;
+package com.example.movieandroidapp.Utility.movie;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +12,11 @@ import com.example.movieandroidapp.model.movie.Movie;
 
 import java.util.List;
 
-public class MoviesListLatestAdminAdapter extends RecyclerView.Adapter<MovieAdminHolder>{
+public class MoviesListDashboardAdminAdapter extends RecyclerView.Adapter<MovieAdminHolder>{
 
     private List<Movie> movieList;
 
-    public MoviesListLatestAdminAdapter(List<Movie> movieList) {
+    public MoviesListDashboardAdminAdapter(List<Movie> movieList) {
         this.movieList = movieList;
     }
 

@@ -3,42 +3,59 @@ package com.example.movieandroidapp.fragment.admin;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.movieandroidapp.R;
+import com.example.movieandroidapp.contract.user.GetUsersContract;
+import com.example.movieandroidapp.model.ResponseFilter;
+import com.example.movieandroidapp.model.User;
+import com.example.movieandroidapp.network.BodyRequest.Filter;
+import com.example.movieandroidapp.presenter.user.GetUsersPresenter;
+import com.example.movieandroidapp.Utility.movie.SortByAdapter;
+import com.example.movieandroidapp.view.user.UserListAdminAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Admin_UserFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Admin_UserFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+public class Admin_UserFragment extends Fragment implements GetUsersContract.View {
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
+
+    private LinearLayoutManager layoutManager;
+    private Filter filterList;
+    private Spinner user_filter_spinner_admin;
+    private EditText search_user_admin;
+    private Button btn_loadMore_user_admin;
+    private RecyclerView rcv_user_admin;
+    private TextView user_admin_total,user_admin_notFound_txt;
+    private UserListAdminAdapter listAdminAdapter;
+
+
+    private List<User> userList;
+
+    private View mView;
     public Admin_UserFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Admin_UserFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static Admin_UserFragment newInstance(String param1, String param2) {
         Admin_UserFragment fragment = new Admin_UserFragment();
         Bundle args = new Bundle();
@@ -60,7 +77,132 @@ public class Admin_UserFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin__user, container, false);
+
+        mView  = inflater.inflate(R.layout.fragment_admin__user, container, false);
+        init();
+        return mView;
+    }
+
+    private void init() {
+        userList = new ArrayList<>();
+
+        filterList = new Filter();
+        filterList.setPageIndex(1);
+        filterList.setPageSize(5);
+        filterList.setQuery("");
+        filterList.setSortBy("date");
+        filterList.setSortType("desc");
+
+        rcv_user_admin = mView.findViewById(R.id.rcv_user_admin);
+        search_user_admin = mView.findViewById(R.id.search_user_admin);
+
+        user_admin_notFound_txt = mView.findViewById(R.id.user_admin_notFound_txt);
+
+        btn_loadMore_user_admin = mView.findViewById(R.id.btn_loadMore_user_admin);
+        user_admin_total = mView.findViewById(R.id.user_admin_total);
+
+//        renderTotalUsers();
+        renderListSortBy();
+        handleSearchText();
+        handleLoadMore();
+    }
+
+//    private void renderTotalUsers(){
+//        GetTotalMovieContract.View view = new GetTotalMovieContract.View() {
+//            @Override
+//            public void onResponseFailure(String message) {
+//                user_admin_total.setText(0);
+//            }
+//
+//            @Override
+//            public void onResponseSuccess(int total) {
+//                user_admin_total.setText(total + " Total");
+//            }
+//        };
+//        GetTotalMoviesPresenter getTotalMoviesPresenter = new GetTotalMoviesPresenter(view);
+//        getTotalMoviesPresenter.requestGetTotalMovies();
+//    }
+
+    private void filterGetUser(){
+        layoutManager = new LinearLayoutManager(mView.getContext());
+        rcv_user_admin.setLayoutManager(layoutManager);
+        rcv_user_admin.setHasFixedSize(false);
+
+        GetUsersPresenter getUsersPresenter = new GetUsersPresenter(this);
+        getUsersPresenter.requestGetUserToServer(filterList);
+    }
+
+    private void handleSearchText(){
+        search_user_admin.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                filterList.setQuery(search_user_admin.getText().toString());
+                filterGetUser();
+                return true;
+            }
+            return false;
+        });
+    }
+
+    private void handleLoadMore(){
+        btn_loadMore_user_admin.setOnClickListener(t->{
+            //tang page index len 1 de load more data
+            filterList.setPageIndex(filterList.getPageIndex() + 1);
+            filterGetUser();
+        });
+    }
+    private void renderListSortBy(){
+        user_filter_spinner_admin = mView.findViewById(R.id.user_filter_spinner_admin);
+        SortByAdapter sortByAdapter = new SortByAdapter(mView.getContext(), R.layout.dropdown_selected,listSortBy());
+        user_filter_spinner_admin.setAdapter(sortByAdapter);
+        user_filter_spinner_admin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                filterList.setSortBy(sortByAdapter.getItem(position));
+                filterGetUser();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private List<String> listSortBy(){
+        List<String> list = new ArrayList<>();
+        list.add("Date");
+        list.add("Status");
+        list.add("Pricing Plan");
+        return list;
+    }
+
+    @Override
+    public void onResponseSuccess(ResponseFilter<User[]> pagination) {
+        if(pagination==null){
+            user_admin_notFound_txt.setVisibility(View.VISIBLE);
+            rcv_user_admin.setAdapter(null);
+        }
+        else{
+            //check co hien thi button load more
+            if(pagination.getPagination().getHasNext())
+            {
+                btn_loadMore_user_admin.setVisibility(View.VISIBLE);
+            }
+            else{
+                btn_loadMore_user_admin.setVisibility(View.GONE);
+            }
+
+            user_admin_notFound_txt.setVisibility(View.GONE);
+
+            List<User> userListResponse = Arrays.asList(pagination.getValue());
+
+            userList.addAll(userListResponse);
+            listAdminAdapter = new UserListAdminAdapter(userList,mView.getContext(),"user");
+            rcv_user_admin.setAdapter(listAdminAdapter);
+        }
+    }
+
+    @Override
+    public void onResponseFailure(String message) {
+
     }
 }

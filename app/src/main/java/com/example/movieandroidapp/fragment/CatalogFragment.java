@@ -16,8 +16,8 @@ import com.example.movieandroidapp.R;
 import com.example.movieandroidapp.contract.movie.GetGenre;
 import com.example.movieandroidapp.model.Genre;
 import com.example.movieandroidapp.presenter.movie.GetGenrePresenter;
-import com.example.movieandroidapp.view.movie.GenreAdapter;
-import com.example.movieandroidapp.view.movie.QualityAdapter;
+import com.example.movieandroidapp.Utility.movie.GenreAdapter;
+import com.example.movieandroidapp.Utility.movie.QualityAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

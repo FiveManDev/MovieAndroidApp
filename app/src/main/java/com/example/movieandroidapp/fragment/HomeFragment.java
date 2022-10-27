@@ -29,10 +29,8 @@ import com.example.movieandroidapp.model.movie.Movie;
 import com.example.movieandroidapp.presenter.movie.GetGenrePresenter;
 import com.example.movieandroidapp.presenter.movie.GetTopLastestPublicationMoviesPresenter;
 import com.example.movieandroidapp.presenter.movie.GetTopLastestReleaseMoviesPresenter;
-import com.example.movieandroidapp.view.movie.GenreAdapter;
-import com.example.movieandroidapp.view.movie.MovieListAdapter;
-
-import org.greenrobot.eventbus.EventBus;
+import com.example.movieandroidapp.Utility.movie.GenreAdapter;
+import com.example.movieandroidapp.Utility.movie.MovieListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

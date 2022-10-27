@@ -4,10 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class Pagination<T> {
-    @SerializedName(value="value", alternate={"movies", "reviews","users"})
-    @Expose
-    private T value = null;
+public class Pagination {
     @SerializedName("pageIndex")
     @Expose
     private Integer pageIndex;
@@ -26,14 +23,6 @@ public class Pagination<T> {
     @SerializedName("hasNext")
     @Expose
     private Boolean hasNext;
-
-    public T getValue() {
-        return value;
-    }
-
-    public void setValue(T movies) {
-        this.value = movies;
-    }
 
     public Integer getPageIndex() {
         return pageIndex;

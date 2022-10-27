@@ -1,4 +1,4 @@
-package com.example.movieandroidapp.view.movie;
+package com.example.movieandroidapp.Utility.movie;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.movieandroidapp.Activity.HomeActivity;
 import com.example.movieandroidapp.R;
 import com.example.movieandroidapp.contract.movie.ListenerMovie;
 import com.example.movieandroidapp.model.movie.Movie;

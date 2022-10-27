@@ -2,6 +2,7 @@ package com.example.movieandroidapp.presenter.movie;
 
 import com.example.movieandroidapp.contract.movie.GetMoviesContract;
 import com.example.movieandroidapp.model.Pagination;
+import com.example.movieandroidapp.model.ResponseFilter;
 import com.example.movieandroidapp.model.movie.Movie;
 import com.example.movieandroidapp.network.BodyRequest.Filter;
 import com.example.movieandroidapp.service.movie.GetMoviesRequest;
@@ -18,7 +19,7 @@ public class GetMoviesPresenter implements GetMoviesContract.Presenter,GetMovies
 
 
     @Override
-    public void onFinished(Pagination<Movie[]> pagination) {
+    public void onFinished(ResponseFilter<Movie[]> pagination) {
         viewModel.onResponseSuccess(pagination);
     }
 

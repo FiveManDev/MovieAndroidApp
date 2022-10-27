@@ -23,14 +23,14 @@ import com.example.movieandroidapp.contract.movie.DeleteMovieContract;
 import com.example.movieandroidapp.contract.movie.GetMoviesContract;
 import com.example.movieandroidapp.contract.movie.GetTotalMovieContract;
 import com.example.movieandroidapp.contract.movie.ListenerMovie;
-import com.example.movieandroidapp.model.Pagination;
+import com.example.movieandroidapp.model.ResponseFilter;
 import com.example.movieandroidapp.model.movie.Movie;
 import com.example.movieandroidapp.network.BodyRequest.Filter;
 import com.example.movieandroidapp.presenter.movie.DeleteMoviePresenter;
 import com.example.movieandroidapp.presenter.movie.GetMoviesPresenter;
 import com.example.movieandroidapp.presenter.movie.GetTotalMoviesPresenter;
-import com.example.movieandroidapp.view.movie.MoviesListAdminAdapter;
-import com.example.movieandroidapp.view.movie.SortByAdapter;
+import com.example.movieandroidapp.Utility.movie.MoviesListAdminAdapter;
+import com.example.movieandroidapp.Utility.movie.SortByAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -87,7 +87,7 @@ public class Admin_CatalogFragment extends Fragment implements GetMoviesContract
         filterList = new Filter();
         filterList.setPageIndex(1);
         filterList.setPageSize(5);
-        filterList.setQuery("a");
+        filterList.setQuery("");
         filterList.setSortBy("date");
         filterList.setSortType("desc");
 
@@ -127,22 +127,6 @@ public class Admin_CatalogFragment extends Fragment implements GetMoviesContract
         getMoviesPresenter.requestGetMovies(filterList);
     }
 
-    private void renderListSortBy(){
-        catalog_filter_spinner_admin = mView.findViewById(R.id.catalog_filter_spinner_admin);
-        SortByAdapter sortByAdapter = new SortByAdapter(mView.getContext(), R.layout.dropdown_selected,listSortBy());
-        catalog_filter_spinner_admin.setAdapter(sortByAdapter);
-        catalog_filter_spinner_admin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                filterList.setSortBy(sortByAdapter.getItem(position));
-                filterGetMovie();
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-    }
 
     private void handleSearchText(){
         search_movie_admin.setOnEditorActionListener((v, actionId, event) -> {
@@ -162,6 +146,23 @@ public class Admin_CatalogFragment extends Fragment implements GetMoviesContract
             filterGetMovie();
         });
     }
+    private void renderListSortBy(){
+        catalog_filter_spinner_admin = mView.findViewById(R.id.catalog_filter_spinner_admin);
+        SortByAdapter sortByAdapter = new SortByAdapter(mView.getContext(), R.layout.dropdown_selected,listSortBy());
+        catalog_filter_spinner_admin.setAdapter(sortByAdapter);
+        catalog_filter_spinner_admin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                filterList.setSortBy(sortByAdapter.getItem(position));
+                filterGetMovie();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
     private List<String> listSortBy(){
         List<String> list = new ArrayList<>();
         list.add("Date");
@@ -176,14 +177,14 @@ public class Admin_CatalogFragment extends Fragment implements GetMoviesContract
     }
 
     @Override
-    public void onResponseSuccess(Pagination<Movie[]> pagination) {
+    public void onResponseSuccess(ResponseFilter<Movie[]> pagination) {
         if(pagination==null){
             movie_admin_notFound_txt.setVisibility(View.VISIBLE);
             rcv_movies_admin.setAdapter(null);
         }
         else{
             //check co hien thi button load more
-            if(pagination.getHasNext())
+            if(pagination.getPagination().getHasNext())
             {
                 btn_loadMore_movie_admin.setVisibility(View.VISIBLE);
             }

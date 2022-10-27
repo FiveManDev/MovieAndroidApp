@@ -14,17 +14,26 @@ import android.widget.Toast;
 
 import com.example.movieandroidapp.R;
 import com.example.movieandroidapp.contract.StatisticsContract;
+import com.example.movieandroidapp.contract.movie.GetMoviesContract;
 import com.example.movieandroidapp.contract.movie.GetTopLastestReleaseMoviesContract;
 import com.example.movieandroidapp.contract.review.GetTopLatestReviewContract;
+import com.example.movieandroidapp.contract.user.GetUsersContract;
+import com.example.movieandroidapp.model.ResponseFilter;
 import com.example.movieandroidapp.model.Review;
 import com.example.movieandroidapp.model.Statistic;
+import com.example.movieandroidapp.model.User;
 import com.example.movieandroidapp.model.movie.Movie;
+import com.example.movieandroidapp.network.BodyRequest.Filter;
 import com.example.movieandroidapp.presenter.Review.GetTopLatestReviewPresenter;
 import com.example.movieandroidapp.presenter.Statistic.GetStatisticsForMonthPresenter;
+import com.example.movieandroidapp.presenter.movie.GetMoviesPresenter;
 import com.example.movieandroidapp.presenter.movie.GetTopLastestReleaseMoviesPresenter;
+import com.example.movieandroidapp.presenter.user.GetUsersPresenter;
 import com.example.movieandroidapp.view.Review.ListReviewLatestAdapter;
-import com.example.movieandroidapp.view.movie.MoviesListLatestAdminAdapter;
+import com.example.movieandroidapp.Utility.movie.MoviesListDashboardAdminAdapter;
+import com.example.movieandroidapp.view.user.UserListAdminAdapter;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Admin_DashBoardFragment extends Fragment  {
@@ -36,9 +45,9 @@ public class Admin_DashBoardFragment extends Fragment  {
     private String mParam2;
 
     private View mView;
-    private RecyclerView rcv_top_movies_dashboard;
-    private RecyclerView rcv_admin_dashboard_review_latest;
-    private RecyclerView rcv_admin_dashboard_movie_latest;
+    private RecyclerView rcv_admin_dashboard_movie_latest,
+            rcv_admin_latest_users,rcv_admin_movie_top,rcv_admin_dashboard_review_latest;
+    private Filter filterList;
 
     //statistic information
     private TextView admin_dashboard_user,admin_dashboard_movie,admin_dashboard_review,admin_dashboard_money;
@@ -74,17 +83,27 @@ public class Admin_DashBoardFragment extends Fragment  {
         return mView;
     }
     private void init(){
+        filterList = new Filter();
+        filterList.setPageIndex(1);
+        filterList.setPageSize(5);
+        filterList.setQuery("");
+        filterList.setSortType("desc");
+
+
         admin_dashboard_user = mView.findViewById(R.id.admin_dashboard_user);
         admin_dashboard_movie = mView.findViewById(R.id.admin_dashboard_movie);
         admin_dashboard_review = mView.findViewById(R.id.admin_dashboard_review);
         admin_dashboard_money = mView.findViewById(R.id.admin_dashboard_money);
 
-        rcv_top_movies_dashboard = mView.findViewById(R.id.rcv_top_movies_dashboard);
+        rcv_admin_latest_users = mView.findViewById(R.id.rcv_admin_latest_users);
+        rcv_admin_movie_top = mView.findViewById(R.id.rcv_admin_movie_top);
         rcv_admin_dashboard_review_latest = mView.findViewById(R.id.rcv_admin_dashboard_review_latest);
         rcv_admin_dashboard_movie_latest = mView.findViewById(R.id.rcv_admin_dashboard_movie_latest);
+        getMovieTop();
         getReviewLatest();
         getStatistic();
         getMovieLatest();
+        getUserLatest();
     }
 
     private void getStatistic(){
@@ -139,7 +158,7 @@ public class Admin_DashBoardFragment extends Fragment  {
         GetTopLastestReleaseMoviesContract.View view = new GetTopLastestReleaseMoviesContract.View() {
             @Override
             public void setDataToRecyclerview(List<Movie> movieListArray) {
-                renderMovieLatest(movieListArray);
+                renderMovies(movieListArray,"latest");
             }
             @Override
             public void onResponseFailure(String message) {
@@ -150,11 +169,63 @@ public class Admin_DashBoardFragment extends Fragment  {
         presenter.requestDataFromServer(5);
 
     }
-    private void renderMovieLatest(List<Movie> movieListArray) {
+    private void renderMovies(List<Movie> movieListArray, String type) {
         linearLayoutManager = new LinearLayoutManager(mView.getContext());
-        MoviesListLatestAdminAdapter reviewLatestAdapter = new MoviesListLatestAdminAdapter(movieListArray);
-        rcv_admin_dashboard_movie_latest.setAdapter(reviewLatestAdapter);
-        rcv_admin_dashboard_movie_latest.setHasFixedSize(true);
-        rcv_admin_dashboard_movie_latest.setLayoutManager(linearLayoutManager);
+        MoviesListDashboardAdminAdapter reviewLatestAdapter = new MoviesListDashboardAdminAdapter(movieListArray);
+        if(type.equals("top")){
+            rcv_admin_movie_top.setAdapter(reviewLatestAdapter);
+            rcv_admin_movie_top.setHasFixedSize(true);
+            rcv_admin_movie_top.setLayoutManager(linearLayoutManager);
+        }
+        else{
+            rcv_admin_dashboard_movie_latest.setAdapter(reviewLatestAdapter);
+            rcv_admin_dashboard_movie_latest.setHasFixedSize(true);
+            rcv_admin_dashboard_movie_latest.setLayoutManager(linearLayoutManager);
+        }
     }
+
+    private void getUserLatest(){
+        GetUsersContract.View view = new GetUsersContract.View() {
+            @Override
+            public void onResponseSuccess(ResponseFilter<User[]> pagination) {
+
+                List<User> userListResponse = Arrays.asList(pagination.getValue());
+                renderUserLatest(userListResponse);
+            }
+
+            @Override
+            public void onResponseFailure(String message) {
+
+            }
+        };
+        filterList.setSortBy("date");
+        GetUsersPresenter presenter = new GetUsersPresenter(view);
+        presenter.requestGetUserToServer(filterList);
+    }
+    private void renderUserLatest(List<User> userList){
+        linearLayoutManager = new LinearLayoutManager(mView.getContext());
+        UserListAdminAdapter listAdminAdapter = new UserListAdminAdapter(userList,mView.getContext(),"dashboard");
+        rcv_admin_latest_users.setAdapter(listAdminAdapter);
+        rcv_admin_latest_users.setHasFixedSize(true);
+        rcv_admin_latest_users.setLayoutManager(linearLayoutManager);
+    }
+
+    private void getMovieTop(){
+        GetMoviesContract.View view = new GetMoviesContract.View() {
+            @Override
+            public void onResponseFailure(String message) {
+                Toast.makeText(mView.getContext(), message, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponseSuccess(ResponseFilter<Movie[]> response) {
+                renderMovies(Arrays.asList(response.getValue()),"top");
+            }
+        };
+
+        filterList.setSortBy("rating");
+        GetMoviesPresenter getMoviesPresenter = new GetMoviesPresenter(view);
+        getMoviesPresenter.requestGetMovies(filterList);
+    }
+
 }

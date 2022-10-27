@@ -25,7 +25,6 @@
                 android:paddingEnd="6dp">
 
                 <LinearLayout
-                    android:paddingStart="5dp"
                     android:paddingEnd="5dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="15dp"
@@ -39,6 +38,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <TextView
+                        android:id="@+id/user_admin_total"
                         android:layout_marginLeft="15dp"
                         android:textColor="@color/text_gray"
                         android:text="14,452 Total"
@@ -57,14 +57,15 @@
                         android:layout_marginBottom="5dp"
                         />
                     <Spinner
-                        android:id="@+id/catalog_filter_genre"
+                        android:id="@+id/user_filter_spinner_admin"
                         android:layout_width="wrap_content"
                         android:background="@android:color/transparent"
                         android:layout_height="wrap_content"/>
 
                 </LinearLayout>
                 <EditText
-                    android:id="@+id/search_movie_admin"
+                    android:id="@+id/search_user_admin"
+                    android:paddingStart="10dp"
                     android:layout_width="240dp"
                     android:layout_height="50dp"
                     android:backgroundTint="@color/gray_darker"
@@ -92,6 +93,11 @@
                             android:layout_height="fill_parent"
                             android:scrollbars="vertical">
 
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
                             <HorizontalScrollView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
@@ -116,7 +122,7 @@
 
                                         <TextView
                                             android:layout_gravity="start"
-                                            android:layout_width="200dp"
+                                            android:layout_width="140dp"
                                             android:maxLines="1"
                                             android:padding="10dp"
                                             android:text="BASIC INFO"
@@ -125,6 +131,7 @@
                                             android:textSize="12sp" />
 
                                         <TextView
+                                            android:layout_width="100dp"
                                             android:layout_gravity="start"
                                             android:maxLines="1"
                                             android:padding="10dp"
@@ -134,6 +141,7 @@
                                             android:textSize="12sp" />
 
                                         <TextView
+                                            android:layout_width="120dp"
                                             android:layout_gravity="start"
                                             android:maxLines="1"
                                             android:padding="10dp"
@@ -179,12 +187,33 @@
                                             android:textSize="12sp" />
                                     </TableRow>
                                     <androidx.recyclerview.widget.RecyclerView
-                                        android:id="@+id/rcv_top_movies"
+                                        android:id="@+id/rcv_user_admin"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         />
+                                    <TextView
+                                        android:id="@+id/user_admin_notFound_txt"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:text="Not found any movie"
+                                        android:textColor="@color/white"
+                                        android:textSize="18sp"
+                                        android:visibility="gone" />
                                 </TableLayout>
                             </HorizontalScrollView>
+                                <Button
+                                    android:id="@+id/btn_loadMore_user_admin"
+                                    android:layout_width="120dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="10dp"
+                                    android:backgroundTint="@color/primary_color"
+                                    android:text="Load More"
+                                    android:textAllCaps="false"
+                                    android:textSize="10sp"
+                                    android:visibility="gone" />
+                            </LinearLayout>
 
                         </ScrollView>
 

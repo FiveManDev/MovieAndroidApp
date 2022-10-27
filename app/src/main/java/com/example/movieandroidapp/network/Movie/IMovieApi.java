@@ -3,6 +3,7 @@ package com.example.movieandroidapp.network.Movie;
 import com.example.movieandroidapp.model.ApiResponse;
 import com.example.movieandroidapp.model.Genre;
 import com.example.movieandroidapp.model.Pagination;
+import com.example.movieandroidapp.model.ResponseFilter;
 import com.example.movieandroidapp.model.movie.Movie;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public interface IMovieApi {
     Call<ApiResponse<List<Genre>>> GetAllGenreOfMovie();
 
     @GET(MovieApiUrl.GetMovies)
-    Call<ApiResponse<Pagination<Movie[]>>> GetMovies(@Query("pageIndex") int pageIndex,
+    Call<ApiResponse<ResponseFilter<Movie[]>>> GetMovies(@Query("pageIndex") int pageIndex,
                                                          @Query("pageSize") int pageSize,
                                                          @Query("q") String q,
                                                          @Query("sortBy") String sortBy,

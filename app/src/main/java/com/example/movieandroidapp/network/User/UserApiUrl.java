@@ -8,4 +8,5 @@ public class UserApiUrl {
     public static final String ConfirmEmailForgot = "User/ConfirmEmailForgotPassword";
     public static final String ResetPassword = "User/ResetPassword";
     public static final String ChangePassword = "User/ChangePassword";
+    public static final String GetUsers = "User/GetUsers";
 }

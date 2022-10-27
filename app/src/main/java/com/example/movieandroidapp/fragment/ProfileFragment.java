@@ -14,12 +14,10 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.movieandroidapp.Activity.HomeActivity;
 import com.example.movieandroidapp.R;
 import com.example.movieandroidapp.Utility.Extension;
 import com.example.movieandroidapp.model.MessageEvent;
 import com.example.movieandroidapp.model.User;
-import com.example.movieandroidapp.view.movie.GenreAdapter;
 import com.example.movieandroidapp.view.user.ProfileNavigationAdapter;
 import com.squareup.picasso.Picasso;
 
