@@ -5,12 +5,16 @@ import com.example.movieandroidapp.model.ResponseFilter;
 import com.example.movieandroidapp.model.TokenModel;
 import com.example.movieandroidapp.model.User;
 import com.example.movieandroidapp.network.BodyRequest.ChangePasswordBody;
+import com.example.movieandroidapp.network.BodyRequest.ChangeStatusUser;
 import com.example.movieandroidapp.network.BodyRequest.CreateUserBody;
 import com.example.movieandroidapp.network.BodyRequest.LoginUserBody;
 import com.example.movieandroidapp.network.BodyRequest.ResetPassword;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -35,10 +39,19 @@ public interface IUserApi {
 
     @POST(UserApiUrl.ChangePassword)
     Call<ApiResponse<String[]>> changePassword(@Body ChangePasswordBody passwordBody);
+
+    @PUT(UserApiUrl.ChangeUserStatus)
+    Call<ApiResponse<String[]>> ChangeUserStatus(@Body ChangeStatusUser changeStatusUser);
+
+    @DELETE(UserApiUrl.DeleteUser)
+    Call<ApiResponse<String[]>> DeleteUser(@Query("UserId") String userId);
+
     @GET(UserApiUrl.GetUsers)
     Call<ApiResponse<ResponseFilter<User[]>>> GetUsers(@Query("pageIndex") int pageIndex,
                                                        @Query("pageSize") int pageSize,
                                                        @Query("q") String q,
                                                        @Query("sortBy") String sortBy,
                                                        @Query("sortType") String sortType);
+
+
 }

@@ -8,5 +8,6 @@ public class MovieApiUrl {
     public static final String GetTotalMovies = "Movie/GetTotalMovie";
     public static final String GetMovies = "Movie/GetMovies";
     public static final String DeleteMovie = "Movie/DeleteMovie";
+    public static final String GetMovieBaseOnFilter = "Movie/GetMovieBaseOnFilter";
 
 }

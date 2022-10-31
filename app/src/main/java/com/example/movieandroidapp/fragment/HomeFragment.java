@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,8 +30,8 @@ import com.example.movieandroidapp.model.movie.Movie;
 import com.example.movieandroidapp.presenter.movie.GetGenrePresenter;
 import com.example.movieandroidapp.presenter.movie.GetTopLastestPublicationMoviesPresenter;
 import com.example.movieandroidapp.presenter.movie.GetTopLastestReleaseMoviesPresenter;
-import com.example.movieandroidapp.Utility.movie.GenreAdapter;
-import com.example.movieandroidapp.Utility.movie.MovieListAdapter;
+import com.example.movieandroidapp.view.movie.GenreAdapter;
+import com.example.movieandroidapp.view.movie.MovieListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,7 @@ public class HomeFragment extends Fragment
     private LinearLayoutManager layoutManager;
     private GridLayoutManager gridLayoutManager;
 
+    TextView new_movie_not_found;
     private Spinner spnGenre;
     private GenreAdapter genreAdapter;
 
@@ -79,6 +81,9 @@ public class HomeFragment extends Fragment
     }
 
     private void initUI() {
+        new_movie_not_found = mView.findViewById(R.id.new_movie_not_found);
+
+
         setUpMoviesRelease();
         setUpMoviesNew("8782bbd0-2f56-4fd4-89d6-081396549bfb",6);
         getListGenre();
@@ -159,6 +164,7 @@ public class HomeFragment extends Fragment
 
     @Override
     public void setDataToRecyclerviewNew(List<Movie> movieListArray) {
+        new_movie_not_found.setVisibility(View.GONE);
         ListenerMovie listenerMovie = (movie,type) -> {
             checkUserIsBasic(mUser,movie);
         };
@@ -168,7 +174,7 @@ public class HomeFragment extends Fragment
 
     @Override
     public void onResponseFailureNew(String message) {
-        Toast.makeText(mView.getContext(), message, Toast.LENGTH_SHORT).show();
+        new_movie_not_found.setVisibility(View.VISIBLE);
     }
 
     @Override

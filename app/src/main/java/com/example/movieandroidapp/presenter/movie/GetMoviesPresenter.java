@@ -1,7 +1,6 @@
 package com.example.movieandroidapp.presenter.movie;
 
 import com.example.movieandroidapp.contract.movie.GetMoviesContract;
-import com.example.movieandroidapp.model.Pagination;
 import com.example.movieandroidapp.model.ResponseFilter;
 import com.example.movieandroidapp.model.movie.Movie;
 import com.example.movieandroidapp.network.BodyRequest.Filter;

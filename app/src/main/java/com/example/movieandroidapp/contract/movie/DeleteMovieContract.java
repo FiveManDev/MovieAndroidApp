@@ -1,6 +1,7 @@
 package com.example.movieandroidapp.contract.movie;
 
 public interface DeleteMovieContract {
+
     interface Model{
         interface OnFinishedListener {
             void onFinished();

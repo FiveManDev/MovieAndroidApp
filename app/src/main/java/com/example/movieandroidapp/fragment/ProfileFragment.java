@@ -1,5 +1,6 @@
 package com.example.movieandroidapp.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,10 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.movieandroidapp.Activity.HomeActivity;
+import com.example.movieandroidapp.Activity.LoginActivity;
 import com.example.movieandroidapp.R;
+import com.example.movieandroidapp.Utility.DataLocalManager;
 import com.example.movieandroidapp.Utility.Extension;
 import com.example.movieandroidapp.model.MessageEvent;
 import com.example.movieandroidapp.model.User;
@@ -27,11 +32,6 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ProfileFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -47,6 +47,8 @@ public class ProfileFragment extends Fragment {
     View mView;
     Spinner profile_navigation;
     ProfileNavigationAdapter profileAdapter;
+
+    RelativeLayout profile_logout;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -89,8 +91,8 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_profile, container, false);
         //default fragment when init is running
-        Profile_information_fragment movieDetailFragment = new Profile_information_fragment();
-        replaceFragment(movieDetailFragment);
+//        Profile_information_fragment movieDetailFragment = new Profile_information_fragment();
+//        replaceFragment(movieDetailFragment);
         init();
         return mView;
     }
@@ -98,6 +100,9 @@ public class ProfileFragment extends Fragment {
     private void init(){
         renderListItemNavigation();
         renderUser(mUser);
+
+        profile_logout = mView.findViewById(R.id.profile_logout);
+        profile_logout.setOnClickListener(t->logout());
     }
     private void renderUser(User user){
         profile_image_user = mView.findViewById(R.id.profile_image_user);
@@ -127,17 +132,12 @@ public class ProfileFragment extends Fragment {
     }
     private List<String> listNavigation(){
         List<String> list = new ArrayList<>();
-        list.add("PROFILE");
         list.add("SUBSCRIPTION");
         list.add("SETTINGS");
         return list;
     }
     private void checkNavigation(String item){
-        if(item.equals("PROFILE")){
-            Profile_information_fragment movieDetailFragment = new Profile_information_fragment();
-            replaceFragment(movieDetailFragment);
-        }
-        else if(item.equals("SUBSCRIPTION")){
+        if(item.equals("SUBSCRIPTION")){
             Profile_subscription_fragment fragment = Profile_subscription_fragment.newInstance(mUser.getProfile().getClassification());
             replaceFragment(fragment);
         }
@@ -159,5 +159,10 @@ public class ProfileFragment extends Fragment {
         final Handler handler = new Handler();
         final Runnable runnable = () -> renderUser(mUser);
         handler.postDelayed(runnable,1000);
+    }
+    public void logout(){
+        DataLocalManager.setAccessToken("");
+        DataLocalManager.setUserId("");
+        startActivity(new Intent(mView.getContext(), LoginActivity.class));
     }
 }

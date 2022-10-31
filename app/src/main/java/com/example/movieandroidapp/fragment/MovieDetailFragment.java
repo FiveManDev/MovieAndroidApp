@@ -170,7 +170,7 @@ public class MovieDetailFragment extends Fragment implements getListReviewContra
     }
     private void handleReviewWithSignalR(){
         hubConnection = HubConnectionBuilder.create(
-                        "http://10.0.2.2:5237/review")
+                        ApiClient.address+"/review")
                 .build();
         try {
             if(hubConnection.getConnectionState() == HubConnectionState.DISCONNECTED){

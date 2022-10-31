@@ -1,4 +1,4 @@
-package com.example.movieandroidapp.Utility.movie;
+package com.example.movieandroidapp.view.movie;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,9 +15,9 @@ import com.example.movieandroidapp.model.Genre;
 
 import java.util.List;
 
-public class SortByAdapter extends ArrayAdapter<String> {
+public class GenreAdapter extends ArrayAdapter<Genre> {
 
-    public SortByAdapter(@NonNull Context context, int resource, @NonNull List<String> objects) {
+    public GenreAdapter(@NonNull Context context, int resource, @NonNull List<Genre> objects) {
         super(context, resource, objects);
     }
 
@@ -27,9 +27,9 @@ public class SortByAdapter extends ArrayAdapter<String> {
         convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.dropdown_selected,parent,false);
         TextView tvSelected = convertView.findViewById(R.id.tv_dropdown_selected);
 
-        String item = this.getItem(position);
-        if(item != null){
-            tvSelected.setText(item);
+        Genre genre = this.getItem(position);
+        if(genre != null){
+            tvSelected.setText(genre.getGenreName());
         }
 
         return convertView;
@@ -40,9 +40,9 @@ public class SortByAdapter extends ArrayAdapter<String> {
         convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.dropdown_item,parent,false);
         TextView tvGenre = convertView.findViewById(R.id.tv_dropdown_item);
 
-        String item = this.getItem(position);
-        if(item != null){
-            tvGenre.setText(item);
+        Genre genre = this.getItem(position);
+        if(genre != null){
+            tvGenre.setText(genre.getGenreName());
         }
         return convertView;
     }

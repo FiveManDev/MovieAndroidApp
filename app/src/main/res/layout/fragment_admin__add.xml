@@ -39,6 +39,7 @@
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/admin_movie_add_thumbnail"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
                     android:layout_marginBottom="15dp"
@@ -46,7 +47,7 @@
                     android:src="@drawable/not_available" />
 
                 <EditText
-                    android:id="@+id/admin_movie_add__title"
+                    android:id="@+id/admin_movie_add_title"
                     style="@style/inputText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -68,18 +69,18 @@
                     android:paddingBottom="5dp" />
 
                 <EditText
-
                     android:id="@+id/admin_movie_add_releaseTime"
                     style="@style/inputText"
+                    android:focusable="false"
+                    android:cursorVisible="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:ems="10"
-                    android:hint="Release year"
+                    android:hint="Release date"
                     android:inputType="textPersonName" />
 
                 <EditText
-
                     android:id="@+id/admin_movie_add_running_time"
                     style="@style/inputText"
                     android:layout_width="match_parent"
@@ -87,9 +88,7 @@
                     android:layout_marginTop="16dp"
                     android:ems="10"
                     android:hint="Running timed in minutes"
-                    android:inputType="textPersonName" />
-
-
+                    android:inputType="numberDecimal" />
 
                 <EditText
                     android:id="@+id/admin_movie_add_age"
@@ -99,7 +98,7 @@
                     android:layout_marginTop="16dp"
                     android:ems="10"
                     android:hint="Age"
-                    android:inputType="textPersonName" />
+                    android:inputType="number" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"

@@ -83,6 +83,7 @@
                     </LinearLayout>
 
                     <RelativeLayout
+                        android:id="@+id/profile_logout"
                         android:layout_width="40dp"
                         android:layout_height="match_parent"
                         android:background="#313136">

@@ -29,8 +29,8 @@ import com.example.movieandroidapp.presenter.Statistic.GetStatisticsForMonthPres
 import com.example.movieandroidapp.presenter.movie.GetMoviesPresenter;
 import com.example.movieandroidapp.presenter.movie.GetTopLastestReleaseMoviesPresenter;
 import com.example.movieandroidapp.presenter.user.GetUsersPresenter;
-import com.example.movieandroidapp.view.Review.ListReviewLatestAdapter;
-import com.example.movieandroidapp.Utility.movie.MoviesListDashboardAdminAdapter;
+import com.example.movieandroidapp.view.Review.ListReviewAdminAdapter;
+import com.example.movieandroidapp.view.movie.MoviesListDashboardAdminAdapter;
 import com.example.movieandroidapp.view.user.UserListAdminAdapter;
 
 import java.util.Arrays;
@@ -147,7 +147,7 @@ public class Admin_DashBoardFragment extends Fragment  {
     }
     private void renderReviewLatest(List<Review> reviewListArray){
         linearLayoutManager = new LinearLayoutManager(mView.getContext());
-        ListReviewLatestAdapter reviewLatestAdapter = new ListReviewLatestAdapter(reviewListArray);
+        ListReviewAdminAdapter reviewLatestAdapter = new ListReviewAdminAdapter(reviewListArray,mView.getContext(),"dashboard");
         rcv_admin_dashboard_review_latest.setAdapter(reviewLatestAdapter);
         rcv_admin_dashboard_review_latest.setHasFixedSize(true);
         rcv_admin_dashboard_review_latest.setLayoutManager(linearLayoutManager);

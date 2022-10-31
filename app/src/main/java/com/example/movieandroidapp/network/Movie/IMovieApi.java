@@ -27,6 +27,15 @@ public interface IMovieApi {
     @GET(MovieApiUrl.GetMoviesBasedOnSearchText)
     Call<ApiResponse<List<Movie>>> GetMoviesBasedOnSearchText(@Query("searchText") String query);
 
+    @GET(MovieApiUrl.GetMovieBaseOnFilter)
+    Call<ApiResponse<List<Movie>>> GetMovieBaseOnFilter(@Query("genreID") String genreID,
+                                                        @Query("quality") String quality,
+                                                        @Query("ratingMin") String ratingMin,
+                                                        @Query("ratingMax") String ratingMax,
+                                                        @Query("releaseTimeMin") String releaseTimeMin,
+                                                        @Query("releaseTimeMax") String releaseTimeMax
+                                                        );
+
     @GET(MovieApiUrl.GetGenres)
     Call<ApiResponse<List<Genre>>> GetAllGenreOfMovie();
 
@@ -40,6 +49,6 @@ public interface IMovieApi {
     @GET(MovieApiUrl.GetTotalMovies)
     Call<ApiResponse<Integer>> GetTotalMovies();
 
-    @HTTP(method = "DELETE",path = MovieApiUrl.DeleteMovie, hasBody = true)
-    Call<ApiResponse<String[]>> DeleteMovie(@Body String movieID);
+    @DELETE(MovieApiUrl.DeleteMovie)
+    Call<ApiResponse<String[]>> DeleteMovie(@Query("movieID") String movieID);
 }

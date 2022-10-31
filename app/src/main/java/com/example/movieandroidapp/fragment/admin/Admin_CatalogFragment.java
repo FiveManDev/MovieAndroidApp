@@ -29,8 +29,8 @@ import com.example.movieandroidapp.network.BodyRequest.Filter;
 import com.example.movieandroidapp.presenter.movie.DeleteMoviePresenter;
 import com.example.movieandroidapp.presenter.movie.GetMoviesPresenter;
 import com.example.movieandroidapp.presenter.movie.GetTotalMoviesPresenter;
-import com.example.movieandroidapp.Utility.movie.MoviesListAdminAdapter;
-import com.example.movieandroidapp.Utility.movie.SortByAdapter;
+import com.example.movieandroidapp.view.movie.MoviesListAdminAdapter;
+import com.example.movieandroidapp.view.movie.SortByAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -181,6 +181,7 @@ public class Admin_CatalogFragment extends Fragment implements GetMoviesContract
         if(pagination==null){
             movie_admin_notFound_txt.setVisibility(View.VISIBLE);
             rcv_movies_admin.setAdapter(null);
+            btn_loadMore_movie_admin.setVisibility(View.GONE);
         }
         else{
             //check co hien thi button load more

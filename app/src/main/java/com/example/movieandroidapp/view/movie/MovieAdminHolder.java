@@ -1,4 +1,4 @@
-package com.example.movieandroidapp.Utility.movie;
+package com.example.movieandroidapp.view.movie;
 
 import android.view.View;
 import android.widget.LinearLayout;

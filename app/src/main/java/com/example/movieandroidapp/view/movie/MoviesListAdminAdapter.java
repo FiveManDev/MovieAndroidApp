@@ -1,4 +1,4 @@
-package com.example.movieandroidapp.Utility.movie;
+package com.example.movieandroidapp.view.movie;
 
 import android.app.AlertDialog;
 import android.content.Context;

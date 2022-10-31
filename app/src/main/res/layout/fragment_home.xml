@@ -87,7 +87,17 @@
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/new_movie_not_found"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:text="Not found"
+                />
             <androidx.recyclerview.widget.RecyclerView
                 android:paddingStart="10dp"
                 android:id="@+id/rcv_movie_new_home"

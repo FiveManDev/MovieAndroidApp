@@ -19,7 +19,7 @@ import com.example.movieandroidapp.contract.movie.ListenerMovie;
 import com.example.movieandroidapp.contract.movie.SearchMovieHome;
 import com.example.movieandroidapp.model.movie.Movie;
 import com.example.movieandroidapp.presenter.movie.SearchHomePresenter;
-import com.example.movieandroidapp.Utility.movie.MovieListAdapter;
+import com.example.movieandroidapp.view.movie.MovieListAdapter;
 
 import java.util.List;
 

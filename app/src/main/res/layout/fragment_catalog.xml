@@ -102,7 +102,7 @@
                         android:layout_width="180dp"
                         android:layout_height="2dp"
                         app:values="@array/initial_release_values"
-                        android:valueFrom="2000"
+                        android:valueFrom="1996"
                         android:valueTo="2022"
                         android:stepSize="1"
                         app:thumbColor="@color/primary_color"
@@ -112,6 +112,7 @@
                 </LinearLayout>
 
                 <Button
+                    android:id="@+id/btn_apply_filter"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
                     android:text="APPLY FILTER"
@@ -119,28 +120,22 @@
                     />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-        <HorizontalScrollView
+        <TextView
+            android:id="@+id/not_found_catalog_text"
+            android:text="Couldn't find any movies"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:fillViewport="true"
-            android:scrollbars="none">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:paddingStart="5dp"
-                    android:id="@+id/rcv_movie_catalog"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal" />
-
-            </RelativeLayout>
-
-        </HorizontalScrollView>
+            />
+        <androidx.recyclerview.widget.RecyclerView
+            android:paddingStart="10dp"
+            android:id="@+id/rcv_movie_catalog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

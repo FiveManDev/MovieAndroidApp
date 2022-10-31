@@ -1,6 +1,7 @@
 package com.example.movieandroidapp.presenter.Review;
 
 import com.example.movieandroidapp.contract.review.GetTopLatestReviewContract;
+import com.example.movieandroidapp.service.Review.GetTopLatestReviewRequest;
 import com.example.movieandroidapp.model.Review;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public class GetTopLatestReviewPresenter implements GetTopLatestReviewContract.P
 
     public GetTopLatestReviewPresenter(GetTopLatestReviewContract.View view) {
         this.view = view;
-        model = new com.example.movieandroidapp.service.Review.GetTopLatestReviewRequest();
+        model = new GetTopLatestReviewRequest();
     }
 
     @Override
