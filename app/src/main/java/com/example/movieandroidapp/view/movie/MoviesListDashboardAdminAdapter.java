@@ -30,7 +30,7 @@ public class MoviesListDashboardAdminAdapter extends RecyclerView.Adapter<MovieA
     public void onBindViewHolder(@NonNull MovieAdminHolder holder, int position) {
         if (movieList.size() > 0) {
             Movie movie = movieList.get(position);
-            holder.row_movie_item_admin_id.setText(movie.getMovieID());
+            holder.row_movie_item_admin_id.setText(Integer.toString(position+1));
             holder.row_movie_item_admin_genre.setText(String.join(", ", movie.getGenres()));
             holder.row_movie_item_admin_rating.setText(movie.getRating().toString());
             holder.row_movie_item_admin_name.setText(movie.getMovieName());

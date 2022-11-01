@@ -72,7 +72,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         //get information of a user
         getUser(DataLocalManager.getUserId());
 
-
     }
     private void init(){
         //tool bar top

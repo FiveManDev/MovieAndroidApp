@@ -111,8 +111,9 @@ public class HomeFragment extends Fragment
 
         SpacingItemDecorator itemDecorator = new SpacingItemDecorator(40, 0);
         rcv_movie_home.addItemDecoration(itemDecorator);
-        rcv_movie_home.setHasFixedSize(false);
+        rcv_movie_home.setHasFixedSize(true);
         movieList = new ArrayList<>();
+
         presenter.requestDataFromServer(6);
     }
 

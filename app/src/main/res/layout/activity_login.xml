@@ -46,7 +46,7 @@
         android:textSize="18sp"
         android:visibility="gone"
         android:textColor="@color/error"
-        android:text="In correct password" />
+       />
 
     <Button
         android:id="@+id/btnLogin"

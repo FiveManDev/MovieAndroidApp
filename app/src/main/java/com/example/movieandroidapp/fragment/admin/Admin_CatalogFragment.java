@@ -135,6 +135,8 @@ public class Admin_CatalogFragment extends Fragment implements GetMoviesContract
     private void handleSearchText(){
         search_movie_admin.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                movieList.clear();
+                filterList.setPageIndex(1);
                 filterList.setQuery(search_movie_admin.getText().toString());
                 filterGetMovie();
                 return true;
@@ -158,6 +160,8 @@ public class Admin_CatalogFragment extends Fragment implements GetMoviesContract
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 filterList.setSortBy(sortByAdapter.getItem(position));
+                movieList.clear();
+                filterList.setPageIndex(1);
                 filterGetMovie();
             }
             @Override

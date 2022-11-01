@@ -33,5 +33,6 @@ public class ResetPasswordPresenter implements ResetPasswordContract.Presenter, 
         } else {
             model.resetPassword(this,newPassword, confirmPassword, email);
         }
+//them truong hop 6 ky tu
     }
 }

@@ -24,6 +24,7 @@ import com.example.movieandroidapp.Utility.Extension;
 import com.example.movieandroidapp.model.MessageEvent;
 import com.example.movieandroidapp.model.User;
 import com.example.movieandroidapp.view.user.ProfileNavigationAdapter;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
@@ -160,6 +161,7 @@ public class ProfileFragment extends Fragment {
         final Runnable runnable = () -> renderUser(mUser);
         handler.postDelayed(runnable,1000);
     }
+
     public void logout(){
         DataLocalManager.setAccessToken("");
         DataLocalManager.setUserId("");

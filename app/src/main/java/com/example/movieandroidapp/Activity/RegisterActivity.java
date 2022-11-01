@@ -26,6 +26,7 @@ public class RegisterActivity extends AppCompatActivity implements ConfirmEmailC
         setContentView(R.layout.activity_register);
         signin_link = findViewById(R.id.signin_link);
         btnRegister = findViewById(R.id.btnRegister);
+
         ConfirmEmailPresenter confirmEmailPresenter = new ConfirmEmailPresenter(this);
 
         userName =  findViewById(R.id.username_register);

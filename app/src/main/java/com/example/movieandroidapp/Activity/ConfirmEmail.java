@@ -34,6 +34,7 @@ public class ConfirmEmail extends AppCompatActivity {
         email = getIntent().getExtras().getString("email");
         code = getIntent().getExtras().getString("code");
         action = getIntent().getExtras().getString("Action");
+
         if (action.equals("register")) {
             handleRegister();
         } else if (action.equals("forgot")) {

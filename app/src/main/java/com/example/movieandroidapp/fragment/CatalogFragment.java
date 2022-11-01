@@ -69,6 +69,7 @@ public class CatalogFragment extends Fragment {
         movie_detail_release = mView.findViewById(R.id.movie_detail_release);
         rcv_movie_catalog = mView.findViewById(R.id.rcv_movie_catalog);
         not_found_catalog_text = mView.findViewById(R.id.not_found_catalog_text);
+
         renderListQuality();
         handleChangeImbd();
         handleChangeRelease();
@@ -153,8 +154,10 @@ public class CatalogFragment extends Fragment {
     }
     private List<String> getListQuality(){
         List<String> qualityList = new ArrayList<>();
-        qualityList.add("HD");
-        qualityList.add("FULL HD");
+        qualityList.add("1080p60");
+        qualityList.add("720p60");
+        qualityList.add("480p");
+        qualityList.add("360p");
         return qualityList;
     }
 

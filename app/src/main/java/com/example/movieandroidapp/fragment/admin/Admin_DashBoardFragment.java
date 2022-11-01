@@ -81,6 +81,7 @@ public class Admin_DashBoardFragment extends Fragment  {
         mView =inflater.inflate(R.layout.fragment_admin_dashboard, container, false);
         init();
         return mView;
+
     }
     private void init(){
         filterList = new Filter();
@@ -99,6 +100,7 @@ public class Admin_DashBoardFragment extends Fragment  {
         rcv_admin_movie_top = mView.findViewById(R.id.rcv_admin_movie_top);
         rcv_admin_dashboard_review_latest = mView.findViewById(R.id.rcv_admin_dashboard_review_latest);
         rcv_admin_dashboard_movie_latest = mView.findViewById(R.id.rcv_admin_dashboard_movie_latest);
+
         getMovieTop();
         getReviewLatest();
         getStatistic();
@@ -125,7 +127,7 @@ public class Admin_DashBoardFragment extends Fragment  {
         admin_dashboard_user.setText(statistic.getUserCreatedCount().toString());
         admin_dashboard_movie.setText(statistic.getMovieCreatedCount().toString());
         admin_dashboard_review.setText(statistic.getReviewCreatedCount().toString());
-        admin_dashboard_money.setText(statistic.getTotalMoneyGained().toString());
+        admin_dashboard_money.setText(statistic.getTotalMoneyGained().toString() + "$");
     }
 
     private void getReviewLatest(){

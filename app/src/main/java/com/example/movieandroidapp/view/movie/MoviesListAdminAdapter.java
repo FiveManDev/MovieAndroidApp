@@ -73,7 +73,7 @@ public class MoviesListAdminAdapter extends RecyclerView.Adapter<MovieAdminHolde
             holder.btn_block_movie_admin.setOnClickListener(t->{
                 AlertDialog myQuittingDialogBox = new AlertDialog.Builder(context)
                         // set message, title, and icon
-                        .setTitle("Delete")
+                        .setTitle("Block")
                         .setMessage("Do you want to block")
                         .setPositiveButton("Block", (dialog, whichButton) -> {
                             listenerMovie.ClickedMovie(movie, "block");

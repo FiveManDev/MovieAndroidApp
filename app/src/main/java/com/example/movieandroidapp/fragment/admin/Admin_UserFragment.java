@@ -146,8 +146,10 @@ public class Admin_UserFragment extends Fragment implements GetUsersContract.Vie
     private void handleSearchText(){
         search_user_admin.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                userList.clear();
                 filterList.setQuery(search_user_admin.getText().toString());
                 isSearch=true;
+                filterList.setPageIndex(1);
                 filterGetUser();
                 return true;
             }
@@ -170,6 +172,8 @@ public class Admin_UserFragment extends Fragment implements GetUsersContract.Vie
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 filterList.setSortBy(sortByAdapter.getItem(position));
+                filterList.setPageIndex(1);
+                userList.clear();
                 filterGetUser();
             }
             @Override
@@ -183,7 +187,6 @@ public class Admin_UserFragment extends Fragment implements GetUsersContract.Vie
         List<String> list = new ArrayList<>();
         list.add("Date");
         list.add("Status");
-        list.add("Pricing Plan");
         return list;
     }
 

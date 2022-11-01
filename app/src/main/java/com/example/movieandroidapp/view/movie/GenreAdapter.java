@@ -31,7 +31,6 @@ public class GenreAdapter extends ArrayAdapter<Genre> {
         if(genre != null){
             tvSelected.setText(genre.getGenreName());
         }
-
         return convertView;
     }
 

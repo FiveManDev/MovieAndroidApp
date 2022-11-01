@@ -1,11 +1,9 @@
 package com.example.movieandroidapp.Activity;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,17 +26,16 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         init();
-
     }
 
     private void init(){
         btnLogin = findViewById(R.id.btnLogin);
         btn_forgot = findViewById(R.id.btn_forgot_password);
+        signup_link = findViewById(R.id.signup_link);
 
         userName = findViewById(R.id.userName);
         password = findViewById(R.id.password);
         progress = new ProgressDialog(this);
-        signup_link = findViewById(R.id.signup_link);
 
         handleForgot();
         handleSignUp();

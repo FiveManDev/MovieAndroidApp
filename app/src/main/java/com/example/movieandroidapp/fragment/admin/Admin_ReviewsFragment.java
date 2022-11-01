@@ -158,6 +158,8 @@ public class Admin_ReviewsFragment extends Fragment implements GetReviews.View, 
     private void handleSearchText(){
         search_movie_admin.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                reviewList.clear();
+                filterList.setPageIndex(1);
                 filterList.setQuery(search_movie_admin.getText().toString());
                 filterGetReviews();
                 return true;
@@ -181,6 +183,8 @@ public class Admin_ReviewsFragment extends Fragment implements GetReviews.View, 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 filterList.setSortBy(sortByAdapter.getItem(position));
+                filterList.setPageIndex(1);
+                reviewList.clear();
                 filterGetReviews();
             }
             @Override
