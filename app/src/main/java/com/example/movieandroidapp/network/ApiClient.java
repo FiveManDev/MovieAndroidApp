@@ -6,6 +6,8 @@ package com.example.movieandroidapp.network;
 import com.example.movieandroidapp.Utility.DataLocalManager;
 import com.example.movieandroidapp.Utility.Extension;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Retrofit;
@@ -30,8 +32,10 @@ public class ApiClient {
                                     .addHeader("Content-Type","application/json;charset=UTF-8")
                                     .addHeader("Authorization", BearToken).build();
                             return chain.proceed(request);
-                        }).retryOnConnectionFailure(true).build();
-
+                        }).connectTimeout(60, TimeUnit.SECONDS)
+                 .writeTimeout(60, TimeUnit.SECONDS)
+                 .readTimeout(60,TimeUnit.SECONDS)
+                 .retryOnConnectionFailure(true).build();
         if(retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)

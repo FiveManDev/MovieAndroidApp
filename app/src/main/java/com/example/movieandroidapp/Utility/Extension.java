@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.movieandroidapp.R;
 import com.google.gson.Gson;
 
+import java.io.File;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -57,4 +58,20 @@ public class Extension {
     public static Gson GsonUtil(){
         return new Gson();
     }
+
+    public static boolean acceptImage(File file) {
+        final String[] okFileExtensions = new String[] {
+                "jpg",
+                "png",
+                "gif",
+                "jpeg"
+        };
+        for (String extension: okFileExtensions) {
+            if (file.getName().toLowerCase().endsWith(extension)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

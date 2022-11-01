@@ -70,6 +70,19 @@ public class MoviesListAdminAdapter extends RecyclerView.Adapter<MovieAdminHolde
                         .create();
                 myQuittingDialogBox.show();
             });
+            holder.btn_block_movie_admin.setOnClickListener(t->{
+                AlertDialog myQuittingDialogBox = new AlertDialog.Builder(context)
+                        // set message, title, and icon
+                        .setTitle("Delete")
+                        .setMessage("Do you want to block")
+                        .setPositiveButton("Block", (dialog, whichButton) -> {
+                            listenerMovie.ClickedMovie(movie, "block");
+                            dialog.dismiss();
+                        })
+                        .setNegativeButton("cancel", (dialog, which) -> dialog.dismiss())
+                        .create();
+                myQuittingDialogBox.show();
+            });
         }
     }
 

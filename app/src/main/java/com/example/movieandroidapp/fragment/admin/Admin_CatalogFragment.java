@@ -19,16 +19,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.movieandroidapp.R;
+import com.example.movieandroidapp.contract.movie.ChangeStatusMovieContract;
 import com.example.movieandroidapp.contract.movie.DeleteMovieContract;
 import com.example.movieandroidapp.contract.movie.GetMoviesContract;
 import com.example.movieandroidapp.contract.movie.GetTotalMovieContract;
 import com.example.movieandroidapp.contract.movie.ListenerMovie;
 import com.example.movieandroidapp.model.ResponseFilter;
 import com.example.movieandroidapp.model.movie.Movie;
+import com.example.movieandroidapp.network.BodyRequest.ChangeStatusBody;
 import com.example.movieandroidapp.network.BodyRequest.Filter;
 import com.example.movieandroidapp.presenter.movie.DeleteMoviePresenter;
 import com.example.movieandroidapp.presenter.movie.GetMoviesPresenter;
 import com.example.movieandroidapp.presenter.movie.GetTotalMoviesPresenter;
+import com.example.movieandroidapp.presenter.movie.UpdateMovieStatusPresenter;
 import com.example.movieandroidapp.view.movie.MoviesListAdminAdapter;
 import com.example.movieandroidapp.view.movie.SortByAdapter;
 
@@ -208,6 +211,9 @@ public class Admin_CatalogFragment extends Fragment implements GetMoviesContract
         if(type.equals("delete")){
             deleteMovieById(movie.getMovieID());
         }
+        else if(type.equals("block")){
+            blockMovieById(movie);
+        }
     }
     private void deleteMovieById(String idMovie){
         DeleteMovieContract.View view = new DeleteMovieContract.View() {
@@ -218,13 +224,38 @@ public class Admin_CatalogFragment extends Fragment implements GetMoviesContract
 
             @Override
             public void onResponseSuccess() {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    movieList.removeIf(e -> e.getMovieID().equals(idMovie));
+                for (Movie movie : movieList) {
+                    if(movie.getMovieID().equals(idMovie)){
+                        movieList.remove(movie);
+                        break;
+                    }
                 }
                 listAdminAdapter.setMovieList(movieList);
             }
         };
         DeleteMoviePresenter deleteMoviePresenter = new DeleteMoviePresenter(view);
         deleteMoviePresenter.requestDeleteMovies(idMovie);
+    }
+
+    private void blockMovieById(Movie movie){
+        ChangeStatusMovieContract.View view = new ChangeStatusMovieContract.View() {
+            @Override
+            public void onResponseFailure(String message) {
+                Toast.makeText(mView.getContext(), message, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponseSuccess() {
+                for (Movie movie1 : movieList) {
+                    if(movie1.getMovieID().equals(movie.getMovieID())){
+                        movie1.setIsVisible(!movie.getIsVisible());
+                    }
+                }
+                listAdminAdapter.setMovieList(movieList);
+                Toast.makeText(mView.getContext(), "Change status successfully", Toast.LENGTH_SHORT).show();
+            }
+        };
+        UpdateMovieStatusPresenter presenter = new UpdateMovieStatusPresenter(view);
+        presenter.requestUpdateStatus(new ChangeStatusBody(movie.getMovieID(),!movie.getIsVisible()));
     }
 }

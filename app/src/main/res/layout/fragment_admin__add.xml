@@ -99,7 +99,6 @@
                     android:ems="10"
                     android:hint="Age"
                     android:inputType="number" />
-
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
@@ -113,6 +112,26 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/auto_complete_country"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        android:textColor="@color/white" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/textview_border"
+                    android:hint="Class name"
+                    android:theme="@style/InputText_Overlay"
+                    android:textColorHint="#959598"
+                    app:boxStrokeWidth="0dp">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/auto_complete_className"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="none"
@@ -163,6 +182,8 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <EditText
+                    android:focusable="false"
+                    android:cursorVisible="false"
                     android:id="@+id/admin_movie_upload_photos"
                     style="@style/inputText"
                     android:layout_width="match_parent"
@@ -173,6 +194,8 @@
                     android:inputType="textPersonName" />
 
                 <EditText
+                    android:focusable="false"
+                    android:cursorVisible="false"
                     android:id="@+id/admin_movie_upload_video"
                     style="@style/inputText"
                     android:layout_width="match_parent"
@@ -181,9 +204,17 @@
                     android:ems="10"
                     android:hint="Upload video"
                     android:inputType="textPersonName" />
-
+                <TextView
+                    android:id="@+id/error_message_add_movie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="10dp"
+                    android:textSize="18sp"
+                    android:visibility="gone"
+                    android:textColor="@color/error" />
                 <Button
-                    android:id="@+id/btn_send_review"
+                    android:id="@+id/btn_add_movie"
                     android:layout_width="170dp"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
