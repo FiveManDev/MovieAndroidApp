@@ -56,6 +56,7 @@ public class HomeFragment extends Fragment
     List<Genre> genreList;
 
     private User mUser;
+
     public static HomeFragment newInstance(User user) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
@@ -68,7 +69,7 @@ public class HomeFragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mUser = Extension.GsonUtil().fromJson(getArguments().getString(ARG_PARAM1),User.class);
+            mUser = Extension.GsonUtil().fromJson(getArguments().getString(ARG_PARAM1), User.class);
         }
     }
 
@@ -85,11 +86,11 @@ public class HomeFragment extends Fragment
 
 
         setUpMoviesRelease();
-        setUpMoviesNew("8782bbd0-2f56-4fd4-89d6-081396549bfb",6);
+        setUpMoviesNew("8782bbd0-2f56-4fd4-89d6-081396549bfb", 6);
         getListGenre();
     }
 
-    private void setUpMoviesNew(String genreID,int top) {
+    private void setUpMoviesNew(String genreID, int top) {
         rcv_movie_new_home = mView.findViewById(R.id.rcv_movie_new_home);
         GetTopLastestPublicationMoviesPresenter presenter = new GetTopLastestPublicationMoviesPresenter(this);
         gridLayoutManager = new GridLayoutManager(mView.getContext(), 2);
@@ -117,7 +118,7 @@ public class HomeFragment extends Fragment
 
     private void renderGenreFilter() {
         spnGenre = mView.findViewById(R.id.home_filter_genre);
-        genreAdapter = new GenreAdapter(mView.getContext(), R.layout.dropdown_selected,genreList);
+        genreAdapter = new GenreAdapter(mView.getContext(), R.layout.dropdown_selected, genreList);
         spnGenre.setAdapter(genreAdapter);
         spnGenre.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -126,12 +127,11 @@ public class HomeFragment extends Fragment
 
             }
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
     }
-    private void getListGenre(){
+
+    private void getListGenre() {
         genreList = new ArrayList<>();
         GetGenre.View view = new GetGenre.View() {
             @Override
@@ -149,13 +149,14 @@ public class HomeFragment extends Fragment
         getGenrePresenter.requestGetGenres();
     }
 
-    private void filterMovieByGenre(String genreID){
-        setUpMoviesNew(genreID,10);
+    private void filterMovieByGenre(String genreID) {
+        setUpMoviesNew(genreID, 10);
     }
+
     @Override
     public void setDataToRecyclerview(List<Movie> movieListArray) {
-        ListenerMovie listenerMovie = (movie,type) -> {
-            checkUserIsBasic(mUser,movie);
+        ListenerMovie listenerMovie = (movie, type) -> {
+            checkUserIsBasic(mUser, movie);
         };
         movieList.addAll(movieListArray);
         MovieListAdapter adapter = new MovieListAdapter(movieList, listenerMovie);
@@ -165,8 +166,8 @@ public class HomeFragment extends Fragment
     @Override
     public void setDataToRecyclerviewNew(List<Movie> movieListArray) {
         new_movie_not_found.setVisibility(View.GONE);
-        ListenerMovie listenerMovie = (movie,type) -> {
-            checkUserIsBasic(mUser,movie);
+        ListenerMovie listenerMovie = (movie, type) -> {
+            checkUserIsBasic(mUser, movie);
         };
         MovieListAdapter adapter = new MovieListAdapter(movieListArray, listenerMovie);
         rcv_movie_new_home.setAdapter(adapter);
@@ -181,24 +182,28 @@ public class HomeFragment extends Fragment
     public void onResponseFailure(String message) {
         Toast.makeText(mView.getContext(), message, Toast.LENGTH_SHORT).show();
     }
-    public void checkUserIsBasic(User user,Movie movie) {
-        String classNameUser = user.getProfile().getClassification().getClassName().toLowerCase();
+
+    public void checkUserIsBasic(User user, Movie movie) {
+
+        int classNameUser = user.getProfile().getClassification().getClassLevel();
         String classNameMovie = movie.getClassName().toLowerCase();
 
-        if(user.getProfile().getClassification().getClassLevel() == 2){
+        if (classNameUser == 2) {
             MovieDetailFragment movieDetailFragment = ((HomeActivity) getActivity()).bundleMovieToDetailFragment(movie);
             ((HomeActivity) getActivity()).replaceFragment(movieDetailFragment);
-        }
-        else if(classNameUser.equals("basic")){
-            if(classNameMovie.equals("basic")){
+
+        } else if (classNameUser == 1) {
+
+            if (classNameMovie.equals("basic")) {
                 MovieDetailFragment movieDetailFragment = ((HomeActivity) getActivity()).bundleMovieToDetailFragment(movie);
                 ((HomeActivity) getActivity()).replaceFragment(movieDetailFragment);
             }
-            else{
+
+            else {
                 ((HomeActivity) getActivity()).replaceFragment(new PricingFragment());
                 HomeActivity.mCurrentFragment = HomeActivity.FRAGMENT_PRICING_HOME;
             }
         }
     }
-    
+
 }

@@ -75,15 +75,14 @@
                         />
                     <com.google.android.material.slider.RangeSlider
                         android:id="@+id/movie_detail_imbd"
-                        android:layout_width="180dp"
-                        android:layout_height="2dp"
+                        android:layout_width="160dp"
+                        android:layout_height="1dp"
                         app:values="@array/initial_imbd_values"
                         android:valueFrom="0.0"
                         android:valueTo="10.0"
                         app:thumbColor="@color/primary_color"
                         app:trackColorActive="@color/primary_color"
                         app:trackColorInactive="@color/text_gray" />
-
                 </LinearLayout>
                 <LinearLayout
                     android:layout_marginTop="10dp"
@@ -100,7 +99,7 @@
                     <com.google.android.material.slider.RangeSlider
                         android:id="@+id/movie_detail_release"
                         android:layout_width="180dp"
-                        android:layout_height="2dp"
+                        android:layout_height="1dp"
                         app:values="@array/initial_release_values"
                         android:valueFrom="1996"
                         android:valueTo="2022"

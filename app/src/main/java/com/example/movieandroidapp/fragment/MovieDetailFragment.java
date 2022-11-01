@@ -121,8 +121,7 @@ public class MovieDetailFragment extends Fragment implements getListReviewContra
     private void clickButtonWatch() {
         watchBtn = mView.findViewById(R.id.btn_watch_movie);
         watchBtn.setOnClickListener(t -> {
-            WatchMovieFragment movieDetailFragment = new WatchMovieFragment();
-            ((HomeActivity) getActivity()).replaceFragment(movieDetailFragment);
+            ((HomeActivity) getActivity()).replaceFragment(WatchMovieFragment.newInstance(movie.getMovieURL()));
         });
     }
 

@@ -39,8 +39,8 @@ public interface IMovieApi {
                                                         @Query("quality") String quality,
                                                         @Query("ratingMin") String ratingMin,
                                                         @Query("ratingMax") String ratingMax,
-                                                        @Query("releaseTimeMin") String releaseTimeMin,
-                                                        @Query("releaseTimeMax") String releaseTimeMax
+                                                        @Query("releaseTimeMin") int releaseTimeMin,
+                                                        @Query("releaseTimeMax") int releaseTimeMax
                                                         );
 
     @GET(MovieApiUrl.GetGenres)

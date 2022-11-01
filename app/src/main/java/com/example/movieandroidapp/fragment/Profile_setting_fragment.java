@@ -24,20 +24,14 @@ import com.example.movieandroidapp.presenter.user.ChangePasswordPresenter;
 
 import org.greenrobot.eventbus.EventBus;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Profile_setting_fragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Profile_setting_fragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
 
     private User mUser;
     private View mView;
-    private TextView error_message_profile;
+    private TextView error_message_profile,error_message_name;
 
     private EditText username_profile_setting,
             email_profile_setting,
@@ -106,27 +100,32 @@ public class Profile_setting_fragment extends Fragment {
     }
 
     private void handleChangeProfile() {
+        error_message_name = mView.findViewById(R.id.error_message_name);
         btn_save_profile = mView.findViewById(R.id.btn_save_profile);
         btn_save_profile.setOnClickListener(t -> {
-            UpdateProfileUser.View view = new UpdateProfileUser.View() {
-                @Override
-                public void onResponseSuccess() {
-                    mUser.getProfile().setFirstName(firstName_profile_setting.getText().toString());
-                    mUser.getProfile().setLastName(lastName_profile_setting.getText().toString());
-                    EventBus.getDefault().post(new MessageEvent<User>(mUser));
-                    Toast.makeText(mView.getContext(),"Update profile success" , Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onResponseFailure(String message) {
-                    Toast.makeText(mView.getContext(),"Failed" , Toast.LENGTH_SHORT).show();
-                }
-            };
-            UpdateProfileUserPresenter presenter = new UpdateProfileUserPresenter(view);
-            presenter.requestUpdateProfile(mUser.getUserID(),firstName_profile_setting.getText().toString(),
+            UpdateProfileUserPresenter presenter = new UpdateProfileUserPresenter(callbackUpdateProfile());
+            presenter.requestUpdateProfile(mUser.getUserID(), firstName_profile_setting.getText().toString(),
                     lastName_profile_setting.getText().toString()
-                    );
+            );
         });
+    }
+
+    private UpdateProfileUser.View callbackUpdateProfile() {
+        return new UpdateProfileUser.View() {
+            @Override
+            public void onResponseSuccess() {
+                error_message_name.setVisibility(View.GONE);
+                mUser.getProfile().setFirstName(firstName_profile_setting.getText().toString());
+                mUser.getProfile().setLastName(lastName_profile_setting.getText().toString());
+                EventBus.getDefault().post(new MessageEvent<>(mUser));
+                Toast.makeText(mView.getContext(), "Update profile success", Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onResponseFailure(String message) {
+                error_message_name.setText(message);
+                error_message_name.setVisibility(View.VISIBLE);
+            }
+        };
     }
 
     private void handleChangePassword() {
@@ -139,29 +138,32 @@ public class Profile_setting_fragment extends Fragment {
         btn_change_password_profile = mView.findViewById(R.id.btn_change_password_profile);
 
         btn_change_password_profile.setOnClickListener(t -> {
-            ChangePasswordContract.View view = new ChangePasswordContract.View() {
-                @Override
-                public void onResponseSuccess() {
-                    error_message_profile.setText("");
-                    error_message_profile.setVisibility(View.GONE);
-                    Toast.makeText(mView.getContext(), "Change password successfully", Toast.LENGTH_SHORT).show();
-                    old_password_profile_setting.setText("");
-                    new_password_profile_setting.setText("");
-                    confirm_password_profile_setting.setText("");
-                }
 
-                @Override
-                public void onResponseFailure(String message) {
-                    error_message_profile.setText(message);
-                    error_message_profile.setVisibility(View.VISIBLE);
-                }
-            };
-
-            ChangePasswordPresenter presenter = new ChangePasswordPresenter(view);
+            ChangePasswordPresenter presenter = new ChangePasswordPresenter(callBackChangePassword());
             presenter.requestChangePassword(old_password_profile_setting.getText().toString(),
                     new_password_profile_setting.getText().toString(),
                     confirm_password_profile_setting.getText().toString()
             );
         });
+    }
+
+    private ChangePasswordContract.View callBackChangePassword() {
+        return new ChangePasswordContract.View() {
+            @Override
+            public void onResponseSuccess() {
+                error_message_profile.setText("");
+                error_message_profile.setVisibility(View.GONE);
+                Toast.makeText(mView.getContext(), "Change password successfully", Toast.LENGTH_SHORT).show();
+                old_password_profile_setting.setText("");
+                new_password_profile_setting.setText("");
+                confirm_password_profile_setting.setText("");
+            }
+
+            @Override
+            public void onResponseFailure(String message) {
+                error_message_profile.setText(message);
+                error_message_profile.setVisibility(View.VISIBLE);
+            }
+        };
     }
 }

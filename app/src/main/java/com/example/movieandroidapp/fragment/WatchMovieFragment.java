@@ -26,6 +26,10 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
 
 public class WatchMovieFragment extends Fragment {
+
+    private static final String ARG_URl = "param1";
+
+    private String urlStream;
     View mView;
     PlayerView playerView;
     ImageView fullScreen;
@@ -34,9 +38,29 @@ public class WatchMovieFragment extends Fragment {
     ProgressBar progressBar;
     private boolean isShowingTrackSelectionDialog;
     private DefaultTrackSelector trackSelector;
-
-    String[] speed = {"0.25x","0.5x","Normal","1.5x","2x"};
+    MediaItem mediaItem;
+    String[] speed = {"0.25x", "0.5x", "Normal", "1.5x", "2x"};
     String live_url = "https://moviewebapi.s3.ap-southeast-1.amazonaws.com/Video/1.mp4?AWSAccessKeyId=AKIAUBYK6ZN225WS3AEB&Expires=1696951404&Signature=owI%2BOJUvTlkSH%2FsUROJCqsqLSi4%3D";
+
+    public WatchMovieFragment() {
+    }
+
+    public static WatchMovieFragment newInstance(String url) {
+        WatchMovieFragment fragment = new WatchMovieFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_URl, url);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            urlStream = getArguments().getString(ARG_URl);
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,15 +69,20 @@ public class WatchMovieFragment extends Fragment {
         return mView;
     }
 
-    private void init(){
+    private void init() {
         playVideo();
     }
-    private void playVideo(){
+
+    private void playVideo() {
         trackSelector = new DefaultTrackSelector(mView.getContext());
         player = new SimpleExoPlayer.Builder(mView.getContext()).setTrackSelector(trackSelector).build();
         playerView = mView.findViewById(R.id.playerView);
         playerView.setPlayer(player);
-        MediaItem mediaItem = MediaItem.fromUri(live_url);
+        if (urlStream.isEmpty()) {
+            mediaItem = MediaItem.fromUri(live_url);
+        } else {
+            mediaItem = MediaItem.fromUri(ARG_URl);
+        }
         player.addMediaItem(mediaItem);
         player.prepare();
         player.setPlayWhenReady(true);
@@ -72,7 +101,7 @@ public class WatchMovieFragment extends Fragment {
             builder.setItems(speed, (dialog, which) -> {
                 // the user clicked on colors[which]
 
-                if (which==0){
+                if (which == 0) {
 
                     speedTxt.setVisibility(View.VISIBLE);
                     speedTxt.setText("0.25X");
@@ -80,7 +109,8 @@ public class WatchMovieFragment extends Fragment {
                     player.setPlaybackParameters(param);
 
 
-                }  if (which==1){
+                }
+                if (which == 1) {
 
                     speedTxt.setVisibility(View.VISIBLE);
                     speedTxt.setText("0.5X");
@@ -89,7 +119,7 @@ public class WatchMovieFragment extends Fragment {
 
 
                 }
-                if (which==2){
+                if (which == 2) {
 
                     speedTxt.setVisibility(View.GONE);
                     PlaybackParameters param = new PlaybackParameters(1f);
@@ -97,14 +127,14 @@ public class WatchMovieFragment extends Fragment {
 
 
                 }
-                if (which==3){
+                if (which == 3) {
                     speedTxt.setVisibility(View.VISIBLE);
                     speedTxt.setText("1.5X");
                     PlaybackParameters param = new PlaybackParameters(1.5f);
                     player.setPlaybackParameters(param);
 
                 }
-                if (which==4){
+                if (which == 4) {
 
 
                     speedTxt.setVisibility(View.VISIBLE);
@@ -123,15 +153,15 @@ public class WatchMovieFragment extends Fragment {
 
                 getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
 
-                if (((HomeActivity)getActivity()).getSupportActionBar() != null) {
-                    ((HomeActivity)getActivity()).getSupportActionBar().show();
+                if (((HomeActivity) getActivity()).getSupportActionBar() != null) {
+                    ((HomeActivity) getActivity()).getSupportActionBar().show();
                 }
 
                 getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
                 ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) playerView.getLayoutParams();
                 params.width = params.MATCH_PARENT;
-                params.height = (int) (200 * ((HomeActivity)getActivity()).getApplicationContext().getResources().getDisplayMetrics().density);
+                params.height = (int) (200 * ((HomeActivity) getActivity()).getApplicationContext().getResources().getDisplayMetrics().density);
                 playerView.setLayoutParams(params);
                 isFullScreen = false;
             } else {
@@ -139,8 +169,8 @@ public class WatchMovieFragment extends Fragment {
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
-                if (((HomeActivity)getActivity()).getSupportActionBar() != null) {
-                    ((HomeActivity)getActivity()).getSupportActionBar().hide();
+                if (((HomeActivity) getActivity()).getSupportActionBar() != null) {
+                    ((HomeActivity) getActivity()).getSupportActionBar().hide();
                 }
 
                 getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -162,7 +192,7 @@ public class WatchMovieFragment extends Fragment {
                         TrackSelectionDialog.createForTrackSelector(
                                 trackSelector,
                                 /* onDismissListener= */ dismissedDialog -> isShowingTrackSelectionDialog = false);
-                trackSelectionDialog.show(((HomeActivity)getActivity()).getSupportFragmentManager(), /* tag= */ null);
+                trackSelectionDialog.show(((HomeActivity) getActivity()).getSupportFragmentManager(), /* tag= */ null);
             }
         });
 
@@ -182,6 +212,7 @@ public class WatchMovieFragment extends Fragment {
             }
         });
     }
+
     @Override
     public void onResume() {
         super.onResume();

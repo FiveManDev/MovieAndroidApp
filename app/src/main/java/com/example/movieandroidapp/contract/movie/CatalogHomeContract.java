@@ -14,7 +14,7 @@ public interface CatalogHomeContract {
 
         void getMovieBaseOnFilter(CatalogHomeContract.Model.OnFinishedListener onFinishedListener,
                                   String genreID,String quality, String ratingMin, String ratingMax,
-                                  String releaseTimeMin, String releaseTimeMax
+                                  int releaseTimeMin, int releaseTimeMax
                                   );
     }
 
@@ -25,6 +25,6 @@ public interface CatalogHomeContract {
 
     interface Presenter {
         void requestDataFromServer(String genreID,String quality, String ratingMin, String ratingMax,
-                                   String releaseTimeMin, String releaseTimeMax);
+                                   int releaseTimeMin, int releaseTimeMax);
     }
 }

@@ -27,32 +27,44 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        init();
+
+    }
+
+    private void init(){
         btnLogin = findViewById(R.id.btnLogin);
         btn_forgot = findViewById(R.id.btn_forgot_password);
 
         userName = findViewById(R.id.userName);
         password = findViewById(R.id.password);
         progress = new ProgressDialog(this);
-        LoginPresenter loginPresenter = new LoginPresenter(this);
         signup_link = findViewById(R.id.signup_link);
 
+        handleForgot();
+        handleSignUp();
+        handleLogin();
+    }
+    private void handleForgot(){
         btn_forgot.setOnClickListener(t->{
             startActivity(new Intent(LoginActivity.this, ForgotPassword.class));
         });
+    }
+    private void handleSignUp(){
         signup_link.setOnClickListener(t -> {
             startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
         });
+    }
+    private void handleLogin(){
         btnLogin.setOnClickListener(t -> {
             progress.setTitle("Loading");
             progress.setMessage("Wait while loading...");
             progress.setCancelable(false);
             progress.show();
+            LoginPresenter loginPresenter = new LoginPresenter(this);
             loginPresenter.requestLoginToServer(userName.getText().toString(), password.getText().toString());
         });
     }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onResponseSuccess(TokenModel tokenModel) {
         progress.dismiss();
@@ -62,6 +74,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         DataLocalManager.setUserId(payload.getUserID());
         navigate(payload.getRole());
     }
+
     public void navigate(String role){
         if (checkRole(role)) {
             startActivity( new Intent(this, HomeActivity.class));

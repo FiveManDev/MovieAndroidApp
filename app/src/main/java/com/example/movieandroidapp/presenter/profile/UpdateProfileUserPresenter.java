@@ -24,6 +24,14 @@ public class UpdateProfileUserPresenter implements UpdateProfileUser.Presenter,U
 
     @Override
     public void requestUpdateProfile(String userId, String firstname, String lastname) {
-        model.updateProfile(this,userId,firstname,lastname);
+        if(firstname.isEmpty()){
+            view.onResponseFailure("First name can not be empty");
+        }
+        else if(lastname.isEmpty()){
+            view.onResponseFailure("Last name can not be empty");
+        }
+        else{
+            model.updateProfile(this,userId,firstname,lastname);
+        }
     }
 }

@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.movieandroidapp.R;
+import com.example.movieandroidapp.contract.GetTotalContract;
 import com.example.movieandroidapp.contract.user.ChangeUserStatus;
 import com.example.movieandroidapp.contract.user.DeleteUserContract;
 import com.example.movieandroidapp.contract.user.GetUsersContract;
@@ -25,9 +26,11 @@ import com.example.movieandroidapp.contract.user.ListenerActionUser;
 import com.example.movieandroidapp.model.ResponseFilter;
 import com.example.movieandroidapp.model.User;
 import com.example.movieandroidapp.network.BodyRequest.Filter;
+import com.example.movieandroidapp.presenter.Statistic.GetTotalPresenter;
 import com.example.movieandroidapp.presenter.user.ChangeUserStatusPresenter;
 import com.example.movieandroidapp.presenter.user.DeleteUserPresenter;
 import com.example.movieandroidapp.presenter.user.GetUsersPresenter;
+import com.example.movieandroidapp.service.Statistic.GetTotalUserRequest;
 import com.example.movieandroidapp.view.movie.SortByAdapter;
 import com.example.movieandroidapp.view.user.UserListAdminAdapter;
 
@@ -108,27 +111,28 @@ public class Admin_UserFragment extends Fragment implements GetUsersContract.Vie
         btn_loadMore_user_admin = mView.findViewById(R.id.btn_loadMore_user_admin);
         user_admin_total = mView.findViewById(R.id.user_admin_total);
 
-//        renderTotalUsers();
+        renderTotalUsers();
         renderListSortBy();
         handleSearchText();
         handleLoadMore();
     }
 
-//    private void renderTotalUsers(){
-//        GetTotalMovieContract.View view = new GetTotalMovieContract.View() {
-//            @Override
-//            public void onResponseFailure(String message) {
-//                user_admin_total.setText(0);
-//            }
-//
-//            @Override
-//            public void onResponseSuccess(int total) {
-//                user_admin_total.setText(total + " Total");
-//            }
-//        };
-//        GetTotalMoviesPresenter getTotalMoviesPresenter = new GetTotalMoviesPresenter(view);
-//        getTotalMoviesPresenter.requestGetTotalMovies();
-//    }
+    private void renderTotalUsers(){
+        GetTotalContract.View view = new GetTotalContract.View() {
+            @Override
+            public void onResponseFailure(String message) {
+                user_admin_total.setText(0);
+            }
+
+            @Override
+            public void onResponseSuccess(int total) {
+                user_admin_total.setText(total + " Total");
+            }
+        };
+        GetTotalUserRequest request = new GetTotalUserRequest();
+        GetTotalPresenter getTotalPresenter = new GetTotalPresenter(view,request);
+        getTotalPresenter.requestGetTotal();
+    }
 
     private void filterGetUser(){
         layoutManager = new LinearLayoutManager(mView.getContext());

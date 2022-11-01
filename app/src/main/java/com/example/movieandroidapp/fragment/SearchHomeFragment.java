@@ -60,6 +60,7 @@ public class SearchHomeFragment extends Fragment implements SearchMovieHome.View
             MovieDetailFragment movieDetailFragment = ((HomeActivity) getActivity()).bundleMovieToDetailFragment(movie);
             ((HomeActivity) getActivity()).replaceFragment(movieDetailFragment);
         };
+
         MovieListAdapter adapter = new MovieListAdapter(movieListArray,listenerMovie);
         rcv_movie_search_home.setAdapter(adapter);
     }

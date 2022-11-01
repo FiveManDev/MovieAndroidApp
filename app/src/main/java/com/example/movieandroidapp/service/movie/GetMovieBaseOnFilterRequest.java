@@ -14,7 +14,7 @@ import retrofit2.Response;
 
 public class GetMovieBaseOnFilterRequest implements CatalogHomeContract.Model {
     @Override
-    public void getMovieBaseOnFilter(OnFinishedListener onFinishedListener, String genreID, String quality, String ratingMin, String ratingMax, String releaseTimeMin, String releaseTimeMax) {
+    public void getMovieBaseOnFilter(OnFinishedListener onFinishedListener, String genreID, String quality, String ratingMin, String ratingMax, int releaseTimeMin, int releaseTimeMax) {
         IMovieApi apiService = ApiClient.getClient().create(IMovieApi.class);
         Call<ApiResponse<List<Movie>>> call = apiService.GetMovieBaseOnFilter(genreID, quality, ratingMin, ratingMax, releaseTimeMin, releaseTimeMax);
 

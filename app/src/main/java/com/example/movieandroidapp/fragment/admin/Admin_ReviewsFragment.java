@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.movieandroidapp.R;
 import com.example.movieandroidapp.Utility.Extension;
+import com.example.movieandroidapp.contract.GetTotalContract;
 import com.example.movieandroidapp.contract.review.DeleteReviewContract;
 import com.example.movieandroidapp.contract.review.GetReviews;
 import com.example.movieandroidapp.contract.review.ListenerReview;
@@ -28,6 +29,8 @@ import com.example.movieandroidapp.model.User;
 import com.example.movieandroidapp.network.BodyRequest.Filter;
 import com.example.movieandroidapp.presenter.Review.DeleteReviewPresenter;
 import com.example.movieandroidapp.presenter.Review.GetReviewsPresenter;
+import com.example.movieandroidapp.presenter.Statistic.GetTotalPresenter;
+import com.example.movieandroidapp.service.Statistic.GetTotalReviewRequest;
 import com.example.movieandroidapp.view.Review.ListReviewAdminAdapter;
 import com.example.movieandroidapp.view.movie.SortByAdapter;
 
@@ -120,27 +123,28 @@ public class Admin_ReviewsFragment extends Fragment implements GetReviews.View, 
         btn_loadMore_review_admin = mView.findViewById(R.id.btn_loadMore_review_admin);
         review_admin_total = mView.findViewById(R.id.review_admin_total);
 
-//        renderTotalUsers();
+        renderTotalReview();
         renderListSortBy();
         handleSearchText();
         handleLoadMore();
     }
 
-//    private void renderTotalUsers(){
-//        GetTotalMovieContract.View view = new GetTotalMovieContract.View() {
-//            @Override
-//            public void onResponseFailure(String message) {
-//                review_admin_total.setText(0);
-//            }
-//
-//            @Override
-//            public void onResponseSuccess(int total) {
-//                review_admin_total.setText(total + " Total");
-//            }
-//        };
-//        GetTotalMoviesPresenter getTotalMoviesPresenter = new GetTotalMoviesPresenter(view);
-//        getTotalMoviesPresenter.requestGetTotalMovies();
-//    }
+    private void renderTotalReview(){
+        GetTotalContract.View view = new GetTotalContract.View() {
+            @Override
+            public void onResponseFailure(String message) {
+                review_admin_total.setText(0);
+            }
+
+            @Override
+            public void onResponseSuccess(int total) {
+                review_admin_total.setText(total + " Total");
+            }
+        };
+        GetTotalReviewRequest request = new GetTotalReviewRequest();
+        GetTotalPresenter getTotalPresenter = new GetTotalPresenter(view,request);
+        getTotalPresenter.requestGetTotal();
+    }
 
     private void filterGetReviews(){
         layoutManager = new LinearLayoutManager(mView.getContext());

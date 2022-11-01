@@ -1,6 +1,5 @@
 package com.example.movieandroidapp.fragment.admin;
 
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -22,7 +21,7 @@ import com.example.movieandroidapp.R;
 import com.example.movieandroidapp.contract.movie.ChangeStatusMovieContract;
 import com.example.movieandroidapp.contract.movie.DeleteMovieContract;
 import com.example.movieandroidapp.contract.movie.GetMoviesContract;
-import com.example.movieandroidapp.contract.movie.GetTotalMovieContract;
+import com.example.movieandroidapp.contract.GetTotalContract;
 import com.example.movieandroidapp.contract.movie.ListenerMovie;
 import com.example.movieandroidapp.model.ResponseFilter;
 import com.example.movieandroidapp.model.movie.Movie;
@@ -30,8 +29,9 @@ import com.example.movieandroidapp.network.BodyRequest.ChangeStatusBody;
 import com.example.movieandroidapp.network.BodyRequest.Filter;
 import com.example.movieandroidapp.presenter.movie.DeleteMoviePresenter;
 import com.example.movieandroidapp.presenter.movie.GetMoviesPresenter;
-import com.example.movieandroidapp.presenter.movie.GetTotalMoviesPresenter;
+import com.example.movieandroidapp.presenter.Statistic.GetTotalPresenter;
 import com.example.movieandroidapp.presenter.movie.UpdateMovieStatusPresenter;
+import com.example.movieandroidapp.service.movie.GetTotalMoviesRequest;
 import com.example.movieandroidapp.view.movie.MoviesListAdminAdapter;
 import com.example.movieandroidapp.view.movie.SortByAdapter;
 
@@ -106,7 +106,7 @@ public class Admin_CatalogFragment extends Fragment implements GetMoviesContract
         renderTotalMovies();
     }
     private void renderTotalMovies(){
-        GetTotalMovieContract.View view = new GetTotalMovieContract.View() {
+        GetTotalContract.View view = new GetTotalContract.View() {
             @Override
             public void onResponseFailure(String message) {
                 movie_admin_total.setText(0);
@@ -117,8 +117,9 @@ public class Admin_CatalogFragment extends Fragment implements GetMoviesContract
                 movie_admin_total.setText(total + " Total");
             }
         };
-        GetTotalMoviesPresenter getTotalMoviesPresenter = new GetTotalMoviesPresenter(view);
-        getTotalMoviesPresenter.requestGetTotalMovies();
+        GetTotalMoviesRequest request = new GetTotalMoviesRequest();
+        GetTotalPresenter getTotalMoviesPresenter = new GetTotalPresenter(view,request);
+        getTotalMoviesPresenter.requestGetTotal();
     }
 
     private void filterGetMovie(){

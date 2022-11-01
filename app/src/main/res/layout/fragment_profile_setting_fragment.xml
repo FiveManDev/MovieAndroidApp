@@ -60,6 +60,7 @@
                             android:ems="10"
                             android:inputType="textPersonName"
                             style="@style/inputText"
+                            android:alpha="0.5"
                             android:hint="User name"
                             />
                     </LinearLayout>
@@ -75,6 +76,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                         <EditText
+                            android:alpha="0.5"
                             android:focusable="false"
                             android:cursorVisible="false"
                             android:clickable="false"
@@ -130,6 +132,16 @@
                             android:inputType="textPersonName"
                             style="@style/inputText"
                             android:hint="Doe"
+                            />
+                        <TextView
+                            android:id="@+id/error_message_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginTop="10dp"
+                            android:textSize="18sp"
+                            android:visibility="gone"
+                            android:textColor="@color/error"
                             />
                     </LinearLayout>
                     <Button

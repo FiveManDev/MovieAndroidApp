@@ -100,6 +100,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         replaceFragment(HomeFragment.newInstance(mUser));
         renderUser(mUser);
+        logout();
         EventBus.getDefault().register(this);
     }
 
@@ -133,17 +134,22 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         };
         menu.findItem(R.id.search_toolbar).setOnActionExpandListener(onActionExpandListener);
+        //search
         SearchView searchView =(SearchView) menu.findItem(R.id.search_toolbar).getActionView();
+        //set placeholder
         searchView.setQueryHint("I'm looking for...");
+        //handle event search when click icon search on keyboard
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //bundle data to another fragment
+                //bundle data to search fragment
                 Bundle bundle = new Bundle();
                 bundle.putString("search_query",query);
                 SearchHomeFragment searchHomeFragment = new SearchHomeFragment();
                 searchHomeFragment.setArguments(bundle);
+                //replace current fragment to search fragment
                 replaceFragment(searchHomeFragment);
+
                 mCurrentFragment = FRAGMENT_SEARCH_HOME;
                 return true;
             }
@@ -226,11 +232,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         role = header_nav.findViewById(R.id.header_navigation_role);
         name = header_nav.findViewById(R.id.header_navigation_name);
 
-        //set onclick for icon logout to logout
-        btn_logout_home =(header_nav).findViewById(R.id.btn_logout_home);
-        btn_logout_home.setOnClickListener(t ->{
-            logout();
-        });
+
         if(user != null){
             if(!user.getProfile().getAvatar().isEmpty()){
                 Picasso.get().load(user.getProfile().getAvatar()).into(avatar);
@@ -268,8 +270,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void logout(){
-        DataLocalManager.setAccessToken("");
-        DataLocalManager.setUserId("");
-        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+        //set onclick for icon logout to logout
+        btn_logout_home =(header_nav).findViewById(R.id.btn_logout_home);
+        btn_logout_home.setOnClickListener(t ->{
+            DataLocalManager.setAccessToken("");
+            DataLocalManager.setUserId("");
+            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+        });
     }
 }

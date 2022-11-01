@@ -60,7 +60,6 @@ public class AdminActivity extends AppCompatActivity implements NavigationView.O
     View header_nav;
     User mUser;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

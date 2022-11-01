@@ -1,5 +1,6 @@
 package com.example.movieandroidapp.fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ import com.example.movieandroidapp.view.movie.MovieListAdapter;
 import com.example.movieandroidapp.view.movie.QualityAdapter;
 import com.google.android.material.slider.RangeSlider;
 
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -45,9 +47,10 @@ public class CatalogFragment extends Fragment {
     RecyclerView rcv_movie_catalog;
     TextView not_found_catalog_text;
 
+    ProgressDialog progress;
 
-    private String genreIDFilter, qualityFilter, ratingMin, ratingMax, releaseTimeMin, releaseTimeMax;
-
+    private String genreIDFilter, qualityFilter, ratingMin, ratingMax;
+    private int releaseTimeMin, releaseTimeMax;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,6 +59,11 @@ public class CatalogFragment extends Fragment {
         return mView;
     }
     private void init(){
+        progress = new ProgressDialog(mView.getContext());
+        progress.setMessage("Wait while loading...");
+        progress.setCancelable(false);
+
+
         btn_apply_filter = mView.findViewById(R.id.btn_apply_filter);
         movie_detail_imbd = mView.findViewById(R.id.movie_detail_imbd);
         movie_detail_release = mView.findViewById(R.id.movie_detail_release);
@@ -78,18 +86,19 @@ public class CatalogFragment extends Fragment {
         });
     }
     private void handleChangeRelease(){
-        releaseTimeMin = "1996";
-        releaseTimeMax = "2022";
+        releaseTimeMin = 1996;
+        releaseTimeMax = Year.now().getValue();
 
         movie_detail_release.addOnChangeListener((slider, value, fromUser) -> {
             List<Float> values = slider.getValues();
-            releaseTimeMin = Collections.min(values).toString();
-            releaseTimeMax = Collections.max(values).toString();
+            releaseTimeMin = Math.round(Collections.min(values));
+            releaseTimeMax = Math.round(Collections.max(values));
         });
     }
 
     private void handleFilter(){
         btn_apply_filter.setOnClickListener(t->{
+            progress.show();
             resultFilter();
         });
     }
@@ -153,12 +162,14 @@ public class CatalogFragment extends Fragment {
         CatalogHomeContract.View view = new CatalogHomeContract.View() {
             @Override
             public void setDataToRecyclerview(List<Movie> movieListArray) {
+                progress.dismiss();
                 not_found_catalog_text.setVisibility(View.GONE);
                 renderMovies(movieListArray);
             }
 
             @Override
             public void onResponseFailureNew(String message) {
+                progress.dismiss();
                 rcv_movie_catalog.setAdapter(null);
                 not_found_catalog_text.setVisibility(View.VISIBLE);
             }

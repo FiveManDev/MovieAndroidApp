@@ -26,7 +26,7 @@ public class GetMovieBaseOnFilterPresenter implements CatalogHomeContract.Model.
     }
 
     @Override
-    public void requestDataFromServer(String genreID, String quality, String ratingMin, String ratingMax, String releaseTimeMin, String releaseTimeMax) {
+    public void requestDataFromServer(String genreID, String quality, String ratingMin, String ratingMax, int releaseTimeMin, int releaseTimeMax) {
         model.getMovieBaseOnFilter(this, genreID, quality, ratingMin, ratingMax, releaseTimeMin, releaseTimeMax);
     }
 }

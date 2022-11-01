@@ -16,4 +16,10 @@ import retrofit2.http.Query;
 public interface IStatisticApi {
     @GET(StatisticApiUrl.GetStatisticsForMonth)
     Call<ApiResponse<Statistic>> GetStatisticsForMonth(@Query("date") String monthAndYear);
+
+    @GET(StatisticApiUrl.getTotalUser)
+    Call<ApiResponse<Integer>> GetTotalUser();
+
+    @GET(StatisticApiUrl.getTotalReview)
+    Call<ApiResponse<Integer>> GetTotalReview();
 }
