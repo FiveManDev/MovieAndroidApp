@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.movieandroidapp.MainActivity;
 import com.example.movieandroidapp.R;
 import com.example.movieandroidapp.Utility.DataLocalManager;
 import com.example.movieandroidapp.contract.user.GetUserInformationContract;
@@ -41,6 +42,7 @@ public class AdminActivity extends AppCompatActivity implements NavigationView.O
     public static final int FRAGMENT_USER = 2;
     public static final int FRAGMENT_REVIEWS = 3;
     public static final int FRAGMENT_ADD_MOVIE = 4;
+    public static final int FRAGMENT_HOME = 5;
 
     public static int mCurrentFragment = FRAGMENT_DASHBOARD;
 
@@ -79,7 +81,6 @@ public class AdminActivity extends AppCompatActivity implements NavigationView.O
         replaceFragment(new Admin_DashBoardFragment());
 
         navigationView.getMenu().findItem(R.id.nav_dashboard_admin).setChecked(true);
-
         //get information of a user
         getUser(DataLocalManager.getUserId());
         EventBus.getDefault().register(this);
@@ -127,6 +128,9 @@ public class AdminActivity extends AppCompatActivity implements NavigationView.O
         else if(id == R.id.nav_add_admin){
                 replaceFragment(new Admin_MovieFragment());
                 mCurrentFragment=FRAGMENT_ADD_MOVIE;
+        }else if(id == R.id.nav_home){
+            startActivity(new Intent(AdminActivity.this, HomeActivity.class));
+            mCurrentFragment=FRAGMENT_HOME;
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);

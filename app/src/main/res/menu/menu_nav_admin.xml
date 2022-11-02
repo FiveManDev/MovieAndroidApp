@@ -21,6 +21,10 @@
             android:title="ADD MOVIE"
             android:icon="@drawable/ic_add"
             />
+        <item android:id="@+id/nav_home"
+            android:title="HOME"
+            android:icon="@drawable/ic_home"
+            />
     </group>
 
 </menu>

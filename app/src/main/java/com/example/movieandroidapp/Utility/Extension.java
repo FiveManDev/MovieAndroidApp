@@ -74,4 +74,13 @@ public class Extension {
         return false;
     }
 
+    public static boolean checkRoleIsUser(String role) {
+        if (role.equals("User")) {
+            return true;
+        } else if (role.equals("Admin")) {
+            return false;
+        }
+        return false;
+    }
+
 }

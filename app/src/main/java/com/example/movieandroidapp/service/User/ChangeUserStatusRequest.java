@@ -25,7 +25,7 @@ public class ChangeUserStatusRequest implements ChangeUserStatus.Model {
                     onFinishedListener.onFinished(USerId);
                 }
                 else{
-                    onFinishedListener.onFailure(response.body().getMessage());
+                    onFinishedListener.onFailure("Error on change status user");
                 }
             }
             @Override

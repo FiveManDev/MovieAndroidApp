@@ -25,6 +25,14 @@ public class CreateReviewMoviePresenter implements CreateReviewContract.Presente
 
     @Override
     public void requestCreateReview(ReviewBody review) {
-        model.createReview(this,review);
+        if(review.getTitle().isEmpty() || review.getTitle() == null){
+            view.onResponseFailure("Title can not be empty");
+        }
+        else if(review.getReviewContent().isEmpty() || review.getReviewContent() == null){
+            view.onResponseFailure("Content can not be empty");
+        }
+        else{
+            model.createReview(this,review);
+        }
     }
 }

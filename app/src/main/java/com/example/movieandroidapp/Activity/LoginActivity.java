@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     }
 
     public void navigate(String role){
-        if (checkRole(role)) {
+        if (Extension.checkRoleIsUser(role)) {
             startActivity( new Intent(this, HomeActivity.class));
         } else {
             startActivity(new Intent(this, AdminActivity.class));
@@ -86,14 +86,5 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         error_message = findViewById(R.id.error_message);
         error_message.setText(message);
         error_message.setVisibility(View.VISIBLE);
-    }
-
-    public boolean checkRole(String role) {
-        if (role.equals("User")) {
-            return true;
-        } else if (role.equals("Admin")) {
-            return false;
-        }
-        return false;
     }
 }

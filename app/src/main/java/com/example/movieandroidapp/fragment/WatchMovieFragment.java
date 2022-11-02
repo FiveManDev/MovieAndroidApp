@@ -81,7 +81,7 @@ public class WatchMovieFragment extends Fragment {
         if (urlStream.isEmpty()) {
             mediaItem = MediaItem.fromUri(live_url);
         } else {
-            mediaItem = MediaItem.fromUri(ARG_URl);
+            mediaItem = MediaItem.fromUri(urlStream);
         }
         player.addMediaItem(mediaItem);
         player.prepare();

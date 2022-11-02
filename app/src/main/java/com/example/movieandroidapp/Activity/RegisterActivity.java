@@ -2,6 +2,7 @@ package com.example.movieandroidapp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +21,7 @@ public class RegisterActivity extends AppCompatActivity implements ConfirmEmailC
 
     private Button btnRegister;
     private TextView register_error_message;
+    ProgressDialog progress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +38,10 @@ public class RegisterActivity extends AppCompatActivity implements ConfirmEmailC
         register_error_message = findViewById(R.id.register_error_message);
 
         btnRegister.setOnClickListener(t -> {
+            progress = new ProgressDialog(this);
+            progress.setMessage("Wait while loading...");
+            progress.setCancelable(false);
+            progress.show();
             confirmEmailPresenter.confirmEmailToServer(
                     userName.getText().toString(),
                     email.getText().toString(),
@@ -48,6 +54,8 @@ public class RegisterActivity extends AppCompatActivity implements ConfirmEmailC
 
     @Override
     public void onResponseSuccess(String code) {
+        progress.dismiss();
+
         register_error_message.setVisibility(View.GONE);
         bundleData(userName.getText().toString(), email.getText().toString(), password.getText().toString(),code);
 
@@ -68,6 +76,7 @@ public class RegisterActivity extends AppCompatActivity implements ConfirmEmailC
 
     @Override
     public void onResponseFailure(String message) {
+        progress.dismiss();
         register_error_message.setVisibility(View.VISIBLE);
         register_error_message.setText(message);
     }

@@ -18,6 +18,10 @@
             android:title="@string/pricing"
             android:icon="@drawable/ic_registration"
             />
+        <item android:id="@+id/nav_admin"
+            android:title="@string/admin"
+            android:icon="@drawable/ic_admin"
+            />
     </group>
 
 </menu>

@@ -25,8 +25,13 @@ public class LoginRequest implements LoginContract.Model {
             @Override
             public void onResponse(Call<ApiResponse<TokenModel>> call, Response<ApiResponse<TokenModel>> response) {
                 try {
-                    TokenModel tokenModel = response.body().getData();
-                    onFinishedListener.onFinished(tokenModel);
+                    if(response.isSuccessful()){
+                        TokenModel tokenModel = response.body().getData();
+                        onFinishedListener.onFinished(tokenModel);
+                    }
+                    else{
+                        onFinishedListener.onFailure("Incorrect username or password!");
+                    }
                 } catch (Exception e) {
                     onFinishedListener.onFailure("Incorrect username or password!");
                 }

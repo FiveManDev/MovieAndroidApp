@@ -166,9 +166,7 @@ public class Admin_CatalogFragment extends Fragment implements GetMoviesContract
                 filterGetMovie();
             }
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
     }
 

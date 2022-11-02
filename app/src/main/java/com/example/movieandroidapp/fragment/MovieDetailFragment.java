@@ -55,7 +55,9 @@ public class MovieDetailFragment extends Fragment implements getListReviewContra
             movie_time_detail,
             movie_release_detail,
             movie_country_detail,
-            movie_desc_detail;
+            movie_desc_detail,
+            error_message_review
+    ;
     //rating
     Slider movie_review_rating_review;
     int rating;
@@ -91,6 +93,7 @@ public class MovieDetailFragment extends Fragment implements getListReviewContra
     private void renderMovieDetail() {
         movie_image_detail = mView.findViewById(R.id.movie_image_detail);
 
+        error_message_review = mView.findViewById(R.id.error_message_review);
         movie_title_detail = mView.findViewById(R.id.movie_title_detail);
         movie_rating_detail = mView.findViewById(R.id.movie_rating_detail);
         movie_quality_detail = mView.findViewById(R.id.movie_quality_detail);
@@ -145,6 +148,7 @@ public class MovieDetailFragment extends Fragment implements getListReviewContra
             CreateReviewContract.View view = new CreateReviewContract.View() {
                 @Override
                 public void onResponseSuccess() {
+                    error_message_review.setVisibility(View.GONE);
                     Toast.makeText(mView.getContext(), "Created review successfully!", Toast.LENGTH_SHORT).show();
                     movie_detail_title_review.setText("");
                     movie_detail_content_review.setText("");
@@ -153,7 +157,8 @@ public class MovieDetailFragment extends Fragment implements getListReviewContra
 
                 @Override
                 public void onResponseFailure(String message) {
-                    Toast.makeText(mView.getContext(), message, Toast.LENGTH_SHORT).show();
+                    error_message_review.setText(message);
+                    error_message_review.setVisibility(View.VISIBLE);
                 }
             };
 

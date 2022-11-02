@@ -110,7 +110,7 @@ public class ProfileFragment extends Fragment {
         profile_role_user = mView.findViewById(R.id.profile_role_user);
         profile_name_user = mView.findViewById(R.id.profile_name_user);
 
-        if(!(mUser.getProfile().getAvatar().isEmpty())){
+        if(mUser.getProfile().getAvatar() != null){
             Picasso.get().load(mUser.getProfile().getAvatar()).into(profile_image_user);
         }
         profile_role_user.setText(mUser.getAuthorization().getAuthorizationName());

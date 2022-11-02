@@ -28,6 +28,7 @@
     <string name="users">USERS</string>
     <string name="reviews">REVIEWS</string>
     <string name="pricing">PRICING</string>
+    <string name="admin">ADMIN</string>
 
     <!-- Dropdown-->
     <string name="select">Choose quality</string>

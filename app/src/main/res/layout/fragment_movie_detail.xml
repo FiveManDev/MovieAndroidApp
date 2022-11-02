@@ -254,6 +254,16 @@
                         android:inputType="textMultiLine"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp" />
+                    <TextView
+                        android:id="@+id/error_message_review"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginTop="10dp"
+                        android:textSize="18sp"
+                        android:visibility="gone"
+                        android:textColor="@color/error"
+                        />
 
                     <LinearLayout
                         android:layout_width="match_parent"

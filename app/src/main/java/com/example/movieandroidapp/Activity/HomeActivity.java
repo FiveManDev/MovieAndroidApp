@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.movieandroidapp.R;
 import com.example.movieandroidapp.Utility.DataLocalManager;
+import com.example.movieandroidapp.Utility.Extension;
 import com.example.movieandroidapp.contract.user.GetUserInformationContract;
 import com.example.movieandroidapp.fragment.CatalogFragment;
 import com.example.movieandroidapp.fragment.HomeFragment;
@@ -53,6 +54,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public static final int FRAGMENT_SEARCH_HOME = 2;
     public static final int FRAGMENT_PROFILE_HOME = 3;
     public static final int FRAGMENT_PRICING_HOME = 4;
+    public static final int FRAGMENT_ADMIN = 5;
 
     public static int mCurrentFragment = FRAGMENT_HOME;
 
@@ -62,6 +64,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private RelativeLayout btn_logout_home;
     View header_nav;
     User mUser;
+    NavigationView navigationView;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -89,13 +92,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         actionBarDrawerToggle.syncState();
 
 
-        NavigationView navigationView = findViewById(R.id.navigation_view_user);
+        navigationView = findViewById(R.id.navigation_view_user);
         navigationView.setNavigationItemSelectedListener(this);
         //create context to find id of list item in header navigation
         header_nav = navigationView.getHeaderView(0);
 
 
         navigationView.getMenu().findItem(R.id.nav_home_user).setChecked(true);
+
+        if(mUser.getAuthorization().getAuthorizationLevel() == 1){
+            navigationView.getMenu().findItem(R.id.nav_admin).setVisible(false);
+        }
 
         replaceFragment(HomeFragment.newInstance(mUser));
         renderUser(mUser);
@@ -144,6 +151,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 //bundle data to search fragment
                 Bundle bundle = new Bundle();
                 bundle.putString("search_query",query);
+                bundle.putString("user", Extension.GsonUtil().toJson(mUser));
                 SearchHomeFragment searchHomeFragment = new SearchHomeFragment();
                 searchHomeFragment.setArguments(bundle);
                 //replace current fragment to search fragment
@@ -169,7 +177,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
-                replaceFragment(new HomeFragment());
+                replaceFragment(HomeFragment.newInstance(mUser));
                 mCurrentFragment=FRAGMENT_HOME;
                 return true;
             }
@@ -204,6 +212,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 mCurrentFragment=FRAGMENT_PRICING_HOME;
             }
         }
+        else if(id == R.id.nav_admin){
+            startActivity(new Intent(HomeActivity.this, AdminActivity.class));
+            mCurrentFragment=FRAGMENT_ADMIN;
+        }
         mDrawerLayout.closeDrawer(GravityCompat.START);
 
         return true;
@@ -233,7 +245,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
         if(user != null){
-            if(!user.getProfile().getAvatar().isEmpty()){
+            if(user.getProfile().getAvatar() != null){
                 Picasso.get().load(user.getProfile().getAvatar()).into(avatar);
             }else {
                 Picasso.get().load("@drawable/not_available").into(avatar);
@@ -276,5 +288,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             DataLocalManager.setUserId("");
             startActivity(new Intent(HomeActivity.this, LoginActivity.class));
         });
+    }
+
+    @Override
+    public boolean isDestroyed() {
+        navigationView.getMenu().findItem(R.id.nav_home_user).setChecked(true);
+        mCurrentFragment = FRAGMENT_HOME;
+        return super.isDestroyed();
     }
 }

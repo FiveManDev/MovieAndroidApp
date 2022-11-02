@@ -3,6 +3,8 @@ package com.example.movieandroidapp.network;
 
 
 
+import android.util.Log;
+
 import com.example.movieandroidapp.Utility.DataLocalManager;
 import com.example.movieandroidapp.Utility.Extension;
 
@@ -16,6 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
 
 //  public static final String address = "http://192.168.43.60";
+//  public static final String address = "http://14.183.119.13";
 
     public static final String address = "http://10.0.2.2:5237";
     public static final String BASE_URL = address+"/api/v1/";
@@ -32,14 +35,20 @@ public class ApiClient {
                                     .addHeader("Content-Type","application/json;charset=UTF-8")
                                     .addHeader("Authorization", BearToken).build();
                             return chain.proceed(request);
-                        }).connectTimeout(60, TimeUnit.SECONDS)
-                 .writeTimeout(60, TimeUnit.SECONDS)
-                 .readTimeout(60,TimeUnit.SECONDS)
+                        }).connectTimeout(240, TimeUnit.SECONDS)
+                 .writeTimeout(240, TimeUnit.SECONDS)
+                 .readTimeout(240,TimeUnit.SECONDS)
                  .retryOnConnectionFailure(true).build();
+
         if(retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
+                    .client(defaultHttpClient)
+                    .build();
+        }
+        else{
+            retrofit = retrofit.newBuilder()
                     .client(defaultHttpClient)
                     .build();
         }

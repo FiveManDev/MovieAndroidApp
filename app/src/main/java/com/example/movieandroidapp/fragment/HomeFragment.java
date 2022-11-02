@@ -186,23 +186,25 @@ public class HomeFragment extends Fragment
 
     public void checkUserIsBasic(User user, Movie movie) {
 
-        int classNameUser = user.getProfile().getClassification().getClassLevel();
-        String classNameMovie = movie.getClassName().toLowerCase();
+        if(user != null){
+            int classNameUser = user.getProfile().getClassification().getClassLevel();
+            String classNameMovie = movie.getClassName().toLowerCase();
 
-        if (classNameUser == 2) {
-            MovieDetailFragment movieDetailFragment = ((HomeActivity) getActivity()).bundleMovieToDetailFragment(movie);
-            ((HomeActivity) getActivity()).replaceFragment(movieDetailFragment);
-
-        } else if (classNameUser == 1) {
-
-            if (classNameMovie.equals("basic")) {
+            if (classNameUser == 2) {
                 MovieDetailFragment movieDetailFragment = ((HomeActivity) getActivity()).bundleMovieToDetailFragment(movie);
                 ((HomeActivity) getActivity()).replaceFragment(movieDetailFragment);
-            }
 
-            else {
-                ((HomeActivity) getActivity()).replaceFragment(new PricingFragment());
-                HomeActivity.mCurrentFragment = HomeActivity.FRAGMENT_PRICING_HOME;
+            } else if (classNameUser == 1) {
+
+                if (classNameMovie.equals("basic")) {
+                    MovieDetailFragment movieDetailFragment = ((HomeActivity) getActivity()).bundleMovieToDetailFragment(movie);
+                    ((HomeActivity) getActivity()).replaceFragment(movieDetailFragment);
+                }
+
+                else {
+                    ((HomeActivity) getActivity()).replaceFragment(new PricingFragment());
+                    HomeActivity.mCurrentFragment = HomeActivity.FRAGMENT_PRICING_HOME;
+                }
             }
         }
     }

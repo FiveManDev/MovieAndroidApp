@@ -58,7 +58,7 @@
         android:id="@+id/btnRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign In"
+        android:text="Sign Up"
         android:height="60dp"
         android:backgroundTint="@color/primary_color"
         android:layout_marginTop="20dp"
@@ -80,7 +80,7 @@
             android:id="@+id/signin_link"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sign in! "
+            android:text="Sign in"
             style="@style/text_primary"
             />
     </LinearLayout>

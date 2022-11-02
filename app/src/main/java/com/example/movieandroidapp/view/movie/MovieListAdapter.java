@@ -37,8 +37,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MyVi
         holder.title_movie.setText(movieList.get(position).getMovieName());
         holder.genre_movie.setText(String.join(", ",movieList.get(position).getGenres()));
         holder.rating_movie.setText(movieList.get(position).getRating().toString());
-        if(movieList.get(position).getCoverImage() != null){
-         Picasso.get().load(movieList.get(position).getCoverImage()).into(holder.img_movie);
+        if(movieList.get(position).getThumbnail() != null || !movieList.get(position).getThumbnail().isEmpty()){
+          Picasso.get().load(movieList.get(position).getThumbnail()).into(holder.img_movie);
         }
         holder.movie_item_container.setOnClickListener(t-> listenerMovie.ClickedMovie(movieList.get(position),"detail"));
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="initial_imbd_values">
-        <item>1.0</item>
+        <item>0.0</item>
         <item>10.0</item>
     </array>
 

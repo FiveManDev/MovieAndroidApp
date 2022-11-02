@@ -26,10 +26,10 @@ public class ChangePasswordRequest implements ChangePasswordContract.Model {
         call.enqueue(new Callback<ApiResponse<String[]>>() {
             @Override
             public void onResponse(Call<ApiResponse<String[]>> call, Response<ApiResponse<String[]>> response) {
-                if (response.code() == 400) {
-                    onFinishedListener.onFailure("Old password incorrect");
-                } else {
+                if (response.isSuccessful()) {
                     onFinishedListener.onFinished();
+                } else {
+                    onFinishedListener.onFailure("Old password incorrect");
                 }
             }
 
