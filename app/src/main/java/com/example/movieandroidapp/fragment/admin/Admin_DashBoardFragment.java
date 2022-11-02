@@ -9,9 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.movieandroidapp.Activity.AdminActivity;
 import com.example.movieandroidapp.R;
 import com.example.movieandroidapp.contract.StatisticsContract;
 import com.example.movieandroidapp.contract.movie.GetMoviesContract;
@@ -53,6 +55,8 @@ public class Admin_DashBoardFragment extends Fragment  {
     private TextView admin_dashboard_user,admin_dashboard_movie,admin_dashboard_review,admin_dashboard_money;
 
     private LinearLayoutManager linearLayoutManager;
+
+    Button btn_add_item;
 
     public Admin_DashBoardFragment() {
     }
@@ -100,6 +104,13 @@ public class Admin_DashBoardFragment extends Fragment  {
         rcv_admin_movie_top = mView.findViewById(R.id.rcv_admin_movie_top);
         rcv_admin_dashboard_review_latest = mView.findViewById(R.id.rcv_admin_dashboard_review_latest);
         rcv_admin_dashboard_movie_latest = mView.findViewById(R.id.rcv_admin_dashboard_movie_latest);
+
+        btn_add_item = mView.findViewById(R.id.btn_add_item);
+
+        btn_add_item.setOnClickListener(t->{
+            ((AdminActivity) requireActivity()).replaceFragment(new Admin_MovieFragment());
+            AdminActivity.mCurrentFragment = AdminActivity.FRAGMENT_ADD_MOVIE;
+        });
 
         getMovieTop();
         getReviewLatest();

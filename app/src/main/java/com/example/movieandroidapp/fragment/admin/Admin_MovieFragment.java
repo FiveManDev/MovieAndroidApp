@@ -33,34 +33,35 @@ import com.example.movieandroidapp.Utility.DataLocalManager;
 import com.example.movieandroidapp.Utility.Extension;
 import com.example.movieandroidapp.Utility.RealPathUtil;
 import com.example.movieandroidapp.contract.movie.GetGenre;
-import com.example.movieandroidapp.contract.movie.PostMovieContract;
+import com.example.movieandroidapp.contract.movie.PostUpdateMovieContract;
 import com.example.movieandroidapp.model.Genre;
+import com.example.movieandroidapp.model.movie.Movie;
 import com.example.movieandroidapp.model.movie.PostMovie;
 import com.example.movieandroidapp.presenter.movie.GetGenrePresenter;
 import com.example.movieandroidapp.presenter.movie.PostMoviePresenter;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class Admin_AddFragment extends Fragment {
+public class Admin_MovieFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final int MY_REQUEST_CODE = 10;
+
+    private static final String ARG_Movie = "param1";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private Movie movie;
+
+    private static final int MY_REQUEST_CODE = 10;
+
 
     private View mView;
 
     //value of dropdown quality
-    String[] itemsDropdownQuality = {"1080p60", "720p60","480p","360p"};
+    String[] itemsDropdownQuality = {"1080p60", "720p60", "480p", "360p"};
     AutoCompleteTextView autoCompleteTxt_quality;
     ArrayAdapter<String> adapterItemQuality;
 
@@ -71,7 +72,7 @@ public class Admin_AddFragment extends Fragment {
 
 
     //value of dropdown country
-    String[] itemsDropdownCountry = {"US", "UK", "Viet Nam", "Singapore","Korea","Japan","Thailand","China"};
+    String[] itemsDropdownCountry = {"US", "UK", "Viet Nam", "Singapore", "Korea", "Japan", "Thailand", "China"};
     AutoCompleteTextView autoCompleteTxt_country;
     ArrayAdapter<String> adapterItemCountry;
 
@@ -89,7 +90,7 @@ public class Admin_AddFragment extends Fragment {
             admin_movie_upload_video, admin_movie_add_title, admin_movie_add_content;
     private String stateCurrent;
     private Button btn_add_movie;
-    private TextView error_message_add_movie;
+    private TextView error_message_add_movie, title_fragment;
 
     ProgressDialog progress;
 
@@ -117,13 +118,13 @@ public class Admin_AddFragment extends Fragment {
             });
 
 
-    public Admin_AddFragment() {
+    public Admin_MovieFragment() {
     }
 
-    public static Admin_AddFragment newInstance(String param1) {
-        Admin_AddFragment fragment = new Admin_AddFragment();
+    public static Admin_MovieFragment newInstance(Movie movieParam) {
+        Admin_MovieFragment fragment = new Admin_MovieFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_Movie, Extension.GsonUtil().toJson(movieParam));
         fragment.setArguments(args);
         return fragment;
     }
@@ -132,7 +133,7 @@ public class Admin_AddFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            movie = Extension.GsonUtil().fromJson(getArguments().getString(ARG_Movie), Movie.class);
         }
     }
 
@@ -140,7 +141,7 @@ public class Admin_AddFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = inflater.inflate(R.layout.fragment_admin__add, container, false);
+        mView = inflater.inflate(R.layout.fragment_admin__movie, container, false);
         init();
         return mView;
     }
@@ -153,55 +154,87 @@ public class Admin_AddFragment extends Fragment {
 
 
         postMovie = new PostMovie();
-        postMovie.setActor("1");
-        postMovie.setDirector("1");
-        postMovie.setMovieTypeName("Short Video");
-        postMovie.setSubtitle("12");
-        postMovie.setReleaseTime(java.time.LocalDate.now().toString());
-        postMovie.setMovieID(DataLocalManager.getUserId());
+        defaultValue();
 
+        title_fragment = mView.findViewById(R.id.title_fragment);
+
+        admin_movie_upload_photos = mView.findViewById(R.id.admin_movie_upload_photos);
+        admin_movie_upload_video = mView.findViewById(R.id.admin_movie_upload_video);
+        admin_movie_add_thumbnail = mView.findViewById(R.id.admin_movie_add_thumbnail);
+        admin_movie_add_releaseTime = mView.findViewById(R.id.admin_movie_add_releaseTime);
         admin_movie_add_title = mView.findViewById(R.id.admin_movie_add_title);
         admin_movie_add_content = mView.findViewById(R.id.admin_movie_add_content);
         admin_movie_add_running_time = mView.findViewById(R.id.admin_movie_add_running_time);
         admin_movie_add_age = mView.findViewById(R.id.admin_movie_add_age);
         error_message_add_movie = mView.findViewById(R.id.error_message_add_movie);
 
-        getGenre();
-        renderDropdownQuality();
-        renderDropdownGenre();
-        renderDropdownCountry();
-        renderDropdownClassName();
+        autoCompleteTxt_quality = mView.findViewById(R.id.auto_complete_quality);
+        autoCompleteTxt_genre = mView.findViewById(R.id.auto_complete_genre);
+        autoCompleteTxt_country = mView.findViewById(R.id.auto_complete_country);
+        autoCompleteTxt_className = mView.findViewById(R.id.auto_complete_className);
+
+
         initDatePicker();
         getReleaseDate();
         getThumbnail();
         getVideo();
         getCoverImage();
+
+        getGenre();
+        renderDropdownQuality();
+        renderDropdownGenre();
+        renderDropdownCountry();
+        renderDropdownClassName();
         submitForm();
+        setValueFormForUpdate();
+    }
+
+    private void setValueFormForUpdate() {
+        if (movie != null) {
+            title_fragment.setText("Update movie");
+            if (!movie.getThumbnail().isEmpty()) {
+                Picasso.get().load(movie.getCoverImage()).into(admin_movie_add_thumbnail);
+            }
+
+            admin_movie_add_title.setText(movie.getMovieName());
+            admin_movie_add_content.setText(movie.getDescription());
+            admin_movie_add_releaseTime.setText(Extension.formatDate(movie.getReleaseTime()));
+            admin_movie_add_running_time.setText(movie.getRunningTime().toString());
+            admin_movie_add_age.setText(movie.getAge());
+            admin_movie_upload_photos.setText(movie.getCoverImage());
+            admin_movie_upload_video.setText(movie.getMovieURL());
+        }
     }
 
     private void submitForm() {
         btn_add_movie = mView.findViewById(R.id.btn_add_movie);
+        //submit to set value for object postMovie
         btn_add_movie.setOnClickListener(t -> {
             progress.show();
-            postMovie.setMovieName(admin_movie_add_title.getText().toString());
-            postMovie.setDescription(admin_movie_add_content.getText().toString());
             if (!admin_movie_add_running_time.getText().toString().isEmpty()) {
                 postMovie.setRunningTime(Float.parseFloat(admin_movie_add_running_time.getText().toString()));
             }
             postMovie.setAge(admin_movie_add_age.getText().toString());
-
             postMovie.setUserID(DataLocalManager.getUserId());
-            postMovieToServer(postMovie);
+            postMovie.setMovieName(admin_movie_add_title.getText().toString());
+            postMovie.setDescription(admin_movie_add_content.getText().toString());
+            //check is update
+            if (movie != null) {
+                updateMovieToServer(postMovie);
+            } else {
+                postMovieToServer(postMovie);
+            }
         });
     }
 
     private void postMovieToServer(PostMovie movie) {
-        PostMovieContract.View view = new PostMovieContract.View() {
+        PostUpdateMovieContract.View view = new PostUpdateMovieContract.View() {
             @Override
             public void onResponseSuccess() {
                 error_message_add_movie.setVisibility(View.GONE);
                 progress.dismiss();
                 Toast.makeText(mView.getContext(), "Create movie successfully!", Toast.LENGTH_SHORT).show();
+                clearDataForm();
             }
 
             @Override
@@ -213,11 +246,38 @@ public class Admin_AddFragment extends Fragment {
             }
         };
         PostMoviePresenter postMoviePresenter = new PostMoviePresenter(view);
-        postMoviePresenter.requestPostMovie(movie);
+        postMoviePresenter.requestMovie(movie,"post");
+    }
+    private void updateMovieToServer(PostMovie postMovie) {
+        postMovie.setLanguage(movie.getLanguage());
+        postMovie.setPublicationTime(java.time.LocalDate.now().toString());
+        postMovie.setMovieID(movie.getMovieID());
+        postMovie.setReleaseTime(admin_movie_add_releaseTime.getText().toString());
+        PostUpdateMovieContract.View view = new PostUpdateMovieContract.View() {
+            @Override
+            public void onResponseSuccess() {
+                error_message_add_movie.setVisibility(View.GONE);
+                progress.dismiss();
+                Toast.makeText(mView.getContext(), "Update movie successfully!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponseFailure(String message) {
+                progress.dismiss();
+                error_message_add_movie.setText(message);
+                error_message_add_movie.setVisibility(View.VISIBLE);
+                Toast.makeText(mView.getContext(), message, Toast.LENGTH_SHORT).show();
+            }
+        };
+        PostMoviePresenter postMoviePresenter = new PostMoviePresenter(view);
+        postMoviePresenter.requestMovie(postMovie,"update");
     }
 
     private void renderDropdownQuality() {
-        autoCompleteTxt_quality = mView.findViewById(R.id.auto_complete_quality);
+        if (movie != null) {
+            autoCompleteTxt_quality.setText(movie.getQuality());
+            postMovie.setQuality(movie.getQuality());
+        }
 
         adapterItemQuality = new ArrayAdapter<>(mView.getContext(), R.layout.dropdown_normal_item, itemsDropdownQuality);
 
@@ -249,23 +309,31 @@ public class Admin_AddFragment extends Fragment {
     }
 
     private void renderDropdownGenre() {
-        autoCompleteTxt_genre = mView.findViewById(R.id.auto_complete_genre);
+        List<String> list = new ArrayList<>();
+
+        if (movie != null) {
+            autoCompleteTxt_genre.setText(movie.getGenres().get(0));
+            list.add(movie.getGenres().get(0));
+            postMovie.setGenreNames(list);
+        }
 
         adapterItemGenre = new ArrayAdapter<>(mView.getContext(), R.layout.dropdown_normal_item, genres);
 
         autoCompleteTxt_genre.setAdapter(adapterItemGenre);
-
+        //set movie when action is updating
         autoCompleteTxt_genre.setOnItemClickListener((parent, view, position, id) -> {
             String item = parent.getItemAtPosition(position).toString();
-            List<String> list = new ArrayList<>();
+            list.clear();
             list.add(item);
             postMovie.setGenreNames(list);
         });
     }
 
     private void renderDropdownCountry() {
-        autoCompleteTxt_country = mView.findViewById(R.id.auto_complete_country);
-
+        if (movie != null) {
+            autoCompleteTxt_country.setText(movie.getCountry());
+            postMovie.setCountry(movie.getCountry());
+        }
         adapterItemCountry = new ArrayAdapter<>(mView.getContext(), R.layout.dropdown_normal_item, itemsDropdownCountry);
 
         autoCompleteTxt_country.setAdapter(adapterItemCountry);
@@ -278,7 +346,11 @@ public class Admin_AddFragment extends Fragment {
     }
 
     private void renderDropdownClassName() {
-        autoCompleteTxt_className = mView.findViewById(R.id.auto_complete_className);
+        //for update
+        if (movie != null) {
+            autoCompleteTxt_className.setText(movie.getClassName());
+            postMovie.setClassName(movie.getClassName());
+        }
 
         adapterItemClassname = new ArrayAdapter<>(mView.getContext(), R.layout.dropdown_normal_item, itemsDropdownClassname);
 
@@ -291,14 +363,12 @@ public class Admin_AddFragment extends Fragment {
     }
 
     private void getReleaseDate() {
-        admin_movie_add_releaseTime = mView.findViewById(R.id.admin_movie_add_releaseTime);
         admin_movie_add_releaseTime.setOnClickListener(t -> {
             datePickerDialog.show();
         });
     }
 
     private void getThumbnail() {
-        admin_movie_add_thumbnail = mView.findViewById(R.id.admin_movie_add_thumbnail);
         admin_movie_add_thumbnail.setOnClickListener(t -> {
             stateCurrent = "thumb";
             onClickRequestPermission();
@@ -325,7 +395,6 @@ public class Admin_AddFragment extends Fragment {
     }
 
     private void getVideo() {
-        admin_movie_upload_video = mView.findViewById(R.id.admin_movie_upload_video);
         admin_movie_upload_video.setOnClickListener(t -> {
             stateCurrent = "video";
 
@@ -346,7 +415,6 @@ public class Admin_AddFragment extends Fragment {
     }
 
     private void getCoverImage() {
-        admin_movie_upload_photos = mView.findViewById(R.id.admin_movie_upload_photos);
         admin_movie_upload_photos.setOnClickListener(t -> {
             stateCurrent = "cover";
 
@@ -401,7 +469,7 @@ public class Admin_AddFragment extends Fragment {
         DatePickerDialog.OnDateSetListener dateSetListener = (datePicker, year, month, day) -> {
             month = month + 1;
             String date = makeDateString(day, month, year);
-            postMovie.setPublicationTime(date);
+            postMovie.setReleaseTime(date);
             admin_movie_add_releaseTime.setText(date);
         };
 
@@ -419,4 +487,28 @@ public class Admin_AddFragment extends Fragment {
         return year + "-" + month + "-" + day;
     }
 
+    private void clearDataForm() {
+        admin_movie_add_thumbnail.setImageResource(R.drawable.not_available);
+        admin_movie_add_title.setText("");
+        admin_movie_add_content.setText("");
+        admin_movie_add_releaseTime.setText("");
+        admin_movie_add_running_time.setText("");
+        admin_movie_add_age.setText("");
+        admin_movie_upload_photos.setText("");
+        admin_movie_upload_video.setText("");
+        autoCompleteTxt_quality.setText("");
+        autoCompleteTxt_genre.setText("");
+        autoCompleteTxt_className.setText("");
+        autoCompleteTxt_country.setText("");
+
+        defaultValue();
+    }
+    private void defaultValue(){
+        postMovie.setActor("Group1");
+        postMovie.setDirector("Group1");
+        postMovie.setMovieTypeName("Short Video");
+        postMovie.setSubtitle("This is subtitle");
+        postMovie.setPublicationTime(java.time.LocalDate.now().toString());
+        postMovie.setMovieID(DataLocalManager.getUserId());
+    }
 }

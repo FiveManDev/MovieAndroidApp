@@ -41,6 +41,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <Button
+                        android:id="@+id/btn_add_item"
                         android:backgroundTint="@color/primary_color"
                         android:text="ADD ITEM"
                         android:layout_width="wrap_content"

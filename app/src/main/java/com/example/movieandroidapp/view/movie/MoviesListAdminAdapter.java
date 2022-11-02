@@ -83,6 +83,9 @@ public class MoviesListAdminAdapter extends RecyclerView.Adapter<MovieAdminHolde
                         .create();
                 myQuittingDialogBox.show();
             });
+            holder.btn_update_movie_admin.setOnClickListener(t->{
+                listenerMovie.ClickedMovie(movie,"update");
+            });
         }
     }
 

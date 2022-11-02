@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.admin.Admin_AddFragment">
+    tools:context=".fragment.admin.Admin_MovieFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -31,6 +31,7 @@
                     android:paddingBottom="15dp">
 
                     <TextView
+                        android:id="@+id/title_fragment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Add new movie"
@@ -43,7 +44,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
                     android:layout_marginBottom="15dp"
-                    android:scaleType="center"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/not_available" />
 
                 <EditText

@@ -1,10 +1,8 @@
 package com.example.movieandroidapp.Activity;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -12,11 +10,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,13 +21,9 @@ import android.widget.TextView;
 import com.example.movieandroidapp.R;
 import com.example.movieandroidapp.Utility.DataLocalManager;
 import com.example.movieandroidapp.contract.user.GetUserInformationContract;
-import com.example.movieandroidapp.fragment.CatalogFragment;
-import com.example.movieandroidapp.fragment.HomeFragment;
-import com.example.movieandroidapp.fragment.SearchHomeFragment;
-import com.example.movieandroidapp.fragment.admin.Admin_AddFragment;
+import com.example.movieandroidapp.fragment.admin.Admin_MovieFragment;
 import com.example.movieandroidapp.fragment.admin.Admin_CatalogFragment;
 import com.example.movieandroidapp.fragment.admin.Admin_DashBoardFragment;
-import com.example.movieandroidapp.fragment.ProfileFragment;
 import com.example.movieandroidapp.fragment.admin.Admin_ReviewsFragment;
 import com.example.movieandroidapp.fragment.admin.Admin_UserFragment;
 import com.example.movieandroidapp.model.MessageEvent;
@@ -45,13 +36,13 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 public class AdminActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-    private static final int FRAGMENT_DASHBOARD = 0;
-    private static final int FRAGMENT_CATALOG = 1;
-    private static final int FRAGMENT_USER = 2;
-    private static final int FRAGMENT_REVIEWS = 3;
-    private static final int FRAGMENT_ADD_MOVIE = 4;
+    public static final int FRAGMENT_DASHBOARD = 0;
+    public static final int FRAGMENT_CATALOG = 1;
+    public static final int FRAGMENT_USER = 2;
+    public static final int FRAGMENT_REVIEWS = 3;
+    public static final int FRAGMENT_ADD_MOVIE = 4;
 
-    private int mCurrentFragment = FRAGMENT_DASHBOARD;
+    public static int mCurrentFragment = FRAGMENT_DASHBOARD;
 
     private DrawerLayout mDrawerLayout;
     private ImageView avatar;
@@ -134,10 +125,8 @@ public class AdminActivity extends AppCompatActivity implements NavigationView.O
             }
         }
         else if(id == R.id.nav_add_admin){
-            if(mCurrentFragment != FRAGMENT_ADD_MOVIE){
-                replaceFragment(new Admin_AddFragment());
+                replaceFragment(new Admin_MovieFragment());
                 mCurrentFragment=FRAGMENT_ADD_MOVIE;
-            }
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);

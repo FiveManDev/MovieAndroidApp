@@ -10,5 +10,6 @@ public class MovieApiUrl {
     public static final String DeleteMovie = "Movie/DeleteMovie";
     public static final String GetMovieBaseOnFilter = "Movie/GetMovieBaseOnFilter";
     public static final String PostMovie = "Movie/PostMovie";
+    public static final String UpdateMovie = "Movie/UpdateMovie";
     public static final String UpdateMovieStatus = "Movie/UpdateMovieStatus";
 }

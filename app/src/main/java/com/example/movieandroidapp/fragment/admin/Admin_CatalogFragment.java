@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.movieandroidapp.Activity.AdminActivity;
 import com.example.movieandroidapp.R;
 import com.example.movieandroidapp.contract.movie.ChangeStatusMovieContract;
 import com.example.movieandroidapp.contract.movie.DeleteMovieContract;
@@ -219,6 +220,9 @@ public class Admin_CatalogFragment extends Fragment implements GetMoviesContract
         else if(type.equals("block")){
             blockMovieById(movie);
         }
+        else if(type.equals("update")){
+            updateMovie(movie);
+        }
     }
     private void deleteMovieById(String idMovie){
         DeleteMovieContract.View view = new DeleteMovieContract.View() {
@@ -262,5 +266,10 @@ public class Admin_CatalogFragment extends Fragment implements GetMoviesContract
         };
         UpdateMovieStatusPresenter presenter = new UpdateMovieStatusPresenter(view);
         presenter.requestUpdateStatus(new ChangeStatusBody(movie.getMovieID(),!movie.getIsVisible()));
+    }
+
+    private void updateMovie(Movie movie){
+        ((AdminActivity) requireActivity()).replaceFragment(Admin_MovieFragment.newInstance(movie));
+        AdminActivity.mCurrentFragment = AdminActivity.FRAGMENT_ADD_MOVIE;
     }
 }

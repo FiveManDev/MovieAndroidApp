@@ -1,11 +1,8 @@
 package com.example.movieandroidapp.contract.movie;
 
-import com.example.movieandroidapp.model.movie.Movie;
 import com.example.movieandroidapp.model.movie.PostMovie;
 
-import java.util.List;
-
-public interface PostMovieContract {
+public interface PostUpdateMovieContract {
 
     interface Model{
         interface OnFinishedListener {
@@ -13,7 +10,8 @@ public interface PostMovieContract {
             void onFailure(String message);
         }
 
-        void postMovie(PostMovieContract.Model.OnFinishedListener onFinishedListener, PostMovie postMovie);
+        void postOrUpdateMovie(PostUpdateMovieContract.Model.OnFinishedListener onFinishedListener, PostMovie postMovie, String type);
+
     }
 
     interface View{
@@ -22,6 +20,6 @@ public interface PostMovieContract {
     }
 
     interface Presenter {
-        void requestPostMovie(PostMovie postMovie);
+        void requestMovie(PostMovie postMovie, String type);
     }
 }

@@ -12,7 +12,7 @@ import com.example.movieandroidapp.R;
 public class MovieAdminHolder extends RecyclerView.ViewHolder {
     TextView row_movie_item_admin_id, row_movie_item_admin_name, row_movie_item_admin_genre,
             row_movie_item_admin_rating, row_movie_item_admin_visible, row_movie_item_admin_releaseTime,
-            btn_delete_movie_admin, btn_block_movie_admin;
+            btn_delete_movie_admin, btn_block_movie_admin,btn_update_movie_admin;
     LinearLayout movie_item_admin_action;
 
     public MovieAdminHolder(@NonNull View itemView) {
@@ -29,6 +29,6 @@ public class MovieAdminHolder extends RecyclerView.ViewHolder {
 
         btn_delete_movie_admin = itemView.findViewById(R.id.btn_delete_movie_admin);
         btn_block_movie_admin = itemView.findViewById(R.id.btn_block_movie_admin);
-
+        btn_update_movie_admin = itemView.findViewById(R.id.btn_update_movie_admin);
     }
 }

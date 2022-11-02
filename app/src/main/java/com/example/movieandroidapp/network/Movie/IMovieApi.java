@@ -82,6 +82,30 @@ public interface IMovieApi {
                                           @Part("MovieTypeName") RequestBody MovieTypeName,
                                           @Part("GenreName") RequestBody GenreName
                                           );
+    @Multipart
+    @PUT(MovieApiUrl.UpdateMovie)
+    Call<ApiResponse<String[]>> UpdateMovie(@Part("movieID") RequestBody movieID,
+                                          @Part("MovieName") RequestBody MovieName,
+                                          @Part("Description") RequestBody Description,
+                                          @Part MultipartBody.Part Thumbnail,
+                                          @Part("Country") RequestBody Country,
+                                          @Part("Actor") RequestBody Actor,
+                                          @Part("Director") RequestBody Director,
+                                          @Part("Language") RequestBody Language,
+                                          @Part("Subtitle") RequestBody Subtitle,
+                                          @Part("ReleaseTime") RequestBody ReleaseTime,
+                                          @Part("PublicationTime") RequestBody PublicationTime,
+                                          @Part MultipartBody.Part CoverImage,
+                                          @Part("Age") RequestBody Age,
+                                          @Part MultipartBody.Part Movie,
+                                          @Part("RunningTime") RequestBody RunningTime,
+                                          @Part("Quality") RequestBody Quality,
+                                          @Part("UserID") RequestBody UserID,
+                                          @Part("ClassName") RequestBody ClassName,
+                                          @Part("MovieTypeName") RequestBody MovieTypeName,
+                                          @Part("GenreName") RequestBody GenreName
+    );
+
     @PUT(MovieApiUrl.UpdateMovieStatus)
     Call<ApiResponse<String[]>> UpdateMovieStatus(@Body ChangeStatusBody statusBody);
 }
