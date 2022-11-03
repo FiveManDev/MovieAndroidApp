@@ -26,7 +26,7 @@ public class GetStatisticsForMonthRequest implements StatisticsContract.Model {
                 if (response.isSuccessful()) {
                     onFinishedListener.onFinished(response.body().getData());
                 } else {
-                    onFinishedListener.onFailure(response.body().getMessage());
+                    onFinishedListener.onFailure("Error on get latest list review");
                 }
             }
             @Override

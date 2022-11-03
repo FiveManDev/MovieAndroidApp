@@ -104,7 +104,7 @@ public class MovieDetailFragment extends Fragment implements getListReviewContra
         movie_country_detail = mView.findViewById(R.id.movie_country_detail);
         movie_desc_detail = mView.findViewById(R.id.movie_desc_detail);
 
-        Picasso.get().load(movie.getCoverImage()).into(movie_image_detail);
+        Picasso.get().load(movie.getThumbnail()).into(movie_image_detail);
 
         movie_title_detail.setText(movie.getMovieName());
         movie_rating_detail.setText(movie.getRating().toString());
