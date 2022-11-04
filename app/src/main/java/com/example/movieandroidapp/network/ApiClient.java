@@ -18,9 +18,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
 
 //  public static final String address = "http://192.168.43.60";
-//  public static final String address = "http://14.183.119.13";
+  public static final String address = "http://192.168.10.147";
 
-    public static final String address = "http://10.0.2.2:5237";
+//    public static final String address = "http://10.0.2.2:5237";
     public static final String BASE_URL = address+"/api/v1/";
     public static Retrofit retrofit = null;
 

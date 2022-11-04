@@ -43,9 +43,9 @@ public class RegisterActivity extends AppCompatActivity implements ConfirmEmailC
             progress.setCancelable(false);
             progress.show();
             confirmEmailPresenter.confirmEmailToServer(
-                    userName.getText().toString(),
-                    email.getText().toString(),
-                    password.getText().toString());
+                    userName.getText().toString().trim(),
+                    email.getText().toString().trim(),
+                    password.getText().toString().trim());
         });
         signin_link.setOnClickListener(t -> {
             startActivity(new Intent(this, LoginActivity.class));

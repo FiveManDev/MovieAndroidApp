@@ -28,7 +28,7 @@ public class ForgotPassword extends AppCompatActivity implements ForgotPasswordC
 
         btn_send_forgot.setOnClickListener(t -> {
             ForgotPasswordPresenter presenter = new ForgotPasswordPresenter(this);
-            presenter.confirmEmailToServer(email_forgot.getText().toString());
+            presenter.confirmEmailToServer(email_forgot.getText().toString().trim());
         });
     }
 

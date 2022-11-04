@@ -33,7 +33,7 @@ public class ResetPasswordActivity extends AppCompatActivity implements ResetPas
 
         btn_reset_password.setOnClickListener(t->{
             ResetPasswordPresenter presenter = new ResetPasswordPresenter(this);
-            presenter.confirmEmailToServer(reset_password_new.getText().toString(),reset_password_confirm.getText().toString(),email);
+            presenter.confirmEmailToServer(reset_password_new.getText().toString().trim(),reset_password_confirm.getText().toString().trim(),email.trim());
         });
 
         signin_link_forgot.setOnClickListener(t->{

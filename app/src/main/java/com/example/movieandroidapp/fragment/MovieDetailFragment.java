@@ -136,8 +136,8 @@ public class MovieDetailFragment extends Fragment implements getListReviewContra
 
         ReviewBody review = new ReviewBody();
         btn_send_review.setOnClickListener(t -> {
-            review.setTitle(movie_detail_title_review.getText().toString());
-            review.setReviewContent(movie_detail_content_review.getText().toString());
+            review.setTitle(movie_detail_title_review.getText().toString().trim());
+            review.setReviewContent(movie_detail_content_review.getText().toString().trim());
             review.setRating(rating);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 review.setReviewTime(LocalDate.now().toString());
@@ -193,6 +193,7 @@ public class MovieDetailFragment extends Fragment implements getListReviewContra
     @Override
     public void onDestroy() {
         if(hubConnection.getConnectionState() == HubConnectionState.CONNECTED){
+            hubConnection.invoke("RemoveGroup", movie.getMovieID());
             hubConnection.stop();
         }
         super.onDestroy();

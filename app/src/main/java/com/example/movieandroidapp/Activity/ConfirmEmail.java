@@ -73,7 +73,7 @@ public class ConfirmEmail extends AppCompatActivity {
             progress.setCancelable(false);
             progress.show();
 
-            registerPresenter.requestCreateUserToServer(userName, email, password, code_input.getText().toString(), code);
+            registerPresenter.requestCreateUserToServer(userName.trim(), email.trim(), password.trim(), code_input.getText().toString().trim(), code.trim());
         });
     }
 

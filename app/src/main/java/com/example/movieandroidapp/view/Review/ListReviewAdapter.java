@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.movieandroidapp.R;
 import com.example.movieandroidapp.Utility.Extension;
 import com.example.movieandroidapp.model.Review;
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class ListReviewAdapter extends RecyclerView.Adapter<ListReviewAdapter.MyViewHolder> {
@@ -40,6 +42,9 @@ public class ListReviewAdapter extends RecyclerView.Adapter<ListReviewAdapter.My
         holder.review_item_movie_info.setText(info);
         holder.review_item_movie_content.setText(review.getReviewContent());
         holder.review_item_movie_rating.setText(review.getRating().toString());
+        if(review.getAvatar() != null){
+            Picasso.get().load(review.getAvatar()).into(holder.review_item_movie_avatar);
+        }
     }
 
     @Override

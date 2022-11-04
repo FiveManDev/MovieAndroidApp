@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
             progress.setCancelable(false);
             progress.show();
             LoginPresenter loginPresenter = new LoginPresenter(this);
-            loginPresenter.requestLoginToServer(userName.getText().toString(), password.getText().toString());
+            loginPresenter.requestLoginToServer(userName.getText().toString().trim(), password.getText().toString().trim());
         });
     }
 

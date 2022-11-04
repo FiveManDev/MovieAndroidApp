@@ -184,14 +184,14 @@ public class WatchMovieFragment extends Fragment {
         });
         playerView = mView.findViewById(R.id.playerView);
         ImageView setting = playerView.findViewById(R.id.exo_track_selection_view);
+
         setting.setOnClickListener(v -> {
             if (!isShowingTrackSelectionDialog
                     && TrackSelectionDialog.willHaveContent(trackSelector)) {
                 isShowingTrackSelectionDialog = true;
-                TrackSelectionDialog trackSelectionDialog =
-                        TrackSelectionDialog.createForTrackSelector(
-                                trackSelector,
-                                /* onDismissListener= */ dismissedDialog -> isShowingTrackSelectionDialog = false);
+                TrackSelectionDialog trackSelectionDialog =TrackSelectionDialog.createForTrackSelector(
+                                 trackSelector,
+                                 dismissedDialog -> isShowingTrackSelectionDialog = false);
                 trackSelectionDialog.show(((HomeActivity) getActivity()).getSupportFragmentManager(), /* tag= */ null);
             }
         });
